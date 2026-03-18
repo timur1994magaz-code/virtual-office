@@ -286,7 +286,7 @@ body{font-family:'Press Start 2P',monospace;background:#1a1a2e;display:flex;flex
 .modal .tasks div{padding:6px 0;border-bottom:1px solid #333}
 
 /* Доска задач модалка */
-.board-modal{max-width:460px}
+.board-modal{max-width:520px;max-height:80vh;overflow-y:auto}
 .board-modal h3{color:#DDAA55;font-size:14px}
 .board-modal .project{font-size:10px;padding:10px 0;border-bottom:1px solid #333;display:flex;justify-content:space-between}
 .board-modal .project .pstatus{font-size:5px;padding:2px 6px;border-radius:2px}
@@ -673,15 +673,57 @@ const agents = {
   }
 };
 
-const projects = [
-  { name: 'Vibe School (лендинг)', status: 'active', label: 'ГОТОВ' },
-  { name: 'AI Creator School (лендинг)', status: 'active', label: 'ГОТОВ' },
-  { name: 'ПДД Тренажёр', status: 'active', label: 'ЗАДЕПЛОЕН' },
-  { name: 'Застройщик домов (лендинг)', status: 'active', label: 'ГОТОВ' },
-  { name: 'AI Дайджест Telegram', status: 'active', label: 'ЕЖЕНЕДЕЛЬНО' },
-  { name: 'Morning Briefing', status: 'active', label: 'ЕЖЕДНЕВНО' },
-  { name: 'Виртуальный офис', status: 'active', label: 'В РАБОТЕ' },
-  { name: 'Google Calendar', status: 'active', label: 'ПОДКЛЮЧЁН' }
+const boardSections = [
+  {
+    title: '🎓 CAT School — Онлайн-школа AI-креатор',
+    color: '#FF6644',
+    tasks: [
+      { name: 'Лендинг AI Creator School', status: 'active', label: 'ГОТОВ' },
+      { name: 'ТГ-канал @catschool_ai', status: 'active', label: 'ПОДКЛЮЧЁН' },
+      { name: 'Квиз-бот @ai_creator_anketa_bot', status: 'active', label: 'РАБОТАЕТ' },
+      { name: 'Google Sheets для лидов', status: 'active', label: 'НАСТРОЕН' },
+      { name: 'Контент-план (2-3 поста/нед)', status: 'planned', label: 'В РАБОТЕ' },
+      { name: 'Лид-магниты в закреп канала', status: 'planned', label: 'ЖДЁМ' },
+      { name: 'Интеграция Instagram/TikTok → ManyChat', status: 'planned', label: 'СЕГОДНЯ' },
+      { name: 'Воронка: Reels → DM → ТГ-бот → канал', status: 'idea', label: 'ПЛАН' }
+    ]
+  },
+  {
+    title: '🎬 AIZNSTEIN — AI-видеопродакшн для брендов',
+    color: '#44AADD',
+    tasks: [
+      { name: 'ТГ-канал @aiznstein', status: 'active', label: 'ПОДКЛЮЧЁН' },
+      { name: 'Канал согласования постов', status: 'active', label: 'НАСТРОЕН' },
+      { name: 'Доступы Sostav.ru / vc.ru', status: 'active', label: 'ПОЛУЧЕНЫ' },
+      { name: 'Контент-план ТГ (2 поста/нед)', status: 'planned', label: 'В РАБОТЕ' },
+      { name: 'Контент-план Sostav.ru (2 поста/нед)', status: 'planned', label: 'В РАБОТЕ' },
+      { name: 'Контент-план vc.ru (2 поста/нед)', status: 'planned', label: 'В РАБОТЕ' },
+      { name: 'Мониторинг тендеров (zakupki.gov.ru)', status: 'active', label: 'ЕЖЕДНЕВНО' },
+      { name: 'Ресёрч: топ AI-видео контент', status: 'planned', label: 'В РАБОТЕ' }
+    ]
+  },
+  {
+    title: '🔥 Феникс — Phygital мультимедиа дизайн',
+    color: '#FF8800',
+    tasks: [
+      { name: 'Инсталляции, свет, контент для брендов', status: 'idea', label: 'ЗАПУСК' },
+      { name: 'Мероприятия / корпоративы / фестивали', status: 'idea', label: 'ПЛАН' },
+      { name: 'Phygital-решения для брендов', status: 'idea', label: 'ПЛАН' }
+    ]
+  },
+  {
+    title: '📦 Остальное',
+    color: '#999',
+    tasks: [
+      { name: 'ПДД Тренажёр', status: 'active', label: 'ЗАДЕПЛОЕН' },
+      { name: 'Vibe School (лендинг)', status: 'active', label: 'ГОТОВ' },
+      { name: 'Застройщик домов (лендинг)', status: 'active', label: 'ГОТОВ' },
+      { name: 'AI Дайджест Telegram', status: 'active', label: 'ЕЖЕНЕДЕЛЬНО' },
+      { name: 'Morning Briefing', status: 'active', label: 'ЕЖЕДНЕВНО' },
+      { name: 'Виртуальный офис', status: 'active', label: 'ОБНОВЛЁН' },
+      { name: 'Google Calendar', status: 'active', label: 'ПОДКЛЮЧЁН' }
+    ]
+  }
 ];
 
 function showAgent(id) {
@@ -697,8 +739,13 @@ function showAgent(id) {
 
 function showBoard() {
   const content = document.getElementById('board-content');
-  content.innerHTML = projects.map(p =>
-    '<div class="project"><span>' + p.name + '</span><span class="pstatus ' + p.status + '">' + p.label + '</span></div>'
+  content.innerHTML = boardSections.map(s =>
+    '<div style="margin-bottom:16px">' +
+    '<div style="font-size:9px;color:' + s.color + ';padding:8px 0 6px;border-bottom:2px solid ' + s.color + '">' + s.title + '</div>' +
+    s.tasks.map(p =>
+      '<div class="project"><span>' + p.name + '</span><span class="pstatus ' + p.status + '">' + p.label + '</span></div>'
+    ).join('') +
+    '</div>'
   ).join('');
   document.getElementById('board-modal').classList.add('active');
 }
