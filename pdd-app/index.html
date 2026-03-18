@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>ПДД Demuzo</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:rgba(200,255,0,0.15);touch-action:manipulation}
+:root{--bg:#0D0D0D;--card:#1E1E1E;--card2:#2A2A2A;--accent:#C8FF00;--text:#fff;--text2:#888;--green:#4CAF50;--red:#F44336;--nav-h:64px;--safe-top:env(safe-area-inset-top,0px);--safe-bot:env(safe-area-inset-bottom,0px)}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:15px;line-height:1.4;-webkit-font-smoothing:antialiased}
+.app{height:100%;display:flex;flex-direction:column;max-width:430px;margin:0 auto;position:relative}
+.screen{display:none;flex:1;overflow-y:auto;padding:16px 16px calc(var(--nav-h) + var(--safe-bot) + 8px) 16px;-webkit-overflow-scrolling:touch}
+.screen.active{display:block}
+.screen.no-scroll{overflow:hidden}
+[onclick],[data-click]{cursor:pointer;-webkit-user-select:none;user-select:none}
+button{cursor:pointer;border:none;background:none;font-family:inherit;font-size:inherit;color:inherit;touch-action:manipulation;-webkit-tap-highlight-color:rgba(200,255,0,0.15)}
+
+/* Bottom Nav */
+.nav{position:fixed;bottom:0;left:0;right:0;height:calc(var(--nav-h) + var(--safe-bot));background:#111;border-top:1px solid #222;display:flex;justify-content:space-around;align-items:flex-start;padding-top:8px;padding-bottom:var(--safe-bot);z-index:100;max-width:430px;margin:0 auto}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:var(--text2);padding:4px 12px;border-radius:8px;transition:color .2s}
+.nav-item.active{color:var(--accent)}
+.nav-item svg{width:24px;height:24px;fill:currentColor}
+
+/* Cards */
+.card{background:var(--card);border-radius:16px;padding:16px;margin-bottom:12px}
+.card2{background:var(--card2);border-radius:12px;padding:14px;margin-bottom:10px}
+
+/* Progress bar */
+.pbar{height:8px;background:#333;border-radius:4px;overflow:hidden;margin-top:8px}
+.pbar-fill{height:100%;background:var(--accent);border-radius:4px;transition:width .5s}
+
+/* Accent button */
+.btn-accent{display:block;width:100%;padding:16px;background:var(--accent);color:#000;font-weight:700;font-size:16px;border-radius:14px;text-align:center;margin-top:12px}
+.btn-accent:active{opacity:.85}
+.btn-outline{display:block;width:100%;padding:14px;border:2px solid var(--accent);color:var(--accent);font-weight:600;font-size:15px;border-radius:14px;text-align:center;margin-top:10px;background:transparent}
+.btn-outline:active{background:rgba(200,255,0,.08)}
+
+/* Header */
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-top:var(--safe-top)}
+.header-left{display:flex;align-items:center;gap:12px}
+.avatar{width:44px;height:44px;border-radius:50%;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:22px}
+.greeting{font-size:13px;color:var(--text2)}
+.greeting b{display:block;font-size:17px;color:var(--text)}
+.icon-btn{width:40px;height:40px;border-radius:12px;background:var(--card);display:flex;align-items:center;justify-content:center}
+.icon-btn svg{width:20px;height:20px;fill:var(--text2)}
+
+/* Tabs */
+.tabs{display:flex;background:var(--card);border-radius:12px;padding:4px;margin-bottom:14px}
+.tab{flex:1;padding:10px;text-align:center;border-radius:10px;font-weight:600;font-size:14px;color:var(--text2);transition:all .2s}
+.tab.active{background:var(--accent);color:#000}
+
+/* Ticket grid */
+.ticket-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}
+.ticket{aspect-ratio:1;border-radius:10px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;color:var(--text2);transition:all .15s}
+.ticket:active{transform:scale(.93)}
+.ticket.done{background:var(--green);color:#fff}
+.ticket.error{background:var(--red);color:#fff}
+.ticket.partial{background:#FF9800;color:#fff}
+
+/* Theory list */
+.theory-item{display:flex;align-items:center;gap:14px;padding:16px;background:var(--card);border-radius:14px;margin-bottom:10px}
+.theory-item:active{background:var(--card2)}
+.theory-icon{width:44px;height:44px;border-radius:12px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.theory-text{flex:1}
+.theory-text span{font-size:12px;color:var(--text2)}
+.theory-arrow{color:var(--text2);font-size:18px}
+
+/* Lesson list */
+.lesson-item{background:var(--card);border-radius:14px;padding:14px;margin-bottom:10px}
+.lesson-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.lesson-num{width:32px;height:32px;border-radius:8px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--accent);flex-shrink:0;margin-right:10px}
+.lesson-name{flex:1;font-weight:600;font-size:14px}
+.lesson-progress{font-size:12px;color:var(--accent);font-weight:600}
+.lesson-btns{display:flex;gap:8px}
+.lesson-btn{flex:1;padding:10px;border-radius:10px;text-align:center;font-weight:600;font-size:13px}
+.lesson-btn.train{background:var(--card2);color:var(--text)}
+.lesson-btn.train:active{background:#333}
+.lesson-btn.exam{background:var(--accent);color:#000}
+.lesson-btn.exam:active{opacity:.85}
+
+/* Question screen */
+#questionScreen{padding-top:var(--safe-top)}
+.q-header{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--card)}
+.q-back{font-size:24px;padding:4px 8px;color:var(--text)}
+.q-title{flex:1;font-weight:600;font-size:16px}
+.q-timer{font-size:14px;color:var(--accent);font-weight:700}
+.q-dots{display:flex;gap:6px;padding:12px 16px;flex-wrap:wrap}
+.q-dot{width:28px;height:6px;border-radius:3px;background:#333}
+.q-dot.current{background:var(--accent)}
+.q-dot.correct{background:var(--green)}
+.q-dot.wrong{background:var(--red)}
+.q-body{padding:0 16px 100px 16px}
+.q-image{width:100%;aspect-ratio:16/9;background:var(--card);border-radius:14px;margin-bottom:14px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.q-image svg{width:100%;height:100%}
+.q-text{font-size:16px;font-weight:600;margin-bottom:14px;line-height:1.5}
+.q-option{display:block;width:100%;padding:16px;background:var(--card);border-radius:12px;margin-bottom:8px;text-align:left;font-size:15px;font-weight:500;border:2px solid transparent;transition:all .15s}
+.q-option:active{background:var(--card2)}
+.q-option.selected-correct{border-color:var(--green);background:rgba(76,175,80,.15);color:var(--green)}
+.q-option.selected-wrong{border-color:var(--red);background:rgba(244,67,54,.15);color:var(--red)}
+.q-option.show-correct{border-color:var(--green);background:rgba(76,175,80,.1)}
+.q-option.disabled{pointer-events:none;opacity:.7}
+.q-explain{background:var(--card);border-radius:12px;padding:14px;margin-top:12px;font-size:14px;color:var(--text2);line-height:1.5;display:none}
+.q-explain.show{display:block}
+.q-next{display:none;margin-top:12px}
+.q-next.show{display:block}
+
+/* Toggle */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+.toggle{width:50px;height:28px;border-radius:14px;background:#333;position:relative;transition:background .2s}
+.toggle.on{background:var(--accent)}
+.toggle-knob{width:24px;height:24px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transition:left .2s}
+.toggle.on .toggle-knob{left:24px}
+
+/* Banner */
+.banner{background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:16px;padding:18px;margin-bottom:12px;position:relative;overflow:hidden}
+.banner::after{content:'';position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:var(--accent);opacity:.08;border-radius:50%}
+.banner h3{font-size:15px;margin-bottom:4px}
+.banner p{font-size:12px;color:var(--text2)}
+
+/* Stats row */
+.stats-row{display:flex;gap:10px;margin-bottom:12px}
+.stat-card{flex:1;background:var(--card);border-radius:14px;padding:14px;text-align:center}
+.stat-num{font-size:24px;font-weight:800;color:var(--accent)}
+.stat-label{font-size:11px;color:var(--text2);margin-top:2px}
+
+/* Section title */
+.section-title{font-size:13px;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;margin-top:4px}
+
+/* Theory content screen */
+#theoryContent{padding-top:var(--safe-top)}
+.tc-header{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--card);margin-bottom:12px}
+.tc-back{font-size:24px;padding:4px 8px;color:var(--text)}
+.tc-title{flex:1;font-weight:600;font-size:16px}
+.tc-body{padding:0 16px 100px 16px}
+.tc-body h3{margin:16px 0 8px;color:var(--accent);font-size:16px}
+.tc-body p{color:var(--text2);font-size:14px;line-height:1.6;margin-bottom:10px}
+.tc-body ul{padding-left:20px;margin-bottom:12px}
+.tc-body li{color:var(--text2);font-size:14px;line-height:1.6;margin-bottom:4px}
+
+/* Result screen */
+.result-screen{display:none;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;min-height:60vh}
+.result-screen.active{display:flex}
+.result-emoji{font-size:64px;margin-bottom:16px}
+.result-title{font-size:24px;font-weight:800;margin-bottom:8px}
+.result-sub{font-size:16px;color:var(--text2);margin-bottom:24px}
+.result-stats{display:flex;gap:20px;margin-bottom:30px}
+.result-stat{text-align:center}
+.result-stat .num{font-size:32px;font-weight:800}
+.result-stat .label{font-size:12px;color:var(--text2)}
+.result-stat .num.g{color:var(--green)}
+.result-stat .num.r{color:var(--red)}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+<!-- ГЛАВНАЯ -->
+<div class="screen active no-scroll" id="homeScreen">
+<div class="header">
+<div class="header-left">
+<div class="avatar">👤</div>
+<div class="greeting"><span>Добро пожаловать</span><b>Привет, ученик!</b></div>
+</div>
+<div class="icon-btn" onclick="alert('Настройки в разработке')"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 00-.48-.41h-3.84a.48.48 0 00-.48.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87a.48.48 0 00.12.61l2.03 1.58c-.04.31-.06.63-.06.94 0 .31.02.63.06.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.26.41.48.41h3.84c.24 0 .44-.17.48-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.61 3.61 0 0112 15.6z"/></svg></div>
+</div>
+
+<div class="stats-row">
+<div class="stat-card"><div class="stat-num" id="homeCorrect">0</div><div class="stat-label">Правильных</div></div>
+<div class="stat-card"><div class="stat-num" id="homeErrors">0</div><div class="stat-label">Ошибок</div></div>
+<div class="stat-card"><div class="stat-num" id="homeTickets">0</div><div class="stat-label">Билетов</div></div>
+</div>
+
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center"><b>🚗 Вождение</b><span style="color:var(--accent);font-weight:700;font-size:13px">0%</span></div>
+<div class="pbar"><div class="pbar-fill" style="width:0%"></div></div>
+<div style="font-size:12px;color:var(--text2);margin-top:6px">Практика — скоро!</div>
+</div>
+
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center"><b>📖 Теория</b><span style="color:var(--accent);font-weight:700;font-size:13px" id="homeTheoryPct">0%</span></div>
+<div class="pbar"><div class="pbar-fill" id="homeTheoryBar" style="width:0%"></div></div>
+<div style="font-size:12px;color:var(--text2);margin-top:6px">Изучай ПДД по билетам</div>
+</div>
+
+<button class="btn-accent" onclick="switchTab('lessons')">📚 Пройти урок</button>
+
+<div class="banner" style="margin-top:12px">
+<h3>🎓 Онлайн-курс ПДД</h3>
+<p>800 вопросов • 40 билетов • Подробные объяснения</p>
+</div>
+
+<div class="card2" style="display:flex;align-items:center;gap:10px" onclick="switchTab('tickets')">
+<span style="font-size:24px">🏆</span>
+<div style="flex:1"><b style="font-size:14px">Марафон 800</b><br><span style="font-size:12px;color:var(--text2)">Ответь на все вопросы подряд</span></div>
+<span style="color:var(--text2)">›</span>
+</div>
+</div>
+
+<!-- УРОКИ -->
+<div class="screen" id="lessonsScreen">
+<div style="padding-top:var(--safe-top)">
+<h2 style="font-size:20px;margin-bottom:4px">📚 Уроки</h2>
+<p style="font-size:13px;color:var(--text2);margin-bottom:14px">Изучай темы по порядку</p>
+</div>
+<div id="lessonsList"></div>
+</div>
+
+<!-- ТЕОРИЯ -->
+<div class="screen" id="theoryScreen">
+<div style="padding-top:var(--safe-top)">
+<h2 style="font-size:20px;margin-bottom:4px">📖 Теория</h2>
+<p style="font-size:13px;color:var(--text2);margin-bottom:14px">Справочные материалы</p>
+</div>
+<div id="theoryList"></div>
+</div>
+
+<!-- БИЛЕТЫ -->
+<div class="screen" id="ticketsScreen">
+<div style="padding-top:var(--safe-top)">
+<h2 style="font-size:20px;margin-bottom:4px">🎫 Билеты</h2>
+</div>
+<div class="tabs">
+<div class="tab active" onclick="setCategory('AB',this)">A / B</div>
+<div class="tab" onclick="setCategory('CD',this)">C / D</div>
+</div>
+<button class="btn-accent" onclick="startExam()" style="margin-top:0">🎓 Экзамен</button>
+<button class="btn-outline" onclick="startMarathon()">🏃 Марафон 800</button>
+<div style="display:flex;gap:8px;margin-top:10px">
+<button class="btn-outline" onclick="startErrors()" style="flex:1;margin-top:0">❌ Ошибки <span id="errCount">0</span></button>
+</div>
+<div class="toggle-row">
+<span style="font-size:14px">💡 Подсказки</span>
+<div class="toggle on" id="hintsToggle" onclick="toggleHints()"><div class="toggle-knob"></div></div>
+</div>
+<div class="section-title">Билеты 1–40</div>
+<div class="ticket-grid" id="ticketGrid"></div>
+</div>
+
+<!-- ЭКРАН ВОПРОСА -->
+<div class="screen" id="questionScreen" style="padding:0;overflow-y:auto">
+<div class="q-header">
+<div class="q-back" onclick="exitQuestion()">‹</div>
+<div class="q-title" id="qTitle">Билет 1</div>
+<div class="q-timer" id="qTimer"></div>
+</div>
+<div class="q-dots" id="qDots"></div>
+<div class="q-body">
+<div class="q-image" id="qImage"></div>
+<div class="q-text" id="qText"></div>
+<div id="qOptions"></div>
+<div class="q-explain" id="qExplain"></div>
+<button class="btn-accent q-next" id="qNext" onclick="nextQuestion()">Далее →</button>
+</div>
+</div>
+
+<!-- ТЕОРИЯ КОНТЕНТ -->
+<div class="screen" id="theoryContent" style="padding:0;overflow-y:auto">
+<div class="tc-header">
+<div class="tc-back" onclick="exitTheory()">‹</div>
+<div class="tc-title" id="tcTitle"></div>
+</div>
+<div class="tc-body" id="tcBody"></div>
+</div>
+
+<!-- РЕЗУЛЬТАТ -->
+<div class="screen" id="resultScreen" style="padding:0">
+<div class="result-screen active">
+<div class="result-emoji" id="resEmoji">🎉</div>
+<div class="result-title" id="resTitle">Отлично!</div>
+<div class="result-sub" id="resSub">Вы сдали экзамен</div>
+<div class="result-stats">
+<div class="result-stat"><div class="num g" id="resCorrect">0</div><div class="label">Верно</div></div>
+<div class="result-stat"><div class="num r" id="resWrong">0</div><div class="label">Ошибок</div></div>
+</div>
+<button class="btn-accent" onclick="exitQuestion()" style="width:80%">На главную</button>
+</div>
+</div>
+
+<!-- НАВИГАЦИЯ -->
+<nav class="nav" id="mainNav">
+<div class="nav-item active" onclick="switchTab('home')">
+<svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+<span>Главная</span>
+</div>
+<div class="nav-item" onclick="switchTab('lessons')">
+<svg viewBox="0 0 24 24"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg>
+<span>Уроки</span>
+</div>
+<div class="nav-item" onclick="switchTab('theory')">
+<svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM6 20V4h5v7h7v9H6z"/></svg>
+<span>Теория</span>
+</div>
+<div class="nav-item" onclick="switchTab('tickets')">
+<svg viewBox="0 0 24 24"><path d="M22 10V6a2 2 0 00-2-2H4c-1.1 0-2 .9-2 2v4c1.1 0 2 .9 2 2s-.9 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2zm-2-1.46c-1.19.69-2 1.99-2 3.46s.81 2.77 2 3.46V18H4v-2.54c1.19-.69 2-1.99 2-3.46 0-1.48-.81-2.77-2-3.46V6h16v2.54z"/></svg>
+<span>Билеты</span>
+</div>
+</nav>
+</div>
+
+<script>
+// ===================== DATA =====================
+var LESSONS=[
+{id:0,name:'Общие положения',icon:'📋'},
+{id:1,name:'Знаки приоритета',icon:'🔺'},
+{id:2,name:'Запрещающие знаки',icon:'⛔'},
+{id:3,name:'Предписывающие знаки',icon:'🔵'},
+{id:4,name:'Разметка',icon:'🛣️'},
+{id:5,name:'Светофор',icon:'🚦'},
+{id:6,name:'Проезд перекрёстков',icon:'🔀'},
+{id:7,name:'Обгон и встречная',icon:'🚗'},
+{id:8,name:'Остановка и стоянка',icon:'🅿️'},
+{id:9,name:'Скоростной режим',icon:'⚡'}
+];
+
+var THEORY_SECTIONS=[
+{id:'pdd',name:'ПДД (основные положения)',icon:'📖',content:'<h3>Общие положения ПДД</h3><p><b>Участники дорожного движения</b> — лица, принимающие непосредственное участие в процессе движения в качестве водителя, пешехода, пассажира транспортного средства.</p><p><b>Водитель</b> — лицо, управляющее каким-либо транспортным средством, погонщик, ведущий по дороге вьючных, верховых животных или стадо.</p><p><b>Пешеход</b> — лицо, находящееся вне транспортного средства на дороге либо на пешеходной или велопешеходной дорожке.</p><h3>Обязанности водителей</h3><ul><li>Иметь при себе водительское удостоверение</li><li>Иметь регистрационные документы на ТС</li><li>Иметь полис ОСАГО</li><li>Быть пристёгнутым ремнём безопасности</li></ul><h3>Обязанности пешеходов</h3><ul><li>Двигаться по тротуарам или пешеходным дорожкам</li><li>Переходить дорогу по пешеходным переходам</li><li>При отсутствии тротуаров — по обочинам навстречу движению</li></ul>'},
+{id:'signs',name:'Знаки дорожные',icon:'🚸',content:'<h3>Предупреждающие знаки</h3><p>Информируют водителей о приближении к опасному участку дороги. Устанавливаются за 150–300 м в населённых пунктах и за 50–100 м вне.</p><h3>Знаки приоритета</h3><p>Устанавливают очерёдность проезда перекрёстков, пересечений, узких участков.</p><ul><li><b>2.1</b> — Главная дорога</li><li><b>2.4</b> — Уступите дорогу</li><li><b>2.5</b> — Движение без остановки запрещено</li></ul><h3>Запрещающие знаки</h3><p>Вводят или отменяют определённые ограничения движения.</p><ul><li><b>3.1</b> — Въезд запрещён (кирпич)</li><li><b>3.2</b> — Движение запрещено</li><li><b>3.24</b> — Ограничение скорости</li></ul><h3>Предписывающие знаки</h3><p>Указывают обязательные направления движения, минимальную скорость.</p>'},
+{id:'markup',name:'Разметка дорожная',icon:'〰️',content:'<h3>Горизонтальная разметка</h3><p>Наносится на проезжую часть и регулирует движение ТС.</p><ul><li><b>1.1</b> — Сплошная линия. Пересекать запрещено.</li><li><b>1.2</b> — Край проезжей части.</li><li><b>1.3</b> — Двойная сплошная. Разделяет потоки.</li><li><b>1.5</b> — Прерывистая линия. Обозначает границы полос.</li><li><b>1.6</b> — Линия приближения. Предупреждает о сплошной.</li></ul><h3>Вертикальная разметка</h3><p>Наносится на элементы дорожных сооружений (опоры мостов, столбики) для обозначения габаритов.</p>'},
+{id:'faults',name:'Неисправности ТС',icon:'🔧',content:'<h3>Неисправности, при которых запрещена эксплуатация</h3><ul><li>Тормозная система не обеспечивает эффективность торможения</li><li>Рулевое управление неисправно</li><li>Не горят фары и задние фонари в тёмное время</li><li>Не работает стеклоочиститель со стороны водителя</li><li>Повреждены шины (порезы, расслоение)</li><li>Отсутствуют зеркала заднего вида</li><li>Не работает звуковой сигнал</li></ul><h3>Допуск к эксплуатации</h3><p>ТС должно пройти техосмотр. Остаточная глубина протектора: летние шины — не менее 1,6 мм, зимние — не менее 4 мм.</p>'},
+{id:'fines',name:'Штрафы',icon:'💰',content:'<h3>Основные штрафы</h3><ul><li><b>Проезд на красный</b> — 1 000 ₽ (повторно — 5 000 ₽ или лишение)</li><li><b>Превышение на 20–40 км/ч</b> — 500 ₽</li><li><b>Превышение на 40–60 км/ч</b> — 1 000–1 500 ₽</li><li><b>Превышение на 60–80 км/ч</b> — 2 000–2 500 ₽ или лишение</li><li><b>Превышение более 80 км/ч</b> — 5 000 ₽ или лишение</li><li><b>Непристёгнутый ремень</b> — 1 000 ₽</li><li><b>Выезд на встречку</b> — 5 000 ₽ или лишение на 4–6 мес</li><li><b>Управление в нетрезвом виде</b> — 30 000 ₽ + лишение на 1,5–2 года</li><li><b>Нет ОСАГО</b> — 800 ₽</li><li><b>Парковка для инвалидов</b> — 5 000 ₽</li></ul>'}
+];
+
+// SVG road scenes
+var SVGS=[
+'<svg viewBox="0 0 320 180"><rect fill="#4a7c59" width="320" height="180"/><rect fill="#555" x="40" y="60" width="240" height="80"/><line x1="160" y1="60" x2="160" y2="140" stroke="#fff" stroke-width="2" stroke-dasharray="10,8"/><rect fill="#c00" x="100" y="75" width="40" height="25" rx="4"/><rect fill="#333" x="104" y="100" width="8" height="4" rx="2"/><rect fill="#333" x="128" y="100" width="8" height="4" rx="2"/><rect fill="#36f" x="185" y="95" width="40" height="25" rx="4"/><rect fill="#333" x="189" y="120" width="8" height="4" rx="2"/><rect fill="#333" x="213" y="120" width="8" height="4" rx="2"/><circle cx="60" cy="30" r="12" fill="#C8FF00" stroke="#333" stroke-width="2"/><text x="60" y="35" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">!</text></svg>',
+'<svg viewBox="0 0 320 180"><rect fill="#87CEEB" width="320" height="90"/><rect fill="#4a7c59" width="320" height="90" y="90"/><rect fill="#555" x="20" y="70" width="280" height="70"/><line x1="160" y1="70" x2="160" y2="140" stroke="#fff" stroke-width="2" stroke-dasharray="10,8"/><rect fill="#f00" x="0" y="0" width="8" height="180"/><circle cx="40" cy="30" r="18" fill="#fff" stroke="#c00" stroke-width="3"/><line x1="30" y1="30" x2="50" y2="30" stroke="#c00" stroke-width="3"/><rect fill="#09f" x="70" y="80" width="45" height="28" rx="4"/><rect fill="#333" x="74" y="108" width="8" height="4" rx="2"/><rect fill="#333" x="103" y="108" width="8" height="4" rx="2"/></svg>',
+'<svg viewBox="0 0 320 180"><rect fill="#87CEEB" width="320" height="80"/><circle cx="280" cy="30" r="20" fill="#FFD700"/><rect fill="#4a7c59" width="320" height="100" y="80"/><rect fill="#555" x="100" y="40" width="120" height="140"/><rect fill="#555" x="0" y="90" width="320" height="50"/><rect fill="#fff" x="155" y="90" width="10" height="50"/><circle cx="160" cy="55" r="8" fill="#0f0"/><circle cx="160" cy="40" r="8" fill="#333"/><circle cx="160" cy="25" r="8" fill="#333"/><rect fill="#c00" x="50" y="95" width="40" height="25" rx="4"/></svg>',
+'<svg viewBox="0 0 320 180"><rect fill="#4a7c59" width="320" height="180"/><rect fill="#555" x="0" y="70" width="320" height="60"/><line x1="0" y1="100" x2="320" y2="100" stroke="#ff0" stroke-width="2"/><line x1="0" y1="100" x2="320" y2="100" stroke="#fff" stroke-width="2" stroke-dasharray="15,10"/><rect fill="#c00" x="220" y="75" width="45" height="25" rx="4"/><polygon points="260,30 275,60 245,60" fill="#fff" stroke="#c00" stroke-width="2"/><text x="260" y="53" text-anchor="middle" font-size="11" font-weight="bold" fill="#c00">!</text><rect fill="#09f" x="50" y="100" width="45" height="25" rx="4"/></svg>',
+'<svg viewBox="0 0 320 180"><rect fill="#87CEEB" width="320" height="80"/><rect fill="#4a7c59" width="320" height="100" y="80"/><rect fill="#555" x="30" y="60" width="260" height="80"/><rect fill="#fff" x="140" y="60" width="40" height="80"/><line x1="145" y1="60" x2="145" y2="140" stroke="#555" stroke-width="2"/><line x1="155" y1="60" x2="155" y2="140" stroke="#555" stroke-width="2"/><line x1="165" y1="60" x2="165" y2="140" stroke="#555" stroke-width="2"/><line x1="175" y1="60" x2="175" y2="140" stroke="#555" stroke-width="2"/><circle cx="100" cy="50" r="6" fill="#f90"/><rect fill="#00c" x="60" y="80" width="40" height="22" rx="3"/><rect fill="#c00" x="220" y="98" width="40" height="22" rx="3"/></svg>'
+];
+
+// 80 questions (IDs 0–79), grouped loosely by lesson
+var Q=[
+// Lesson 0 - Общие положения (q0-q7)
+{q:'Что называется разрешённой максимальной массой транспортного средства?',o:['Масса снаряжённого ТС с грузом, водителем и пассажирами, установленная предприятием-изготовителем','Масса снаряжённого ТС без пассажиров и груза','Масса ТС с учётом только груза'],a:0,e:'Разрешённая максимальная масса — это масса снаряжённого ТС с грузом, водителем и пассажирами, установленная предприятием-изготовителем как предельно допустимая.',s:0},
+{q:'Кто является участником дорожного движения?',o:['Только водители и пешеходы','Водители, пешеходы и пассажиры','Водители, пешеходы, пассажиры и регулировщики'],a:1,e:'Участники дорожного движения — водитель, пешеход, пассажир транспортного средства (п.1.2 ПДД).',s:0},
+{q:'Что означает термин «Обгон»?',o:['Опережение одного или нескольких ТС, связанное с выездом на встречную полосу','Любое опережение одного или нескольких ТС','Опережение с последующим перестроением'],a:0,e:'Обгон — опережение одного или нескольких ТС, связанное с выездом на полосу (сторону) встречного движения и последующим возвращением (п.1.2).',s:0},
+{q:'Что такое «Недостаточная видимость»?',o:['Видимость дороги менее 300 м в условиях тумана, дождя, снегопада и т.п.','Видимость дороги менее 100 м','Видимость дороги менее 150 м в тёмное время суток'],a:0,e:'Недостаточная видимость — видимость дороги менее 300 м в условиях тумана, дождя, снегопада, а также в сумерки (п.1.2 ПДД).',s:0},
+{q:'Являются ли тротуары и обочины частью дороги?',o:['Да','Нет','Только тротуары'],a:0,e:'Дорога включает в себя проезжую часть, тротуары, обочины и разделительные полосы (п.1.2 ПДД).',s:0},
+{q:'Что означает мигание зелёного сигнала светофора?',o:['Информирует о скором включении жёлтого сигнала','Разрешает движение и информирует, что время горения зелёного истекает','Запрещает дальнейшее движение'],a:1,e:'Зелёный мигающий разрешает движение и информирует, что вскоре будет включён запрещающий сигнал (п.6.2 ПДД).',s:0},
+{q:'Какой маневр называется «перестроением»?',o:['Выезд из занимаемой полосы с сохранением направления движения','Поворот направо или налево','Любое изменение направления движения'],a:0,e:'Перестроение — выезд из занимаемой полосы или ряда с сохранением первоначального направления движения (п.1.2 ПДД).',s:0},
+{q:'С какого возраста разрешено управление мопедом?',o:['С 14 лет','С 16 лет','С 18 лет'],a:1,e:'Управление мопедом разрешено лицам, достигшим 16-летнего возраста и имеющим водительское удостоверение категории М.',s:0},
+
+// Lesson 1 - Знаки приоритета (q8-q15)
+{q:'Какой знак обязывает уступить дорогу?',o:['Перевёрнутый белый треугольник с красной каймой','Жёлтый ромб','Круглый знак с красной каймой'],a:0,e:'Знак 2.4 «Уступите дорогу» — перевёрнутый треугольник — обязывает уступить дорогу ТС на пересекаемой дороге.',s:1},
+{q:'Вы подъехали к перекрёстку с мигающим жёлтым. Кому уступить?',o:['Никому — перекрёсток нерегулируемый, применяем знаки/правила','Всем ТС','Только пешеходам'],a:0,e:'Мигающий жёлтый означает, что светофор не регулирует. Руководствуемся знаками приоритета или правилом «помехи справа».',s:1},
+{q:'Что означает знак «Главная дорога»?',o:['Право преимущественного проезда нерегулируемых перекрёстков','Дорога с односторонним движением','Начало автомагистрали'],a:0,e:'Знак 2.1 «Главная дорога» даёт преимущество при проезде нерегулируемых перекрёстков.',s:1},
+{q:'Обязаны ли вы остановиться перед знаком 2.5 «Стоп»?',o:['Да, обязательная остановка у стоп-линии или края проезжей части','Только при наличии других ТС','Нет, если дорога свободна'],a:0,e:'Знак 2.5 запрещает движение без остановки. Нужно остановиться у стоп-линии, а при её отсутствии — у края пересекаемой проезжей части.',s:1},
+{q:'На нерегулируемом перекрёстке равнозначных дорог кто имеет преимущество?',o:['Тот, у кого помеха справа уступает','Тот, кто движется прямо','Водитель, приближающийся справа'],a:2,e:'На равнозначном перекрёстке водитель обязан уступить ТС, приближающимся справа (п.13.11 ПДД).',s:1},
+{q:'Действует ли знак «Главная дорога» на регулируемом перекрёстке?',o:['Нет, при работающем светофоре знаки приоритета не действуют','Да, всегда','Только если светофор мигает жёлтым'],a:0,e:'На регулируемых перекрёстках знаки приоритета не действуют (п.6.15, п.13.3 ПДД).',s:1},
+{q:'Какой знак предоставляет преимущество встречному транспорту на узком участке?',o:['Круглый знак с красной стрелкой и чёрной встречной','Треугольный знак','Квадратный синий знак со стрелкой'],a:0,e:'Знак 2.6 «Преимущество встречного движения» обязывает уступить встречным ТС на узком участке.',s:1},
+{q:'Разрешено ли вам проехать первым на перекрёстке, если вы на главной дороге?',o:['Да, имею преимущество','Нет, нужно пропустить всех','Только при отсутствии пешеходов'],a:0,e:'На главной дороге водитель имеет преимущество перед ТС на второстепенных дорогах.',s:1},
+
+// Lesson 2 - Запрещающие знаки (q16-q23)
+{q:'Что означает знак «Въезд запрещён» (кирпич)?',o:['Запрещает въезд всех ТС','Запрещает въезд только грузовых','Запрещает въезд только легковых'],a:0,e:'Знак 3.1 «Въезд запрещён» запрещает въезд всех транспортных средств в данном направлении.',s:2},
+{q:'Какой знак запрещает обгон?',o:['Круглый с красной каймой, две машины (красная и чёрная)','Треугольный с восклицательным знаком','Квадратный синий с белой стрелкой'],a:0,e:'Знак 3.20 «Обгон запрещён» — круглый с красной каймой, изображены два автомобиля.',s:2},
+{q:'Действует ли знак «Остановка запрещена» на маршрутные ТС?',o:['Нет, маршрутные ТС — исключение','Да, на все ТС без исключения','Только на такси'],a:0,e:'Знаки 3.27 не распространяются на маршрутные транспортные средства в установленных местах остановок.',s:2},
+{q:'Зона действия знака «Ограничение скорости» заканчивается:',o:['У знака отмены, начала населённого пункта или перекрёстка','Через 100 метров','У ближайшего светофора'],a:0,e:'Зона действия знака 3.24 заканчивается у ближайшего перекрёстка, знака отмены или начала/конца населённого пункта.',s:2},
+{q:'Что запрещает знак 3.2 «Движение запрещено»?',o:['Движение всех ТС в обоих направлениях','Только въезд','Только движение грузовых'],a:0,e:'Знак 3.2 запрещает движение всех ТС. Исключение — жители данной территории, обслуживающие предприятия.',s:2},
+{q:'Знак «Поворот направо запрещён» запрещает:',o:['Только поворот направо','Поворот направо и разворот','Все манёвры'],a:0,e:'Знак 3.18.1 запрещает только поворот направо. Движение прямо, налево и разворот разрешены.',s:2},
+{q:'Какой знак запрещает подачу звукового сигнала?',o:['Круглый с перечёркнутой трубой','Треугольный с восклицательным знаком','Прямоугольный информационный'],a:0,e:'Знак 3.26 «Подача звукового сигнала запрещена» — круглый с красной каймой и перечёркнутой трубой.',s:2},
+{q:'Распространяется ли знак «Стоянка запрещена» на инвалидов?',o:['Нет, при наличии знака «Инвалид» на ТС','Да, на всех','Только на инвалидов I группы'],a:0,e:'Знак 3.28 не распространяется на ТС инвалидов I и II групп с установленным знаком «Инвалид».',s:2},
+
+// Lesson 3 - Предписывающие знаки (q24-q31)
+{q:'Что означает знак «Движение прямо»?',o:['Разрешает движение только прямо','Обязывает двигаться только прямо на ближайшем перекрёстке','Рекомендует двигаться прямо'],a:1,e:'Знак 4.1.1 обязывает двигаться только прямо. Может разрешать поворот направо во дворы.',s:3},
+{q:'Знак «Круговое движение» обязывает:',o:['Двигаться по кругу в указанном направлении до съезда','Остановиться и уступить','Объехать препятствие справа'],a:0,e:'Знак 4.3 обязывает двигаться в направлении стрелок (против часовой стрелки запрещено). Съезд на нужном направлении.',s:3},
+{q:'Какой знак разрешает движение только направо?',o:['4.1.2 — синий круг со стрелкой направо','3.18.1 — запрет поворота направо','5.7.1 — выезд на одностороннюю дорогу'],a:0,e:'Знак 4.1.2 «Движение направо» — предписывающий, обязывает повернуть направо.',s:3},
+{q:'На кого не распространяются предписывающие знаки 4.1.1–4.1.6?',o:['На маршрутные ТС','На все ТС без исключения','На мотоциклы'],a:0,e:'Предписывающие знаки 4.1.1–4.1.6 не распространяются на маршрутные транспортные средства.',s:3},
+{q:'Что означает знак «Велосипедная дорожка»?',o:['Дорожка только для велосипедистов и мопедов','Рекомендуемый маршрут для велосипедистов','Запрет движения велосипедов'],a:0,e:'Знак 4.4.1 разрешает движение только велосипедам и мопедам. Пешеходы — при отсутствии тротуара.',s:3},
+{q:'Минимальная скорость указана знаком:',o:['4.6 — синий круг с цифрой','3.24 — ограничение максимальной','6.2 — рекомендуемая скорость'],a:0,e:'Знак 4.6 «Ограничение минимальной скорости» — запрещает движение со скоростью менее указанной.',s:3},
+{q:'Знак «Пешеходная дорожка» запрещает движение:',o:['Всех ТС, разрешено только пешеходам','Только грузовых','Только мотоциклам'],a:0,e:'Знак 4.5.1 разрешает движение только пешеходам. ТС — запрещено.',s:3},
+{q:'Разрешает ли знак «Движение прямо или направо» разворот?',o:['Нет','Да','Только при отсутствии встречных'],a:0,e:'Знак 4.1.4 разрешает только движение прямо и направо. Разворот и поворот налево запрещены.',s:3},
+
+// Lesson 4 - Разметка (q32-q39)
+{q:'Можно ли пересекать сплошную линию разметки 1.1?',o:['Нет, запрещено','Да, при обгоне','Да, при повороте налево'],a:0,e:'Сплошную линию 1.1 пересекать запрещено во всех случаях.',s:4},
+{q:'Что означает жёлтая прерывистая линия у края дороги?',o:['Запрещает стоянку','Запрещает остановку','Обозначает край проезжей части'],a:0,e:'Разметка 1.10 (жёлтая прерывистая у края) означает, что стоянка в этом месте запрещена.',s:4},
+{q:'Разметка 1.11 (сплошная + прерывистая) — можно пересечь:',o:['Со стороны прерывистой линии','С любой стороны','Только при обгоне'],a:0,e:'Разметку 1.11 разрешается пересекать со стороны прерывистой линии для обгона или объезда.',s:4},
+{q:'Что означают стрелки разметки 1.18 на полосе?',o:['Направления движения по полосам','Рекомендуемые направления','Приближение к перекрёстку'],a:0,e:'Разметка 1.18 указывает направления движения по полосам на перекрёстке.',s:4},
+{q:'Разрешено ли вам остановиться на «вафельной» разметке (1.26)?',o:['Нет, запрещено','Да, на 5 минут','Да, для высадки пассажиров'],a:0,e:'На разметку 1.26 («вафельница») запрещается выезжать, если впереди затор, который вынудит остановиться.',s:4},
+{q:'Двойная сплошная линия 1.3 разделяет:',o:['Потоки противоположных направлений на 4+ полосах','Полосы попутного направления','Проезжую часть от обочины'],a:0,e:'Разметка 1.3 разделяет транспортные потоки противоположных направлений на дорогах с 4+ полосами.',s:4},
+{q:'Какая разметка обозначает пешеходный переход?',o:['Зебра — белые полосы 1.14.1','Жёлтая сплошная','Прерывистая линия'],a:0,e:'Разметка 1.14.1 и 1.14.2 — «зебра» — обозначает пешеходный переход.',s:4},
+{q:'Что означает разметка 1.17 (жёлтая зигзаг)?',o:['Место остановки маршрутных ТС','Место для разворота','Запрет остановки'],a:0,e:'Разметка 1.17 (жёлтый зигзаг) обозначает места остановок маршрутных ТС и стоянок такси.',s:4},
+
+// Lesson 5 - Светофор (q40-q47)
+{q:'Разрешает ли красный сигнал с зелёной стрелкой поворот направо?',o:['Да, уступив дорогу другим участникам','Нет','Да, без ограничений'],a:0,e:'Дополнительная стрелка разрешает движение в указанном направлении при включённом красном, но нужно уступить всем.',s:5},
+{q:'Что означает одновременно горящие красный и жёлтый?',o:['Скоро включится зелёный, движение запрещено','Разрешено начать движение','Неисправность светофора'],a:0,e:'Красный+жёлтый одновременно информируют о скоро включаемом зелёном. Движение пока запрещено.',s:5},
+{q:'Кому подчиняются сигналы светофора с силуэтом пешехода?',o:['Только пешеходам','Всем участникам','Только велосипедистам'],a:0,e:'Светофор с силуэтом пешехода предназначен только для пешеходов.',s:5},
+{q:'Жёлтый мигающий сигнал означает:',o:['Перекрёсток нерегулируемый, нужна осторожность','Движение запрещено','Разрешено движение во всех направлениях'],a:0,e:'Жёлтый мигающий — светофор не регулирует. Перекрёсток считается нерегулируемым (п.6.2 ПДД).',s:5},
+{q:'Что означает поднятая вверх рука регулировщика?',o:['Все должны остановиться (запрещает движение всем)','Разрешает поворот направо','Разрешает движение прямо'],a:0,e:'Поднятая вверх рука регулировщика запрещает движение всем участникам (п.6.10 ПДД).',s:5},
+{q:'Сигналы регулировщика имеют приоритет над:',o:['Сигналами светофора и знаками приоритета','Только знаками','Ни над чем'],a:0,e:'Участники обязаны выполнять сигналы регулировщика, даже если они противоречат светофору и знакам (п.6.15).',s:5},
+{q:'Т-образный светофор (три горизонтальных) используется для:',o:['Реверсивных полос','Обычного регулирования','Трамваев'],a:0,e:'Реверсивные светофоры (Х-образные и стрелки) регулируют реверсивные полосы.',s:5},
+{q:'При включении зелёного водитель обязан:',o:['Уступить пешеходам, не завершившим переход, и ТС на перекрёстке','Немедленно начать движение','Подать звуковой сигнал'],a:0,e:'Водитель обязан уступить ТС, завершающим манёвр, и пешеходам, не закончившим переход (п.13.8).',s:5},
+
+// Lesson 6 - Проезд перекрёстков (q48-q55)
+{q:'Кому вы уступаете при повороте налево на зелёный?',o:['Встречным ТС, движущимся прямо и направо','Всем ТС','Никому'],a:0,e:'При повороте налево или развороте на зелёный уступите встречным прямо и направо (п.13.4).',s:6},
+{q:'На равнозначном перекрёстке трамвай:',o:['Имеет преимущество независимо от направления','Уступает всем','Имеет преимущество только при движении прямо'],a:0,e:'Трамвай на равнозначном перекрёстке имеет преимущество перед безрельсовыми ТС независимо от направления (п.13.11).',s:6},
+{q:'Разрешено ли въезжать на перекрёсток при заторе?',o:['Нет, если придётся остановиться на перекрёстке','Да','Да, если горит зелёный'],a:0,e:'Запрещается въезжать на перекрёсток, если образовался затор, который вынудит остановиться (п.13.2).',s:6},
+{q:'При повороте направо вы должны уступить:',o:['Пешеходам, переходящим проезжую часть','Только ТС слева','Никому'],a:0,e:'При повороте направо или налево водитель обязан уступить пешеходам и велосипедистам (п.13.1).',s:6},
+{q:'Кто первым проедет нерегулируемый перекрёсток: вы на главной прямо, встречный на главной налево?',o:['Я — еду прямо на главной','Встречный','Одновременно'],a:0,e:'На главной дороге при встречном повороте налево — вы прямо имеете преимущество (п.13.12).',s:6},
+{q:'Регулировщик стоит к вам боком, руки вытянуты. Ваши действия?',o:['Можно ехать прямо и направо','Только прямо','Движение запрещено'],a:0,e:'Если регулировщик стоит боком с вытянутыми руками — разрешено прямо и направо (п.6.10).',s:6},
+{q:'При въезде на круговой перекрёсток со знаком 4.3+2.4 вы:',o:['Уступаете тем, кто на кольце','Имеете преимущество','Останавливаетесь на 5 секунд'],a:0,e:'Знак 4.3 совместно с 2.4 означает, что вы уступаете ТС на круговом движении (п.13.11.1).',s:6},
+{q:'Что считается регулируемым перекрёстком?',o:['Перекрёсток с работающим светофором или регулировщиком','Любой перекрёсток со знаками','Перекрёсток с разметкой'],a:0,e:'Регулируемый — перекрёсток, на котором очерёдность определяется сигналами светофора или регулировщика (п.13.3).',s:6},
+
+// Lesson 7 - Обгон и встречная (q56-q63)
+{q:'В каких случаях обгон запрещён?',o:['На пешеходных переходах, мостах, перекрёстках, в тоннелях','Только на мостах','Только в тоннелях'],a:0,e:'Обгон запрещён на перекрёстках, пешеходных переходах, мостах, путепроводах, в тоннелях и на ж/д переездах (п.11.4).',s:7},
+{q:'Можно ли обгонять на подъёме перед вершиной?',o:['Нет, обгон запрещён в конце подъёма','Да, если видимость хорошая','Да, если нет встречных'],a:0,e:'Обгон запрещён в конце подъёма и на опасных поворотах с ограниченной видимостью (п.11.4).',s:7},
+{q:'Перед началом обгона водитель обязан убедиться, что:',o:['Полоса встречного движения свободна на достаточном расстоянии','Скорость встречного потока невелика','Впереди нет знаков'],a:0,e:'Прежде чем начать обгон, водитель обязан убедиться в безопасности манёвра (п.11.1 ПДД).',s:7},
+{q:'Обязан ли водитель обгоняемого ТС увеличивать скорость?',o:['Нет, запрещено препятствовать обгону увеличением скорости','Да, для безопасности','На усмотрение водителя'],a:0,e:'Водителю обгоняемого ТС запрещается препятствовать обгону повышением скорости (п.11.3).',s:7},
+{q:'Выезд на встречную полосу запрещён:',o:['На дорогах с 4+ полосами для обгона','Всегда','Только в тоннелях'],a:0,e:'На дорогах с двумя и более полосами в каждом направлении выезд на встречную для обгона запрещён (п.9.2).',s:7},
+{q:'Можно ли обогнать тихоходное ТС через сплошную?',o:['Да, если есть знак «Обгон запрещён» и ТС тихоходное (треугольник)','Нет, через сплошную нельзя','Да, всегда'],a:0,e:'В зоне действия знака 3.20 разрешён обгон тихоходных ТС (со знаком «Тихоходное ТС»).',s:7},
+{q:'Что такое опережение?',o:['Движение со скоростью больше соседнего ТС без выезда на встречную','То же, что обгон','Объезд препятствия'],a:0,e:'Опережение — движение ТС со скоростью, большей скорости попутного ТС, без выезда на встречную полосу (п.1.2).',s:7},
+{q:'Разрешён ли обгон справа?',o:['Понятия «обгон справа» нет — обгон всегда связан с выездом на встречную','Нет, запрещён','Да, на многополосной дороге'],a:0,e:'Обгон по определению — с выездом на встречную. Опережение справа по соседней полосе обгоном не является.',s:7},
+
+// Lesson 8 - Остановка и стоянка (q64-q71)
+{q:'Какое расстояние до пешеходного перехода допустимо для остановки?',o:['Не менее 5 м до перехода','Не менее 10 м','Не менее 3 м'],a:0,e:'Остановка запрещена на расстоянии менее 5 м перед пешеходным переходом (п.12.4).',s:8},
+{q:'Остановка запрещена:',o:['На мостах, путепроводах и в тоннелях','Только в тоннелях','Только на мостах'],a:0,e:'Остановка запрещена на мостах, путепроводах, эстакадах (при менее 3 полос в одном направлении) и в тоннелях (п.12.4).',s:8},
+{q:'Стоянка запрещена:',o:['Ближе 50 м от ж/д переезда','Ближе 100 м','Ближе 25 м'],a:0,e:'Стоянка запрещена ближе 50 м от железнодорожных переездов (п.12.5).',s:8},
+{q:'На какой срок допускается остановка для погрузки/разгрузки в зоне «Стоянка запрещена»?',o:['Знак запрещает стоянку, остановка до 5 минут разрешена','На 10 минут','Запрещено полностью'],a:0,e:'Знак 3.28 запрещает стоянку (более 5 минут). Кратковременная остановка (до 5 мин) разрешена.',s:8},
+{q:'Где разрешена стоянка в населённом пункте?',o:['У правого края проезжей части, на обочине или тротуаре (где разрешено знаком)','Только на парковках','В любом месте'],a:0,e:'Стоянка разрешена у правого края дороги, на обочине. На тротуаре — только при наличии знака с табличкой (п.12.1, 12.2).',s:8},
+{q:'Допускается ли остановка на остановке маршрутных ТС?',o:['Да, для посадки/высадки, если не создаёте помех','Нет, категорически','Да, на 5 минут'],a:0,e:'Остановка допускается для посадки/высадки, не создавая помех маршрутным ТС (п.12.4).',s:8},
+{q:'Остановка на автомагистрали разрешена:',o:['Только на специальных площадках','На обочине','Где угодно при аварийной остановке'],a:0,e:'На автомагистрали остановка разрешена только на специальных площадках (п.16.1).',s:8},
+{q:'Как правильно поставить автомобиль на стоянку на подъёме?',o:['Повернуть колёса от бордюра и включить стояночный тормоз','Просто включить «паркинг»','Повернуть колёса к бордюру'],a:0,e:'На подъёме передние колёса поворачивают от бордюра, чтобы при откате ТС упёрлось в бордюр.',s:8},
+
+// Lesson 9 - Скоростной режим (q72-q79)
+{q:'Максимальная скорость в населённом пункте:',o:['60 км/ч','80 км/ч','40 км/ч'],a:0,e:'В населённых пунктах разрешена скорость не более 60 км/ч (п.10.2 ПДД).',s:9},
+{q:'Максимальная скорость на автомагистрали для легковых:',o:['110 км/ч','130 км/ч','90 км/ч'],a:0,e:'На автомагистралях — не более 110 км/ч для легковых. На отдельных участках — до 130 км/ч по знакам.',s:9},
+{q:'Максимальная скорость вне населённого пункта:',o:['90 км/ч для легковых','110 км/ч','70 км/ч'],a:0,e:'Вне населённых пунктов разрешена скорость не более 90 км/ч для легковых (п.10.3).',s:9},
+{q:'Скорость буксировки не должна превышать:',o:['50 км/ч','40 км/ч','60 км/ч'],a:0,e:'При буксировке скорость не должна превышать 50 км/ч (п.10.4 ПДД).',s:9},
+{q:'Скорость в жилой зоне:',o:['20 км/ч','40 км/ч','30 км/ч'],a:0,e:'В жилых зонах и на дворовых территориях — не более 20 км/ч (п.10.2).',s:9},
+{q:'Ненаказуемый порог превышения скорости:',o:['До 20 км/ч (штраф не налагается)','До 10 км/ч','Любое превышение наказуемо'],a:0,e:'Превышение до 20 км/ч не влечёт штрафа, но не является разрешённым — ответственность просто не предусмотрена.',s:9},
+{q:'Максимальная скорость для грузовых >3.5т на автомагистрали:',o:['90 км/ч','110 км/ч','80 км/ч'],a:0,e:'Грузовые ТС с разрешённой массой более 3,5 т на автомагистрали — не более 90 км/ч (п.10.3).',s:9},
+{q:'Водитель должен ехать со скоростью, позволяющей:',o:['Обеспечить контроль за движением ТС','Успевать за потоком','Не создавать помех обгоняющим'],a:0,e:'Водитель должен вести ТС со скоростью, обеспечивающей постоянный контроль за движением (п.10.1).',s:9}
+];
+
+// ===================== STATE =====================
+var state={
+tab:'home',
+category:'AB',
+hints:true,
+// question mode
+qMode:null, // 'ticket','exam','lesson-train','lesson-exam','marathon','errors'
+qTicket:null,
+qLesson:null,
+qList:[],
+qIdx:0,
+qAnswered:false,
+qResults:[], // 0=unanswered,1=correct,2=wrong
+timerInterval:null,
+timerSec:0
+};
+
+function loadProgress(){
+try{return JSON.parse(localStorage.getItem('pdd_progress'))||{}} catch(e){return{}}
+}
+function saveProgress(p){localStorage.setItem('pdd_progress',JSON.stringify(p))}
+function getProgress(){
+var p=loadProgress();
+if(!p.tickets)p.tickets={};
+if(!p.lessons)p.lessons={};
+if(!p.errors)p.errors=[];
+if(!p.totalCorrect)p.totalCorrect=0;
+if(!p.totalWrong)p.totalWrong=0;
+if(!p.ticketsDone)p.ticketsDone=0;
+return p;
+}
+
+// ===================== NAVIGATION =====================
+function switchTab(tab){
+state.tab=tab;
+document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});
+var screens={home:'homeScreen',lessons:'lessonsScreen',theory:'theoryScreen',tickets:'ticketsScreen'};
+if(screens[tab])document.getElementById(screens[tab]).classList.add('active');
+document.querySelectorAll('.nav-item').forEach(function(n,i){
+n.classList.remove('active');
+if((tab==='home'&&i===0)||(tab==='lessons'&&i===1)||(tab==='theory'&&i===2)||(tab==='tickets'&&i===3))n.classList.add('active');
+});
+document.getElementById('mainNav').style.display='';
+updateHome();
+if(tab==='tickets')renderTickets();
+if(tab==='lessons')renderLessons();
+if(tab==='theory')renderTheory();
+}
+
+// ===================== HOME =====================
+function updateHome(){
+var p=getProgress();
+var done=Object.keys(p.tickets).length;
+var total=40;
+var pct=Math.round(done/total*100);
+document.getElementById('homeTheoryPct').textContent=pct+'%';
+document.getElementById('homeTheoryBar').style.width=pct+'%';
+document.getElementById('homeCorrect').textContent=p.totalCorrect;
+document.getElementById('homeErrors').textContent=p.totalWrong;
+document.getElementById('homeTickets').textContent=done;
+}
+
+// ===================== TICKETS =====================
+function setCategory(cat,el){
+state.category=cat;
+el.parentNode.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
+el.classList.add('active');
+renderTickets();
+}
+
+function renderTickets(){
+var grid=document.getElementById('ticketGrid');
+var p=getProgress();
+grid.innerHTML='';
+for(var i=1;i<=40;i++){
+var cls='ticket';
+var ts=p.tickets['t'+i];
+if(ts==='done')cls+=' done';
+else if(ts==='error')cls+=' error';
+else if(ts==='partial')cls+=' partial';
+grid.innerHTML+='<div class="'+cls+'" onclick="startTicket('+i+')">'+i+'</div>';
+}
+document.getElementById('errCount').textContent=(p.errors||[]).length;
+}
+
+function toggleHints(){
+state.hints=!state.hints;
+var t=document.getElementById('hintsToggle');
+t.classList.toggle('on',state.hints);
+}
+
+// ===================== LESSONS =====================
+function renderLessons(){
+var html='';
+var p=getProgress();
+LESSONS.forEach(function(l,i){
+var prog=p.lessons['l'+i]||0;
+html+='<div class="lesson-item">'+
+'<div class="lesson-top">'+
+'<div class="lesson-num">'+(i+1)+'</div>'+
+'<div class="lesson-name">'+l.icon+' '+l.name+'</div>'+
+'<div class="lesson-progress">'+prog+'%</div>'+
+'</div>'+
+'<div class="pbar" style="margin:0 0 10px"><div class="pbar-fill" style="width:'+prog+'%"></div></div>'+
+'<div class="lesson-btns">'+
+'<button class="lesson-btn train" onclick="startLessonTrain('+i+')">Тренировка</button>'+
+'<button class="lesson-btn exam" onclick="startLessonExam('+i+')">Сдать зачёт</button>'+
+'</div></div>';
+});
+document.getElementById('lessonsList').innerHTML=html;
+}
+
+// ===================== THEORY =====================
+function renderTheory(){
+var html='';
+THEORY_SECTIONS.forEach(function(s){
+html+='<div class="theory-item" onclick="openTheory(\''+s.id+'\')">'+
+'<div class="theory-icon">'+s.icon+'</div>'+
+'<div class="theory-text"><b>'+s.name+'</b><br><span>Нажмите для изучения</span></div>'+
+'<div class="theory-arrow">›</div></div>';
+});
+document.getElementById('theoryList').innerHTML=html;
+}
+
+function openTheory(id){
+var s=THEORY_SECTIONS.find(function(x){return x.id===id});
+if(!s)return;
+document.querySelectorAll('.screen').forEach(function(x){x.classList.remove('active')});
+document.getElementById('theoryContent').classList.add('active');
+document.getElementById('tcTitle').textContent=s.name;
+document.getElementById('tcBody').innerHTML=s.content;
+document.getElementById('mainNav').style.display='none';
+}
+function exitTheory(){
+switchTab('theory');
+}
+
+// ===================== QUESTION ENGINE =====================
+function getTicketQuestions(ticketNum){
+// Each ticket = 20 questions cycling through all
+var qs=[];
+for(var i=0;i<20;i++){
+qs.push((ticketNum-1+i*2)%Q.length);
+}
+return qs;
+}
+function getLessonQuestions(lessonId){
+return Q.map(function(q,i){return q.s===lessonId?i:null}).filter(function(x){return x!==null});
+}
+
+function startTicket(n){
+state.qMode='ticket';state.qTicket=n;
+state.qList=getTicketQuestions(n);
+state.qIdx=0;state.qAnswered=false;
+state.qResults=state.qList.map(function(){return 0});
+showQuestionScreen('Билет '+n,false);
+}
+function startExam(){
+state.qMode='exam';
+// 20 random questions
+var indices=[];for(var i=0;i<Q.length;i++)indices.push(i);
+shuffle(indices);state.qList=indices.slice(0,20);
+state.qIdx=0;state.qAnswered=false;
+state.qResults=state.qList.map(function(){return 0});
+showQuestionScreen('Экзамен',true);
+}
+function startMarathon(){
+state.qMode='marathon';
+var indices=[];for(var i=0;i<Q.length;i++)indices.push(i);
+state.qList=indices;state.qIdx=0;state.qAnswered=false;
+state.qResults=indices.map(function(){return 0});
+showQuestionScreen('Марафон',false);
+}
+function startErrors(){
+var p=getProgress();
+if(!p.errors||p.errors.length===0){alert('Ошибок пока нет!');return}
+state.qMode='errors';
+state.qList=p.errors.slice();
+state.qIdx=0;state.qAnswered=false;
+state.qResults=state.qList.map(function(){return 0});
+showQuestionScreen('Мои ошибки',false);
+}
+function startLessonTrain(lid){
+state.qMode='lesson-train';state.qLesson=lid;
+state.qList=getLessonQuestions(lid);
+state.qIdx=0;state.qAnswered=false;
+state.qResults=state.qList.map(function(){return 0});
+showQuestionScreen(LESSONS[lid].name,false);
+}
+function startLessonExam(lid){
+state.qMode='lesson-exam';state.qLesson=lid;
+state.qList=getLessonQuestions(lid);
+shuffle(state.qList);
+state.qIdx=0;state.qAnswered=false;
+state.qResults=state.qList.map(function(){return 0});
+showQuestionScreen(LESSONS[lid].name+' — Зачёт',true);
+}
+
+function showQuestionScreen(title,withTimer){
+document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});
+document.getElementById('questionScreen').classList.add('active');
+document.getElementById('mainNav').style.display='none';
+document.getElementById('qTitle').textContent=title;
+if(withTimer){
+state.timerSec=20*60;
+updateTimer();
+state.timerInterval=setInterval(function(){
+state.timerSec--;
+updateTimer();
+if(state.timerSec<=0){clearInterval(state.timerInterval);finishQuiz()}
+},1000);
+}else{
+document.getElementById('qTimer').textContent='';
+if(state.timerInterval)clearInterval(state.timerInterval);
+}
+renderQuestion();
+}
+
+function updateTimer(){
+var m=Math.floor(state.timerSec/60);
+var s=state.timerSec%60;
+document.getElementById('qTimer').textContent=m+':'+(s<10?'0':'')+s;
+}
+
+function renderQuestion(){
+var qi=state.qList[state.qIdx];
+var q=Q[qi];
+state.qAnswered=false;
+// Dots
+var dots='';
+for(var i=0;i<state.qList.length;i++){
+var dc='q-dot';
+if(i===state.qIdx)dc+=' current';
+else if(state.qResults[i]===1)dc+=' correct';
+else if(state.qResults[i]===2)dc+=' wrong';
+dots+='<div class="'+dc+'"></div>';
+}
+document.getElementById('qDots').innerHTML=dots;
+// Image
+document.getElementById('qImage').innerHTML=SVGS[qi%SVGS.length];
+// Text
+document.getElementById('qText').textContent=q.q;
+// Options
+var opts='';
+q.o.forEach(function(o,i){
+opts+='<button class="q-option" onclick="selectAnswer('+i+')">'+o+'</button>';
+});
+document.getElementById('qOptions').innerHTML=opts;
+document.getElementById('qExplain').classList.remove('show');
+document.getElementById('qExplain').textContent='';
+document.getElementById('qNext').classList.remove('show');
+// Scroll to top
+document.getElementById('questionScreen').scrollTop=0;
+}
+
+function selectAnswer(idx){
+if(state.qAnswered)return;
+state.qAnswered=true;
+var qi=state.qList[state.qIdx];
+var q=Q[qi];
+var correct=q.a===idx;
+var p=getProgress();
+var opts=document.querySelectorAll('#qOptions .q-option');
+opts.forEach(function(o,i){
+o.classList.add('disabled');
+if(i===q.a)o.classList.add('selected-correct');
+if(i===idx&&!correct)o.classList.add('selected-wrong');
+});
+state.qResults[state.qIdx]=correct?1:2;
+if(correct){
+p.totalCorrect=(p.totalCorrect||0)+1;
+// Remove from errors if present
+if(p.errors){p.errors=p.errors.filter(function(e){return e!==qi})}
+}else{
+p.totalWrong=(p.totalWrong||0)+1;
+if(!p.errors)p.errors=[];
+if(p.errors.indexOf(qi)===-1)p.errors.push(qi);
+}
+saveProgress(p);
+// Show explanation if hints on
+if(state.hints){
+document.getElementById('qExplain').textContent=q.e;
+document.getElementById('qExplain').classList.add('show');
+}
+document.getElementById('qNext').classList.add('show');
+}
+
+function nextQuestion(){
+state.qIdx++;
+if(state.qIdx>=state.qList.length){
+finishQuiz();
+return;
+}
+renderQuestion();
+}
+
+function finishQuiz(){
+if(state.timerInterval)clearInterval(state.timerInterval);
+var correct=state.qResults.filter(function(r){return r===1}).length;
+var wrong=state.qResults.filter(function(r){return r===2}).length;
+var p=getProgress();
+// Save ticket progress
+if(state.qMode==='ticket'&&state.qTicket){
+var key='t'+state.qTicket;
+p.tickets[key]=wrong===0?'done':(wrong<=2?'partial':'error');
+p.ticketsDone=Object.keys(p.tickets).length;
+}
+if(state.qMode==='lesson-exam'||state.qMode==='lesson-train'){
+var total=state.qList.length;
+var pct=Math.round(correct/total*100);
+p.lessons['l'+state.qLesson]=Math.max(p.lessons['l'+state.qLesson]||0,pct);
+}
+saveProgress(p);
+// Show result
+var passed=wrong<=2;
+document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});
+document.getElementById('resultScreen').classList.add('active');
+document.getElementById('resEmoji').textContent=passed?'🎉':'😔';
+document.getElementById('resTitle').textContent=passed?'Отлично!':'Не сдано';
+document.getElementById('resSub').textContent=passed?'Вы справились! Так держать!':'Попробуйте ещё раз';
+document.getElementById('resCorrect').textContent=correct;
+document.getElementById('resWrong').textContent=wrong;
+}
+
+function exitQuestion(){
+if(state.timerInterval)clearInterval(state.timerInterval);
+document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});
+document.getElementById('mainNav').style.display='';
+switchTab(state.tab||'home');
+}
+
+// ===================== UTILS =====================
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+
+// ===================== INIT =====================
+(function(){
+updateHome();
+renderTickets();
+renderLessons();
+renderTheory();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Creator School — Создавай видео с помощью AI без камеры и монтажа</title>
+    <meta name="description" content="Первая практическая школа AI-видео. Научим создавать профессиональные ролики с AI за 6 недель. Без камеры, без монтажа, без опыта.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #E11D48;
+            --primary-dark: #BE123C;
+            --primary-light: #FB7185;
+            --accent: #F59E0B;
+            --accent-light: #FBBF24;
+            --dark: #0C0A09;
+            --dark-2: #1C1917;
+            --dark-3: #44403C;
+            --gray: #A8A29E;
+            --light: #F5F5F4;
+            --white: #FFFFFF;
+            --gradient: linear-gradient(135deg, #E11D48 0%, #F59E0B 100%);
+            --gradient-cool: linear-gradient(135deg, #E11D48 0%, #7C3AED 100%);
+            --glow: 0 0 60px rgba(225, 29, 72, 0.3);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--dark);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 16px 0;
+            background: rgba(12, 10, 9, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(225, 29, 72, 0.1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--white); }
+
+        .nav-cta {
+            background: var(--gradient);
+            color: var(--white) !important;
+            padding: 10px 24px;
+            border-radius: 100px;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glow);
+        }
+
+        .hamburger { display: none; background: none; border: none; color: white; font-size: 28px; cursor: pointer; }
+
+        /* HERO */
+        .hero {
+            padding: 160px 0 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 900px;
+            height: 900px;
+            background: radial-gradient(circle, rgba(225, 29, 72, 0.12) 0%, rgba(245, 158, 11, 0.05) 40%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(225, 29, 72, 0.1);
+            border: 1px solid rgba(225, 29, 72, 0.3);
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 14px;
+            color: var(--primary-light);
+            margin-bottom: 32px;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .hero-badge .pulse {
+            width: 8px;
+            height: 8px;
+            background: #10B981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .hero h1 {
+            font-size: clamp(36px, 5.5vw, 68px);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease 0.1s both;
+        }
+
+        .hero p.subtitle {
+            font-size: 20px;
+            color: var(--gray);
+            max-width: 620px;
+            margin: 0 auto 40px;
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--gradient);
+            color: var(--white);
+            padding: 18px 40px;
+            border-radius: 100px;
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeInUp 0.6s ease 0.3s both;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 60px rgba(225, 29, 72, 0.4);
+        }
+
+        .hero-sub {
+            margin-top: 16px;
+            font-size: 14px;
+            color: var(--dark-3);
+            animation: fadeInUp 0.6s ease 0.4s both;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 64px;
+            animation: fadeInUp 0.6s ease 0.5s both;
+        }
+
+        .hero-stat .number {
+            font-size: 36px;
+            font-weight: 900;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-stat .label {
+            font-size: 14px;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+
+        /* TOOLS BAR */
+        .tools-bar {
+            padding: 48px 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+        }
+
+        .tools-bar p {
+            color: var(--dark-3);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+        }
+
+        .tools-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            opacity: 0.5;
+        }
+
+        .tools-logos span {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gray);
+            letter-spacing: 0.5px;
+        }
+
+        /* SECTION COMMON */
+        .section-label {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--primary-light);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: clamp(30px, 4vw, 48px);
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 600px;
+            margin-bottom: 64px;
+        }
+
+        /* PROBLEM */
+        .problem {
+            padding: 120px 0;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .problem-card {
+            background: var(--dark-2);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 32px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(225, 29, 72, 0.3);
+        }
+
+        .problem-card .icon { font-size: 32px; margin-bottom: 16px; }
+        .problem-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+        .problem-card p { color: var(--gray); font-size: 15px; }
+
+        /* SOLUTION */
+        .solution {
+            padding: 120px 0;
+            background: linear-gradient(135deg, var(--dark-2) 0%, var(--dark) 100%);
+            position: relative;
+        }
+
+        .solution::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .solution-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .solution-header .section-title { max-width: 700px; margin: 0 auto 20px; }
+        .solution-header .section-subtitle { margin: 0 auto; }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .module-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            padding: 36px 28px;
+            text-align: center;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .module-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255,255,255,0.06);
+        }
+
+        .module-card .week {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: var(--gradient);
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .module-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+        .module-card p { color: var(--gray); font-size: 14px; line-height: 1.6; }
+
+        .module-card .tools-used {
+            margin-top: 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+        }
+
+        .module-card .tool-tag {
+            padding: 4px 12px;
+            background: rgba(225, 29, 72, 0.1);
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--primary-light);
+        }
+
+        /* RESULTS SHOWCASE */
+        .results {
+            padding: 120px 0;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .results-header .section-subtitle { margin: 0 auto; }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+        }
+
+        .result-card {
+            background: var(--dark-2);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .result-card:hover { transform: translateY(-4px); }
+
+        .result-card .emoji { font-size: 40px; margin-bottom: 16px; }
+        .result-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+        .result-card p { color: var(--gray); font-size: 14px; }
+
+        /* AUDIENCE */
+        .audience {
+            padding: 120px 0;
+            background: var(--dark-2);
+        }
+
+        .audience-header { text-align: center; margin-bottom: 64px; }
+        .audience-header .section-subtitle { margin: 0 auto; }
+
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        .audience-card {
+            display: flex;
+            gap: 20px;
+            padding: 28px;
+            background: var(--dark);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            transition: transform 0.3s;
+        }
+
+        .audience-card:hover { transform: translateY(-4px); }
+
+        .audience-card .emoji { font-size: 36px; flex-shrink: 0; }
+        .audience-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+        .audience-card p { color: var(--gray); font-size: 14px; }
+
+        /* FEARS / FAQ */
+        .fears {
+            padding: 120px 0;
+        }
+
+        .fears-header { text-align: center; margin-bottom: 64px; }
+        .fears-header .section-subtitle { margin: 0 auto; }
+
+        .fear-list {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .fear-item {
+            background: var(--dark-2);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .fear-item:hover { border-color: rgba(225, 29, 72, 0.3); }
+
+        .fear-question {
+            padding: 24px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            font-size: 17px;
+            font-weight: 600;
+            user-select: none;
+        }
+
+        .fear-question .toggle {
+            font-size: 24px;
+            color: var(--primary-light);
+            transition: transform 0.3s;
+            flex-shrink: 0;
+            margin-left: 16px;
+        }
+
+        .fear-answer {
+            padding: 0 28px 24px;
+            color: var(--gray);
+            font-size: 15px;
+            line-height: 1.7;
+            display: none;
+        }
+
+        .fear-item.open .fear-answer { display: block; }
+        .fear-item.open .toggle { transform: rotate(45deg); }
+
+        /* PRICING */
+        .pricing {
+            padding: 120px 0;
+            background: var(--dark-2);
+        }
+
+        .pricing-header { text-align: center; margin-bottom: 64px; }
+        .pricing-header .section-subtitle { margin: 0 auto; }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: var(--dark);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 24px;
+            padding: 40px;
+            position: relative;
+            transition: transform 0.3s;
+        }
+
+        .pricing-card:hover { transform: translateY(-4px); }
+
+        .pricing-card.featured {
+            border-color: var(--primary);
+            box-shadow: 0 0 80px rgba(225, 29, 72, 0.15);
+        }
+
+        .pricing-card.featured::before {
+            content: '🔥 Лучший выбор';
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient);
+            padding: 6px 20px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .pricing-card .plan-name {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--primary-light);
+            margin-bottom: 8px;
+        }
+
+        .pricing-card .plan-price {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+
+        .pricing-card .plan-price span {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--gray);
+        }
+
+        .pricing-card .plan-desc {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .pricing-card ul li {
+            padding: 10px 0;
+            font-size: 15px;
+            color: var(--light);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .pricing-card ul li::before {
+            content: '✓';
+            color: #10B981;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .plan-cta {
+            display: block;
+            text-align: center;
+            padding: 16px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .plan-cta.primary {
+            background: var(--gradient);
+            color: var(--white);
+        }
+
+        .plan-cta.secondary {
+            background: rgba(255,255,255,0.06);
+            color: var(--white);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .plan-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(225, 29, 72, 0.3);
+        }
+
+        /* TESTIMONIALS */
+        .testimonials {
+            padding: 120px 0;
+        }
+
+        .testimonials-header { text-align: center; margin-bottom: 64px; }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .testimonial-card {
+            background: var(--dark-2);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 32px;
+        }
+
+        .testimonial-card .stars { color: #FBBF24; font-size: 18px; margin-bottom: 16px; }
+
+        .testimonial-card .quote {
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 24px;
+            color: var(--light);
+        }
+
+        .testimonial-card .author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .testimonial-card .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .testimonial-card .author-name { font-weight: 600; font-size: 15px; }
+        .testimonial-card .author-role { font-size: 13px; color: var(--gray); }
+
+        /* GUARANTEE */
+        .guarantee {
+            padding: 100px 0;
+            background: var(--dark-2);
+        }
+
+        .guarantee-box {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 60px 40px;
+            background: rgba(225, 29, 72, 0.06);
+            border: 1px solid rgba(225, 29, 72, 0.2);
+            border-radius: 24px;
+        }
+
+        .guarantee-box .icon { font-size: 48px; margin-bottom: 20px; }
+        .guarantee-box h2 { font-size: 28px; font-weight: 800; margin-bottom: 16px; }
+        .guarantee-box p { color: var(--gray); font-size: 16px; line-height: 1.7; }
+
+        /* FINAL CTA */
+        .final-cta {
+            padding: 120px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(225, 29, 72, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .final-cta h2 {
+            font-size: clamp(30px, 4vw, 52px);
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+        }
+
+        .final-cta p {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 40px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 60px 0 40px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+        }
+
+        footer .logo { font-size: 24px; margin-bottom: 16px; display: inline-flex; }
+        footer p { color: var(--dark-3); font-size: 14px; }
+
+        footer .footer-links {
+            margin-top: 24px;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        footer .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        footer .footer-links a:hover { color: var(--white); }
+
+        /* ANIMATIONS */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: block; }
+            .hero-stats { gap: 24px; flex-wrap: wrap; }
+            .hero-stat .number { font-size: 28px; }
+            .tools-logos { gap: 20px; }
+            .modules-grid { grid-template-columns: 1fr; }
+            .results-grid { grid-template-columns: repeat(2, 1fr); }
+            .audience-grid { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="container">
+        <div class="logo">🎬 <span>AI Creator School</span></div>
+        <ul class="nav-links">
+            <li><a href="#program">Программа</a></li>
+            <li><a href="#audience">Для кого</a></li>
+            <li><a href="#pricing">Тарифы</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#cta" class="nav-cta">Начать →</a></li>
+        </ul>
+        <button class="hamburger" onclick="document.querySelector('.nav-links').style.display = document.querySelector('.nav-links').style.display === 'flex' ? 'none' : 'flex'">☰</button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-badge">
+            <span class="pulse"></span>
+            Набор открыт — осталось 20 мест
+        </div>
+        <h1>
+            Создавай <span class="gradient-text">видео с AI</span><br>
+            без камеры и монтажа
+        </h1>
+        <p class="subtitle">Научим создавать профессиональные ролики с помощью AI за 6 недель. Рекламные видео, Reels, YouTube-контент — всё без студии и команды.</p>
+        <a href="#pricing" class="hero-cta">Записаться на курс →</a>
+        <p class="hero-sub">Гарантия возврата 14 дней</p>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="number">6</div>
+                <div class="label">недель обучения</div>
+            </div>
+            <div class="hero-stat">
+                <div class="number">5</div>
+                <div class="label">видео в портфолио</div>
+            </div>
+            <div class="hero-stat">
+                <div class="number">$3000+</div>
+                <div class="label">экономии на продакшне</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TOOLS BAR -->
+<section class="tools-bar">
+    <div class="container">
+        <p>Учим работать с лучшими AI-инструментами</p>
+        <div class="tools-logos">
+            <span>Runway</span>
+            <span>Sora</span>
+            <span>Kling</span>
+            <span>HeyGen</span>
+            <span>Midjourney</span>
+            <span>ElevenLabs</span>
+            <span>Pika</span>
+            <span>Descript</span>
+        </div>
+    </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+    <div class="container">
+        <span class="section-label">Проблема</span>
+        <h2 class="section-title">Видео решает. Но создавать его — дорого и долго.</h2>
+        <p class="section-subtitle">Видео — это 80% контента в 2026. Но профессиональная съёмка стоит как крыло от самолёта.</p>
+        <div class="problem-grid">
+            <div class="problem-card">
+                <div class="icon">💸</div>
+                <h3>Видеопродакшн = $3,000–50,000</h3>
+                <p>Один рекламный ролик стоит как подержанный автомобиль. Студия, оператор, актёры, монтаж, звук — всё стоит денег.</p>
+            </div>
+            <div class="problem-card">
+                <div class="icon">⏳</div>
+                <h3>2–4 недели на один ролик</h3>
+                <p>Пока согласуешь, снимешь, смонтируешь — тренд уже прошёл. Контент-план горит, а видео ещё на стадии «ждём оператора».</p>
+            </div>
+            <div class="problem-card">
+                <div class="icon">📱</div>
+                <h3>Нужно 20 видео в месяц</h3>
+                <p>Reels, Shorts, TikTok, Stories, YouTube — каждая платформа хочет свой формат. А бюджет — максимум на два.</p>
+            </div>
+            <div class="problem-card">
+                <div class="icon">🎥</div>
+                <h3>Камера, свет, звук — целая наука</h3>
+                <p>Чтобы снять «простое» видео нужно: камера, штатив, свет, микрофон, фон, и 3 года опыта. Или $500 фрилансеру.</p>
+            </div>
+            <div class="problem-card">
+                <div class="icon">😰</div>
+                <h3>Ненавидишь быть в кадре</h3>
+                <p>Не все хотят показывать лицо. Не все фотогеничны. Но видео без «говорящей головы» раньше было невозможно.</p>
+            </div>
+            <div class="problem-card">
+                <div class="icon">🌍</div>
+                <h3>Локализация — отдельная боль</h3>
+                <p>Один ролик нужен на 3 языках? Это ×3 бюджет, ×3 время, ×3 головная боль.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SOLUTION / PROGRAM -->
+<section class="solution" id="program">
+    <div class="container">
+        <div class="solution-header">
+            <span class="section-label">Программа</span>
+            <h2 class="section-title">6 недель — от новичка до<br><span class="gradient-text">AI-креатора</span></h2>
+            <p class="section-subtitle">Учим не одну кнопку, а ВЕСЬ стек AI-инструментов. Каждый модуль — готовый проект для портфолио.</p>
+        </div>
+        <div class="modules-grid">
+            <div class="module-card">
+                <div class="week">W1</div>
+                <h3>Основы AI-видео</h3>
+                <p>Как работают AI-модели. Промпт-инжиниринг для видео. Первый ролик за 30 минут.</p>
+                <div class="tools-used">
+                    <span class="tool-tag">Runway</span>
+                    <span class="tool-tag">Sora</span>
+                    <span class="tool-tag">Kling</span>
+                </div>
+            </div>
+            <div class="module-card">
+                <div class="week">W2</div>
+                <h3>AI-аватары и голос</h3>
+                <p>Создание цифровых двойников. Клонирование голоса. Дубляж на любой язык.</p>
+                <div class="tools-used">
+                    <span class="tool-tag">HeyGen</span>
+                    <span class="tool-tag">ElevenLabs</span>
+                    <span class="tool-tag">Synthesia</span>
+                </div>
+            </div>
+            <div class="module-card">
+                <div class="week">W3</div>
+                <h3>Рекламные ролики</h3>
+                <p>Скрипты, сторителлинг, визуальный ряд. Создаём рекламу, которая продаёт.</p>
+                <div class="tools-used">
+                    <span class="tool-tag">Midjourney</span>
+                    <span class="tool-tag">Runway</span>
+                    <span class="tool-tag">Pika</span>
+                </div>
+            </div>
+            <div class="module-card">
+                <div class="week">W4</div>
+                <h3>Social Media контент</h3>
+                <p>Reels, Shorts, TikTok — массовое производство. 10 роликов за день.</p>
+                <div class="tools-used">
+                    <span class="tool-tag">InVideo</span>
+                    <span class="tool-tag">Descript</span>
+                    <span class="tool-tag">CapCut</span>
+                </div>
+            </div>
+            <div class="module-card">
+                <div class="week">W5</div>
+                <h3>YouTube и длинный формат</h3>
+                <p>Объясняющие видео, обучение, документалки. Сценарий → AI → готовое видео.</p>
+                <div class="tools-used">
+                    <span class="tool-tag">Descript</span>
+                    <span class="tool-tag">Runway</span>
+                    <span class="tool-tag">ElevenLabs</span>
+                </div>
+            </div>
+            <div class="module-card">
+                <div class="week">W6</div>
+                <h3>Монетизация 💰</h3>
+                <p>Как продавать AI-видео клиентам. Ценообразование. Портфолио. Первый заказ.</p>
+                <div class="tools-used">
+                    <span class="tool-tag">Бизнес</span>
+                    <span class="tool-tag">Фриланс</span>
+                    <span class="tool-tag">Продажи</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- RESULTS -->
+<section class="results">
+    <div class="container">
+        <div class="results-header">
+            <span class="section-label">Результат</span>
+            <h2 class="section-title">Что ты будешь уметь после курса</h2>
+            <p class="section-subtitle">5 готовых видеопроектов в портфолио и навыки, которые приносят деньги.</p>
+        </div>
+        <div class="results-grid">
+            <div class="result-card">
+                <div class="emoji">🎬</div>
+                <h3>Рекламные ролики</h3>
+                <p>Промо-видео для бизнеса за 30 минут вместо $5,000</p>
+            </div>
+            <div class="result-card">
+                <div class="emoji">📱</div>
+                <h3>Reels и Shorts</h3>
+                <p>10 вирусных роликов в день для любой соцсети</p>
+            </div>
+            <div class="result-card">
+                <div class="emoji">🗣️</div>
+                <h3>Говорящие головы</h3>
+                <p>AI-аватар вместо камеры — на любом языке</p>
+            </div>
+            <div class="result-card">
+                <div class="emoji">🎓</div>
+                <h3>Обучающие видео</h3>
+                <p>Курсы, инструкции, онбординг без съёмки</p>
+            </div>
+            <div class="result-card">
+                <div class="emoji">🌍</div>
+                <h3>Локализация</h3>
+                <p>Дубляж на 100+ языков с синхронизацией губ</p>
+            </div>
+            <div class="result-card">
+                <div class="emoji">💰</div>
+                <h3>Фриланс-навык</h3>
+                <p>Новая услуга с чеком $300–1,000 за ролик</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- AUDIENCE -->
+<section class="audience" id="audience">
+    <div class="container">
+        <div class="audience-header">
+            <span class="section-label">Для кого</span>
+            <h2 class="section-title">Курс для тех, кто хочет создавать, а не снимать</h2>
+            <p class="section-subtitle">Опыт съёмки не нужен. Нужно только желание и ноутбук.</p>
+        </div>
+        <div class="audience-grid">
+            <div class="audience-card">
+                <div class="emoji">📈</div>
+                <div>
+                    <h3>Маркетологи и SMM</h3>
+                    <p>Делай 20 видео в месяц вместо двух. Тестируй креативы за минуты, не за недели. Забудь про «ждём оператора».</p>
+                </div>
+            </div>
+            <div class="audience-card">
+                <div class="emoji">🚀</div>
+                <div>
+                    <h3>Предприниматели</h3>
+                    <p>Промо для лендинга, питч для инвесторов, реклама в соцсетях — всё сам, за вечер, без бюджета на студию.</p>
+                </div>
+            </div>
+            <div class="audience-card">
+                <div class="emoji">🎨</div>
+                <div>
+                    <h3>Контент-криейторы</h3>
+                    <p>Выделяйся визуалом, пока другие снимают на айфон. AI-видео = уникальный стиль, который невозможно повторить.</p>
+                </div>
+            </div>
+            <div class="audience-card">
+                <div class="emoji">💼</div>
+                <div>
+                    <h3>Фрилансеры</h3>
+                    <p>Добавь AI-видео к своим услугам. Чек за ролик: $300–1,000. Один клиент окупит весь курс.</p>
+                </div>
+            </div>
+            <div class="audience-card">
+                <div class="emoji">🎥</div>
+                <div>
+                    <h3>Видеографы и монтажёры</h3>
+                    <p>Не конкурируй с AI — используй его. Ускорь работу в 10 раз и бери больше проектов.</p>
+                </div>
+            </div>
+            <div class="audience-card">
+                <div class="emoji">🎓</div>
+                <div>
+                    <h3>Эксперты и тренеры</h3>
+                    <p>Запиши онлайн-курс без камеры. AI-аватар + твой голос = профессиональное обучающее видео.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="fears" id="faq">
+    <div class="container">
+        <div class="fears-header">
+            <span class="section-label">FAQ</span>
+            <h2 class="section-title">«AI-видео — это же мусор?»</h2>
+            <p class="section-subtitle">Было мусором. В 2026 — это инструмент, которым пользуются NVIDIA, Nike и Netflix.</p>
+        </div>
+        <div class="fear-list">
+            <div class="fear-item open">
+                <div class="fear-question" onclick="this.parentElement.classList.toggle('open')">
+                    AI-видео выглядит ненатурально — аудитория заметит
+                    <span class="toggle">+</span>
+                </div>
+                <div class="fear-answer">
+                    В 2024 — да, было заметно. В 2026 модели вроде Runway Gen-4.5 и Sora 2 создают видео, которое не отличить от реальной съёмки. Мы учим профессиональные техники промптинга и пост-обработки, чтобы результат был на уровне студийного продакшна. Плюс, гибридный подход: AI + смартфон = идеальный контент.
+                </div>
+            </div>
+            <div class="fear-item">
+                <div class="fear-question" onclick="this.parentElement.classList.toggle('open')">
+                    AI-инструменты дорогие — нужно 5 подписок по $30
+                    <span class="toggle">+</span>
+                </div>
+                <div class="fear-answer">
+                    У нас есть целый модуль «AI-видео за $0» — работа на бесплатных тарифах. Для серьёзной работы достаточно 1-2 подписок ($12-30/мес). Мы покажем, какой инструмент нужен для какой задачи, чтобы ты не платил за лишнее. Один ролик для клиента ($300+) окупает подписки на полгода.
+                </div>
+            </div>
+            <div class="fear-item">
+                <div class="fear-question" onclick="this.parentElement.classList.toggle('open')">
+                    Через 3 месяца всё устареет
+                    <span class="toggle">+</span>
+                </div>
+                <div class="fear-answer">
+                    Мы учим не кнопки, а принципы: storytelling, промпт-инжиниринг, визуальное мышление, пайплайны — это не устаревает. Плюс, программа обновляется ежемесячно. А ещё есть модуль «Как за 1 день освоить новый AI-инструмент» — мета-навык, который работает вечно.
+                </div>
+            </div>
+            <div class="fear-item">
+                <div class="fear-question" onclick="this.parentElement.classList.toggle('open')">
+                    Я не видеограф и ничего не понимаю в съёмке
+                    <span class="toggle">+</span>
+                </div>
+                <div class="fear-answer">
+                    Отлично! Вам и не нужно. AI Creator School создана для людей БЕЗ опыта съёмки и монтажа. Вы будете не снимать, а управлять AI — описывать, что хотите, и получать результат. Если умеете написать сообщение в мессенджере — умеете создавать AI-видео.
+                </div>
+            </div>
+            <div class="fear-item">
+                <div class="fear-question" onclick="this.parentElement.classList.toggle('open')">
+                    Могу разобраться сам на YouTube
+                    <span class="toggle">+</span>
+                </div>
+                <div class="fear-answer">
+                    Можете. Потратите 3-6 месяцев, посмотрите 200 видео, половина которых устарела. Мы сжимаем это в 6 недель: структура + практика + менторство + комьюнити. Плюс, YouTube не научит монетизации — как продавать AI-видео клиентам и зарабатывать.
+                </div>
+            </div>
+            <div class="fear-item">
+                <div class="fear-question" onclick="this.parentElement.classList.toggle('open')">
+                    Для серьёзного бизнеса AI-видео несерьёзно
+                    <span class="toggle">+</span>
+                </div>
+                <div class="fear-answer">
+                    Synthesia используют 50,000+ компаний, включая Fortune 500. Nike, Reuters, BBC экспериментируют с AI-контентом. 80% маркетологов планируют увеличить бюджет на AI-видео в 2026. Это не игрушка — это новый стандарт индустрии.
+                </div>
+            </div>
+            <div class="fear-item">
+                <div class="fear-question" onclick="this.parentElement.classList.toggle('open')">
+                    А что с авторскими правами на AI-контент?
+                    <span class="toggle">+</span>
+                </div>
+                <div class="fear-answer">
+                    Отдельный урок в программе: правовые аспекты AI-контента. Коммерческие лицензии на всех платформах (Runway, HeyGen и др.) дают полные права на использование. Мы учим создавать оригинальный контент, а не копировать чужой.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+    <div class="container">
+        <div class="testimonials-header">
+            <span class="section-label">Отзывы</span>
+            <h2 class="section-title">Они тоже думали «это несерьёзно»</h2>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">«Делала видеоконтент для клиентов за $200/ролик с привлечением оператора. Сейчас делаю сама с AI за 40 минут и беру $500. Окупила курс за первую неделю.»</div>
+                <div class="author">
+                    <div class="avatar">М</div>
+                    <div>
+                        <div class="author-name">Мария В.</div>
+                        <div class="author-role">SMM-фрилансер</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">«У нас стартап, бюджет на маркетинг = 0. После курса сам сделал рекламный ролик, который принёс первых 50 клиентов. Студия просила за такое $4,000.»</div>
+                <div class="author">
+                    <div class="avatar">А</div>
+                    <div>
+                        <div class="author-name">Алексей Р.</div>
+                        <div class="author-role">Основатель стартапа</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">«Я видеограф с 10-летним опытом. Думал, AI — это хайп. После курса я делаю в 5 раз больше проектов. AI не заменил меня — он сделал меня суперменом.»</div>
+                <div class="author">
+                    <div class="avatar">К</div>
+                    <div>
+                        <div class="author-name">Кирилл Н.</div>
+                        <div class="author-role">Видеограф, 10 лет опыта</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+    <div class="container">
+        <div class="pricing-header">
+            <span class="section-label">Тарифы</span>
+            <h2 class="section-title">Один ролик для клиента =<br>окупил весь курс</h2>
+            <p class="section-subtitle">Средний чек за AI-видео на фрилансе: $300–1,000. Курс окупается с первого заказа.</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="plan-name">Start</div>
+                <div class="plan-price">$97</div>
+                <div class="plan-desc">Учись в своём темпе</div>
+                <ul>
+                    <li>6 модулей в записи</li>
+                    <li>Шаблоны промптов для всех инструментов</li>
+                    <li>Доступ к community-чату</li>
+                    <li>Обновления программы 3 месяца</li>
+                </ul>
+                <a href="#cta" class="plan-cta secondary">Выбрать →</a>
+            </div>
+            <div class="pricing-card featured">
+                <div class="plan-name">Pro</div>
+                <div class="plan-price">$297</div>
+                <div class="plan-desc">С менторством и практикой</div>
+                <ul>
+                    <li>Всё из Start</li>
+                    <li>Живые Q&A-сессии 3 раза в неделю</li>
+                    <li>Разбор твоих работ кураторами</li>
+                    <li>Закрытое сообщество практиков</li>
+                    <li>Обновления программы 6 месяцев</li>
+                    <li>Сертификат AI Creator</li>
+                </ul>
+                <a href="#cta" class="plan-cta primary">Записаться →</a>
+            </div>
+            <div class="pricing-card">
+                <div class="plan-name">VIP</div>
+                <div class="plan-price">$697</div>
+                <div class="plan-desc">Личный ментор + первый клиент</div>
+                <ul>
+                    <li>Всё из Pro</li>
+                    <li>Личный ментор (1-на-1 созвоны)</li>
+                    <li>Помощь с первым коммерческим проектом</li>
+                    <li>Пожизненные обновления программы</li>
+                    <li>Включение в базу AI-креаторов</li>
+                    <li>Приоритетная поддержка навсегда</li>
+                </ul>
+                <a href="#cta" class="plan-cta secondary">Выбрать →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GUARANTEE -->
+<section class="guarantee">
+    <div class="container">
+        <div class="guarantee-box">
+            <div class="icon">🛡️</div>
+            <h2>14 дней — гарантия возврата</h2>
+            <p>Пройди первые 2 модуля. Если поймёшь, что это не твоё — вернём 100% без вопросов. Мы уверены в программе, поэтому берём весь риск на себя.</p>
+        </div>
+    </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="cta">
+    <div class="container">
+        <h2>Видео — это язык<br><span class="gradient-text">будущего. Научись сейчас.</span></h2>
+        <p>80% контента в интернете — видео. Те, кто умеют его создавать с AI, выигрывают.</p>
+        <a href="#pricing" class="hero-cta">Записаться на курс →</a>
+        <p class="hero-sub" style="margin-top: 16px;">Или напиши нам: <a href="https://t.me/aicreatorschool" style="color: var(--primary-light); text-decoration: none;">@aicreatorschool</a></p>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="logo">🎬 <span>AI Creator School</span></div>
+        <p>Первая школа AI-видео. Создавай, а не снимай.</p>
+        <div class="footer-links">
+            <a href="#">Политика конфиденциальности</a>
+            <a href="#">Оферта</a>
+            <a href="https://t.me/aicreatorschool">Telegram</a>
+        </div>
+        <p style="margin-top: 24px;">© 2026 AI Creator School. Все права защищены.</p>
+    </div>
+</footer>
+
+</body>
+</html>
