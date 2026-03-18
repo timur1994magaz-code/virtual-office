@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Команда Тимура — Виртуальный Офис</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Press Start 2P',monospace;background:#1a1a2e;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;image-rendering:pixelated;overflow-x:auto}
+.office-wrapper{position:relative;width:1200px;height:700px;overflow:hidden;border:4px solid #3a2a1a;border-radius:4px;box-shadow:0 0 40px rgba(0,0,0,.6)}
+
+/* === ПОЛ === */
+.floor{position:absolute;top:0;left:0;width:100%;height:100%;background:repeating-linear-gradient(0deg,#D5C8A3 0px,#D5C8A3 18px,#C4B78E 18px,#C4B78E 36px,#B8AA82 36px,#B8AA82 54px,#C4B78E 54px,#C4B78E 72px);z-index:0}
+.floor::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:repeating-linear-gradient(90deg,transparent 0px,transparent 59px,rgba(0,0,0,.04) 59px,rgba(0,0,0,.04) 60px);z-index:1}
+
+/* === СТЕНЫ === */
+.wall-top{position:absolute;top:0;left:0;width:100%;height:110px;background:linear-gradient(180deg,#B55828 0%,#C06030 70%,#C06030 100%);z-index:2;border-bottom:3px solid #4a2a10}
+.wall-panel{position:absolute;top:110px;left:0;width:100%;height:50px;background:linear-gradient(180deg,#7C5535 0%,#6B4226 100%);z-index:2;border-bottom:4px solid #5a3a1e}
+.wall-panel::before{content:'';position:absolute;top:20px;left:0;width:100%;height:2px;background:rgba(255,255,255,.08)}
+
+/* === ОКНА === */
+.window{position:absolute;z-index:3;top:20px}
+.window .frame{width:70px;height:75px;background:#5C3A1E;border-radius:2px;padding:4px;position:relative}
+.window .glass{width:100%;height:100%;background:#87CEEB;border-radius:1px;position:relative;overflow:hidden}
+.window .glass::after{content:'';position:absolute;top:0;left:50%;width:3px;height:100%;background:#5C3A1E;transform:translateX(-50%)}
+.window .glass::before{content:'';position:absolute;top:50%;left:0;width:100%;height:3px;background:#5C3A1E;transform:translateY(-50%)}
+.window .curtain-l,.window .curtain-r{position:absolute;top:-2px;width:12px;height:calc(100% + 4px);z-index:2}
+.window .curtain-l{left:-6px;background:#8B3A3A;border-radius:2px 0 0 2px;box-shadow:inset -3px 0 0 #6B2A2A,inset -6px 0 0 #7B3232}
+.window .curtain-r{right:-6px;background:#8B3A3A;border-radius:0 2px 2px 0;box-shadow:inset 3px 0 0 #6B2A2A,inset 6px 0 0 #7B3232}
+.window .curtain-l::after,.window .curtain-r::after{content:'';position:absolute;top:6px;width:4px;height:8px;background:#A04848;border-radius:1px}
+.window .curtain-l::after{right:1px}
+.window .curtain-r::after{left:1px}
+/* Окна: элементы сцены за стеклом */
+.window .scene-sun{position:absolute;top:6px;right:8px;width:12px;height:12px;background:#FFE044;border-radius:50%;z-index:0;box-shadow:0 0 6px #FFE044;display:none}
+.window .scene-cloud{position:absolute;z-index:0;display:none}
+.window .scene-cloud::before,.window .scene-cloud::after{content:'';position:absolute;background:#fff;border-radius:50%}
+.window .scene-cloud::before{width:10px;height:6px;top:0;left:0}
+.window .scene-cloud::after{width:8px;height:5px;top:-2px;left:4px}
+.window .scene-moon{position:absolute;top:8px;right:10px;width:10px;height:10px;background:#EEEEBB;border-radius:50%;z-index:0;box-shadow:0 0 4px rgba(238,238,187,.4);display:none}
+.window .scene-moon::after{content:'';position:absolute;top:-2px;right:-2px;width:8px;height:8px;background:#0a1628;border-radius:50%}
+.window .scene-stars{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;display:none}
+.window .star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%}
+.win1{left:30px}.win2{left:160px}.win3{left:380px}.win4{left:780px}.win5{left:1000px}.win6{left:1100px}
+
+/* === КНИЖНЫЙ ШКАФ === */
+.bookcase{position:absolute;top:8px;left:540px;width:100px;height:150px;background:#5C3A1E;z-index:4;border:3px solid #4a2a10;border-radius:2px}
+.shelf{position:absolute;left:4px;right:4px;height:3px;background:#4a2a10}
+.shelf:nth-child(1){top:28px}.shelf:nth-child(2){top:56px}.shelf:nth-child(3){top:84px}.shelf:nth-child(4){top:112px}
+.books{position:absolute;left:6px;right:6px;display:flex;gap:2px;align-items:flex-end}
+.books.r1{top:6px;height:20px}.books.r2{top:34px;height:20px}.books.r3{top:62px;height:20px}.books.r4{top:90px;height:20px}.books.r5{top:118px;height:20px}
+.book{width:6px;border-radius:1px 1px 0 0}
+.b-red{background:#CC3333;height:16px}.b-blue{background:#3355AA;height:18px}.b-green{background:#33AA44;height:14px}.b-yellow{background:#CCAA22;height:17px}.b-purple{background:#8844AA;height:15px}.b-orange{background:#DD7722;height:13px}.b-dark{background:#444;height:19px}.b-teal{background:#22AAAA;height:16px}
+
+/* === ПРОБКОВАЯ ДОСКА === */
+.corkboard{position:absolute;top:18px;left:30px;width:110px;height:80px;background:#C4A050;border:4px solid #6B4226;z-index:4;cursor:pointer;border-radius:2px}
+.corkboard::before{content:'ЗАДАЧИ';position:absolute;top:4px;left:50%;transform:translateX(-50%);font-size:6px;color:#fff;background:#DD4444;padding:2px 6px;border-radius:1px;white-space:nowrap}
+.pin{position:absolute;width:5px;height:5px;border-radius:50%}
+.pin1{background:#DD2222;top:18px;left:10px}.pin2{background:#2255DD;top:18px;left:60px}.pin3{background:#22AA44;top:45px;left:30px}.pin4{background:#DDAA22;top:45px;left:80px}
+.note{position:absolute;width:30px;height:22px;border-radius:1px;font-size:3px;padding:2px;color:#333}
+.note1{background:#FFEE88;top:22px;left:6px}.note2{background:#88DDFF;top:22px;left:50px}.note3{background:#AAFFAA;top:48px;left:20px}.note4{background:#FFAADD;top:48px;left:68px}
+
+/* === КОМАНДНЫЙ ЛЕЙБЛ === */
+.team-label{position:absolute;top:170px;left:50%;transform:translateX(-50%);background:#fff;border:3px solid #44AA44;padding:6px 20px;z-index:10;font-size:8px;color:#333;border-radius:3px;white-space:nowrap}
+
+/* === СТОЛЫ === */
+.desk{position:absolute;z-index:5;cursor:pointer}
+.desk-top{background:#F0F0F0;border-radius:2px;position:relative}
+.desk-front{background:#4A4A5A;border-radius:0 0 2px 2px;position:absolute}
+.desk-leg{position:absolute;bottom:-12px;width:4px;height:12px;background:#4A4A5A}
+
+/* Стол Илона — центральный, крупнее */
+.desk-elon{left:480px;top:350px}
+.desk-elon .desk-top{width:160px;height:50px}
+.desk-elon .desk-front{width:160px;height:14px;bottom:-14px;left:0}
+.desk-elon .desk-leg.l{left:6px}.desk-elon .desk-leg.r{right:6px}
+
+/* AI Digest Bot */
+.desk-digest{left:100px;top:300px}
+.desk-digest .desk-top{width:130px;height:40px}
+.desk-digest .desk-front{width:130px;height:12px;bottom:-12px;left:0}
+
+/* Morning Briefer */
+.desk-morning{left:100px;top:480px}
+.desk-morning .desk-top{width:120px;height:40px}
+.desk-morning .desk-front{width:120px;height:12px;bottom:-12px;left:0}
+
+/* Researcher */
+.desk-researcher{left:780px;top:300px}
+.desk-researcher .desk-top{width:130px;height:40px}
+.desk-researcher .desk-front{width:130px;height:12px;bottom:-12px;left:0}
+
+/* Developer */
+.desk-developer{left:780px;top:480px}
+
+/* Архивариус */
+.desk-tender{left:300px;top:530px}
+.desk-tender .desk-top{width:120px;height:40px}
+.desk-tender .desk-front{width:120px;height:12px;bottom:-12px;left:0}
+.desk-tender .mon1{width:36px;height:26px;top:-30px;left:42px}
+.desk-tender .ms1{width:10px;height:5px;top:-4px;left:55px}
+.char-tender{left:330px;top:502px}
+
+.desk-archivist{left:660px;top:530px}
+.desk-archivist .desk-top{width:120px;height:40px}
+.desk-archivist .desk-front{width:120px;height:12px;bottom:-12px;left:0}
+.desk-archivist .mon1{width:36px;height:26px;top:-30px;left:42px}
+.desk-archivist .ms1{width:10px;height:5px;top:-4px;left:55px}
+.char-archivist{left:690px;top:502px}
+
+/* СММщик */
+.desk-smm{left:480px;top:530px}
+.desk-smm .desk-top{width:120px;height:40px}
+.desk-smm .desk-front{width:120px;height:12px;bottom:-12px;left:0}
+.desk-smm .mon1{width:36px;height:26px;top:-30px;left:20px}
+.desk-smm .mon2{width:36px;height:26px;top:-30px;left:64px}
+.desk-smm .ms1{width:10px;height:5px;top:-4px;left:33px}
+.desk-smm .ms2{width:10px;height:5px;top:-4px;left:77px}
+.char-smm{left:510px;top:502px}
+.desk-developer .desk-top{width:130px;height:40px}
+.desk-developer .desk-front{width:130px;height:12px;bottom:-12px;left:0}
+
+/* === МОНИТОРЫ === */
+.monitor{position:absolute;background:#222;border:2px solid #111;border-radius:2px}
+.monitor .screen{width:100%;height:100%;border-radius:1px}
+.monitor-stand{position:absolute;background:#333;border-radius:0 0 1px 1px}
+
+/* Монитор Илона — один большой */
+.desk-elon .monitor{width:50px;height:34px;top:-38px;left:55px}
+.desk-elon .monitor .screen{background:#1a3a2a;animation:screenGlow 3s ease-in-out infinite}
+.desk-elon .monitor-stand{width:12px;height:6px;top:-4px;left:74px}
+
+/* AI Digest — 3 монитора */
+.desk-digest .mon1{width:32px;height:24px;top:-28px;left:10px}
+.desk-digest .mon2{width:36px;height:26px;top:-30px;left:48px}
+.desk-digest .mon3{width:32px;height:24px;top:-28px;left:90px}
+.desk-digest .mon1 .screen,.desk-digest .mon2 .screen,.desk-digest .mon3 .screen{background:#1a2a3a;animation:screenFlicker 2.5s ease-in-out infinite}
+.desk-digest .ms1{width:8px;height:4px;top:-4px;left:22px}
+.desk-digest .ms2{width:10px;height:4px;top:-4px;left:61px}
+.desk-digest .ms3{width:8px;height:4px;top:-4px;left:102px}
+
+/* Morning Briefer — 1 монитор + часы */
+.desk-morning .monitor{width:40px;height:28px;top:-32px;left:40px}
+.desk-morning .monitor .screen{background:#2a2a1a;animation:screenGlow 4s ease-in-out infinite}
+.desk-morning .monitor-stand{width:10px;height:5px;top:-4px;left:55px}
+
+/* Researcher — 1 монитор */
+.desk-researcher .monitor{width:44px;height:30px;top:-34px;left:44px}
+.desk-researcher .monitor .screen{background:#1a2a2a;animation:screenGlow 3.5s ease-in-out infinite}
+.desk-researcher .monitor-stand{width:10px;height:5px;top:-4px;left:61px}
+
+/* Developer — 3 монитора */
+.desk-developer .mon1{width:32px;height:24px;top:-28px;left:10px}
+.desk-developer .mon2{width:36px;height:26px;top:-30px;left:48px}
+.desk-developer .mon3{width:32px;height:24px;top:-28px;left:90px}
+.desk-developer .mon1 .screen,.desk-developer .mon2 .screen,.desk-developer .mon3 .screen{background:#0a1a0a;animation:screenFlicker 2s ease-in-out infinite}
+.desk-developer .ms1{width:8px;height:4px;top:-4px;left:22px}
+.desk-developer .ms2{width:10px;height:4px;top:-4px;left:61px}
+.desk-developer .ms3{width:8px;height:4px;top:-4px;left:102px}
+
+/* Часы на столе Morning Briefer */
+.desk-clock{position:absolute;top:-26px;left:90px;width:24px;height:24px;background:#F0E8D0;border:2px solid #8B7355;border-radius:50%;z-index:6;display:flex;align-items:center;justify-content:center;font-size:3px;color:#333}
+
+/* === ТАБЛИЧКИ === */
+.nametag{position:absolute;background:#777;padding:3px 8px;font-size:5px;color:#55DD55;border-radius:2px;white-space:nowrap;text-align:center;z-index:6;letter-spacing:.5px}
+.desk-elon .nametag{bottom:-38px;left:50%;transform:translateX(-50%)}
+.desk-digest .nametag{bottom:-30px;left:50%;transform:translateX(-50%)}
+.desk-morning .nametag{bottom:-30px;left:50%;transform:translateX(-50%)}
+.desk-researcher .nametag{bottom:-30px;left:50%;transform:translateX(-50%)}
+.desk-developer .nametag{bottom:-30px;left:50%;transform:translateX(-50%)}
+
+/* === ПИКСЕЛЬНЫЕ ПЕРСОНАЖИ === */
+.character{position:absolute;z-index:7;animation:breathe 2.5s ease-in-out infinite}
+.char-body{position:relative}
+/* Голова */
+.char-head{width:16px;height:16px;border-radius:2px;position:absolute;left:50%;transform:translateX(-50%);top:0}
+/* Тело */
+.char-torso{width:20px;height:14px;border-radius:1px;position:absolute;left:50%;transform:translateX(-50%);top:16px}
+/* Ноги (скрыты за столом обычно) */
+
+/* Илон — крупнее */
+.char-elon{top:308px;left:535px}
+.char-elon .char-head{width:20px;height:20px;background:#FFD5AA;top:0}
+.char-elon .char-torso{width:26px;height:18px;background:#3366CC;top:20px}
+.char-elon .eyes{position:absolute;top:7px;left:50%;transform:translateX(-50%);width:12px;height:3px;display:flex;gap:4px;justify-content:center}
+.char-elon .eye{width:3px;height:3px;background:#222;border-radius:50%}
+.char-elon .hair{position:absolute;top:-3px;left:50%;transform:translateX(-50%);width:22px;height:6px;background:#4a3520;border-radius:2px 2px 0 0}
+
+/* AI Digest Bot */
+.char-digest{top:260px;left:148px}
+.char-digest .char-head{width:16px;height:16px;background:#AACCFF}
+.char-digest .char-torso{width:20px;height:12px;background:#666;top:16px}
+.char-digest .antenna{position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:2px;height:8px;background:#888}
+.char-digest .antenna::after{content:'';position:absolute;top:-3px;left:-2px;width:6px;height:6px;background:#FF4444;border-radius:50%;animation:blink 1.5s infinite}
+
+/* Morning Briefer */
+.char-morning{top:440px;left:143px}
+.char-morning .char-head{width:16px;height:16px;background:#FFD5AA}
+.char-morning .char-torso{width:20px;height:12px;background:#DDAA22;top:16px}
+.char-morning .hat{position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:20px;height:6px;background:#DD8822;border-radius:2px 2px 0 0}
+
+/* Researcher */
+.char-researcher{top:260px;left:828px}
+.char-researcher .char-head{width:16px;height:16px;background:#FFD5AA}
+.char-researcher .char-torso{width:20px;height:12px;background:#884422;top:16px}
+.char-researcher .glasses{position:absolute;top:5px;left:50%;transform:translateX(-50%);width:14px;height:5px;border:1px solid #333;border-radius:1px;background:rgba(150,200,255,.3)}
+
+/* Developer */
+.char-developer{top:440px;left:828px}
+.char-developer .char-head{width:16px;height:16px;background:#DDBB88}
+.char-developer .char-torso{width:20px;height:12px;background:#222;top:16px}
+.char-developer .headphones{position:absolute;top:-2px;left:50%;transform:translateX(-50%);width:22px;height:10px;border:2px solid #444;border-bottom:none;border-radius:10px 10px 0 0}
+
+/* === СТАТУС ИНДИКАТОРЫ === */
+.status-dot{position:absolute;width:8px;height:8px;border-radius:50%;top:-6px;right:-6px;z-index:8}
+.status-online{background:#44DD44;animation:pulse 1.5s ease-in-out infinite;box-shadow:0 0 6px #44DD44}
+.status-scheduled{background:#DDAA22;animation:pulse 2s ease-in-out infinite;box-shadow:0 0 6px #DDAA22}
+.status-demand{background:#999;animation:pulse 3s ease-in-out infinite;box-shadow:0 0 4px #999}
+
+/* === КАРТИНЫ === */
+.painting{position:absolute;z-index:4}
+.painting .painting-frame{border:4px solid #5C3A1E;border-radius:1px;overflow:hidden;image-rendering:pixelated}
+.painting .painting-canvas{width:100%;height:100%;position:relative}
+/* Пейзаж */
+.painting-landscape .painting-frame{width:60px;height:45px}
+.painting-landscape .painting-canvas{background:linear-gradient(180deg,#FF8844 0%,#FFAA55 25%,#DDDD66 35%,#558833 50%,#446622 100%)}
+.painting-landscape .mountain1{position:absolute;bottom:12px;left:5px;width:0;height:0;border-left:18px solid transparent;border-right:18px solid transparent;border-bottom:28px solid #556677}
+.painting-landscape .mountain2{position:absolute;bottom:12px;right:2px;width:0;height:0;border-left:15px solid transparent;border-right:15px solid transparent;border-bottom:22px solid #667788}
+.painting-landscape .mountain-snow1{position:absolute;bottom:30px;left:14px;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:10px solid #fff}
+.painting-landscape .sun-paint{position:absolute;top:4px;right:6px;width:10px;height:10px;background:#FFDD44;border-radius:50%}
+/* Абстрактная */
+.painting-abstract .painting-frame{width:60px;height:45px;border-color:#3A3A5C}
+.painting-abstract .painting-canvas{background:#222;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr);gap:2px;padding:2px}
+.painting-abstract .pix-block{border-radius:1px}
+
+/* === РАСТЕНИЯ === */
+.plant{position:absolute;z-index:5;width:40px;height:60px}
+.plant-pot{width:22px;height:14px;background:#C06030;border-radius:2px 2px 6px 6px;position:absolute;bottom:0;left:50%;transform:translateX(-50%)}
+.plant-pot::before{content:'';position:absolute;top:-4px;left:-2px;width:26px;height:6px;background:#A85020;border-radius:2px}
+.plant-trunk{width:4px;height:18px;background:#6B4226;position:absolute;bottom:12px;left:50%;transform:translateX(-50%)}
+.plant-crown{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);width:24px;height:24px;background:radial-gradient(circle,#44BB55 30%,#33AA44 60%,#2E9940 100%);border-radius:50%;box-shadow:inset -3px -3px 0 #2A8835,inset 3px 3px 0 #55CC66}
+.plant-crown::after{content:'';position:absolute;top:-4px;left:50%;transform:translateX(-50%);width:16px;height:16px;background:radial-gradient(circle,#55CC66 30%,#44BB55 100%);border-radius:50%}
+.p1{left:50px;top:580px}.p2{left:350px;top:600px}.p3{left:650px;top:590px}.p4{left:950px;top:580px}.p5{left:1050px;top:400px}.p6{left:50px;top:430px}
+
+/* === ТОРШЕРЫ === */
+.lamp{position:absolute;z-index:5}
+.lamp-base{width:16px;height:6px;background:#666;border-radius:2px;position:absolute;bottom:0;left:50%;transform:translateX(-50%)}
+.lamp-pole{width:4px;height:50px;background:#888;position:absolute;bottom:6px;left:50%;transform:translateX(-50%)}
+.lamp-shade{width:28px;height:18px;background:#DDAA55;border-radius:4px 4px 0 0;position:absolute;bottom:56px;left:50%;transform:translateX(-50%);box-shadow:0 8px 20px rgba(221,170,85,.3)}
+.lamp-shade::after{content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);width:36px;height:12px;background:radial-gradient(ellipse,rgba(255,220,120,.15),transparent);border-radius:50%}
+.lamp1{left:400px;top:400px}.lamp2{left:720px;top:400px}
+
+/* === ОГНЕТУШИТЕЛЬ === */
+.extinguisher{position:absolute;left:1140px;top:168px;z-index:5}
+.ext-body{width:12px;height:30px;background:#DD2222;border-radius:3px;position:relative}
+.ext-top{width:8px;height:6px;background:#888;border-radius:2px 2px 0 0;position:absolute;top:-6px;left:2px}
+.ext-handle{width:14px;height:4px;background:#666;border-radius:1px;position:absolute;top:-3px;left:-1px}
+.ext-label{width:8px;height:8px;background:#fff;border-radius:1px;position:absolute;top:8px;left:2px;font-size:3px;color:#DD2222;display:flex;align-items:center;justify-content:center}
+
+/* === ТУМБА === */
+.cabinet{position:absolute;left:1080px;top:560px;width:50px;height:40px;background:#AABBCC;border-radius:2px;z-index:5;border:2px solid #8899AA}
+.cabinet::before{content:'';position:absolute;top:12px;left:50%;transform:translateX(-50%);width:16px;height:3px;background:#778899;border-radius:1px}
+.cabinet::after{content:'';position:absolute;top:26px;left:50%;transform:translateX(-50%);width:16px;height:3px;background:#778899;border-radius:1px}
+
+/* === ЧАСЫ МОСКВЫ === */
+.moscow-clock{position:absolute;top:28px;right:30px;z-index:10;background:rgba(0,0,0,.7);padding:6px 12px;border-radius:3px;border:2px solid #DDAA55}
+.moscow-clock .time{font-size:10px;color:#55DD55}
+.moscow-clock .label{font-size:5px;color:#999;margin-top:3px;text-align:center}
+
+/* === СТАТУС-БАР === */
+.status-bar{width:1200px;background:#2a2a3a;padding:8px 16px;font-size:6px;color:#aaa;display:flex;justify-content:space-between;align-items:center;border:4px solid #3a2a1a;border-top:none;border-radius:0 0 4px 4px}
+.status-bar .agents{color:#55DD55}
+.status-bar .powered{color:#888}
+.status-bar .powered span{color:#DD4444}
+
+/* === КАРТОЧКА АГЕНТА (модалка) === */
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);z-index:100;display:none;align-items:center;justify-content:center}
+.modal-overlay.active{display:flex}
+.modal{background:#1a1a2e;border:3px solid #44AA44;border-radius:8px;padding:24px 20px;max-width:420px;width:92%;color:#ccc;position:relative}
+.modal .close-btn{position:absolute;top:12px;right:16px;font-size:16px;color:#DD4444;cursor:pointer;background:none;border:none;font-family:'Press Start 2P'}
+.modal h3{font-size:14px;color:#55DD55;margin-bottom:14px}
+.modal .role{font-size:10px;color:#DDAA55;margin-bottom:12px}
+.modal .status-line{font-size:10px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.modal .status-line .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.modal .tasks{font-size:9px;color:#aaa;margin-top:12px;line-height:2.2}
+.modal .tasks div{padding:6px 0;border-bottom:1px solid #333}
+
+/* Доска задач модалка */
+.board-modal{max-width:460px}
+.board-modal h3{color:#DDAA55;font-size:14px}
+.board-modal .project{font-size:10px;padding:10px 0;border-bottom:1px solid #333;display:flex;justify-content:space-between}
+.board-modal .project .pstatus{font-size:5px;padding:2px 6px;border-radius:2px}
+.board-modal .pstatus.active{background:#44AA44;color:#fff}
+.board-modal .pstatus.planned{background:#DDAA22;color:#111}
+.board-modal .pstatus.idea{background:#666;color:#fff}
+
+/* === АНИМАЦИИ === */
+@keyframes breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+@keyframes screenGlow{0%,100%{opacity:.8}50%{opacity:1}}
+@keyframes screenFlicker{0%,100%{opacity:.7}30%{opacity:1}60%{opacity:.85}80%{opacity:1}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* Мерцание текста на экранах */
+.screen-text{position:absolute;top:3px;left:3px;font-size:2px;color:#44DD44;line-height:1.6;opacity:.8}
+
+/* === МОБИЛЬНЫЙ === */
+@media(max-width:1220px){
+  body{justify-content:flex-start;align-items:flex-start}
+  .office-wrapper,.status-bar{min-width:1200px}
+}
+</style>
+</head>
+<body>
+
+<div class="office-wrapper">
+  <!-- Пол -->
+  <div class="floor"></div>
+
+  <!-- Стены -->
+  <div class="wall-top"></div>
+  <div class="wall-panel"></div>
+
+  <!-- Окна -->
+  <div class="window win1"><div class="frame"><div class="curtain-l"></div><div class="curtain-r"></div><div class="glass"><div class="scene-sun"></div><div class="scene-cloud" style="top:12px;left:4px"></div><div class="scene-moon"></div><div class="scene-stars"><div class="star" style="top:8px;left:10px"></div><div class="star" style="top:20px;left:30px"></div><div class="star" style="top:5px;left:45px"></div><div class="star" style="top:35px;left:15px"></div><div class="star" style="top:28px;left:50px"></div></div></div></div></div>
+  <div class="window win2"><div class="frame"><div class="curtain-l"></div><div class="curtain-r"></div><div class="glass"><div class="scene-sun"></div><div class="scene-cloud" style="top:16px;left:8px"></div><div class="scene-moon"></div><div class="scene-stars"><div class="star" style="top:6px;left:20px"></div><div class="star" style="top:18px;left:8px"></div><div class="star" style="top:30px;left:40px"></div><div class="star" style="top:12px;left:50px"></div><div class="star" style="top:40px;left:25px"></div></div></div></div></div>
+  <div class="window win3"><div class="frame"><div class="curtain-l"></div><div class="curtain-r"></div><div class="glass"><div class="scene-sun"></div><div class="scene-cloud" style="top:10px;left:6px"></div><div class="scene-moon"></div><div class="scene-stars"><div class="star" style="top:4px;left:15px"></div><div class="star" style="top:22px;left:35px"></div><div class="star" style="top:38px;left:10px"></div><div class="star" style="top:14px;left:48px"></div><div class="star" style="top:32px;left:28px"></div></div></div></div></div>
+  <div class="window win4"><div class="frame"><div class="curtain-l"></div><div class="curtain-r"></div><div class="glass"><div class="scene-sun"></div><div class="scene-cloud" style="top:14px;left:3px"></div><div class="scene-moon"></div><div class="scene-stars"><div class="star" style="top:10px;left:12px"></div><div class="star" style="top:24px;left:42px"></div><div class="star" style="top:6px;left:30px"></div><div class="star" style="top:36px;left:18px"></div><div class="star" style="top:18px;left:52px"></div></div></div></div></div>
+  <div class="window win5"><div class="frame"><div class="curtain-l"></div><div class="curtain-r"></div><div class="glass"><div class="scene-sun"></div><div class="scene-cloud" style="top:18px;left:5px"></div><div class="scene-moon"></div><div class="scene-stars"><div class="star" style="top:8px;left:8px"></div><div class="star" style="top:20px;left:38px"></div><div class="star" style="top:34px;left:22px"></div><div class="star" style="top:12px;left:48px"></div><div class="star" style="top:42px;left:14px"></div></div></div></div></div>
+  <div class="window win6"><div class="frame"><div class="curtain-l"></div><div class="curtain-r"></div><div class="glass"><div class="scene-sun"></div><div class="scene-cloud" style="top:8px;left:10px"></div><div class="scene-moon"></div><div class="scene-stars"><div class="star" style="top:5px;left:18px"></div><div class="star" style="top:25px;left:6px"></div><div class="star" style="top:15px;left:44px"></div><div class="star" style="top:38px;left:30px"></div><div class="star" style="top:30px;left:50px"></div></div></div></div></div>
+
+  <!-- Книжный шкаф -->
+  <div class="bookcase">
+    <div class="shelf"></div><div class="shelf"></div><div class="shelf"></div><div class="shelf"></div>
+    <div class="books r1"><div class="book b-red"></div><div class="book b-blue"></div><div class="book b-green"></div><div class="book b-yellow"></div><div class="book b-dark"></div><div class="book b-purple"></div><div class="book b-red"></div><div class="book b-teal"></div><div class="book b-blue"></div><div class="book b-orange"></div></div>
+    <div class="books r2"><div class="book b-blue"></div><div class="book b-yellow"></div><div class="book b-red"></div><div class="book b-green"></div><div class="book b-dark"></div><div class="book b-orange"></div><div class="book b-purple"></div><div class="book b-teal"></div><div class="book b-red"></div></div>
+    <div class="books r3"><div class="book b-green"></div><div class="book b-red"></div><div class="book b-dark"></div><div class="book b-blue"></div><div class="book b-yellow"></div><div class="book b-purple"></div><div class="book b-orange"></div><div class="book b-blue"></div><div class="book b-teal"></div><div class="book b-green"></div></div>
+    <div class="books r4"><div class="book b-yellow"></div><div class="book b-purple"></div><div class="book b-blue"></div><div class="book b-red"></div><div class="book b-teal"></div><div class="book b-green"></div><div class="book b-dark"></div><div class="book b-orange"></div><div class="book b-red"></div></div>
+    <div class="books r5"><div class="book b-dark"></div><div class="book b-green"></div><div class="book b-yellow"></div><div class="book b-blue"></div><div class="book b-orange"></div><div class="book b-red"></div><div class="book b-purple"></div><div class="book b-teal"></div></div>
+  </div>
+
+  <!-- Пробковая доска -->
+  <div class="corkboard" onclick="showBoard()">
+    <div class="pin pin1"></div><div class="pin pin2"></div><div class="pin pin3"></div><div class="pin pin4"></div>
+    <div class="note note1"></div><div class="note note2"></div><div class="note note3"></div><div class="note note4"></div>
+  </div>
+
+  <!-- Командный лейбл -->
+  <div class="team-label">🚀 Команда Тимура</div>
+
+  <!-- Часы Москвы -->
+  <div class="moscow-clock">
+    <div class="time" id="msk-time">00:00</div>
+    <div class="label">МОСКВА</div>
+  </div>
+
+  <!-- === СТОЛ ИЛОНА (центральный) === -->
+  <div class="desk desk-elon" onclick="showAgent('elon')">
+    <div class="desk-top"></div>
+    <div class="desk-front"></div>
+    <div class="monitor"><div class="screen"><div class="screen-text">$ openclaw<br>&gt; ready_<br>&gt; .....</div></div></div>
+    <div class="monitor-stand"></div>
+    <div class="nametag">🚀 ИЛОН</div>
+  </div>
+  <div class="character char-elon" onclick="showAgent('elon')">
+    <div class="char-body">
+      <div class="hair"></div>
+      <div class="char-head"><div class="eyes"><div class="eye"></div><div class="eye"></div></div></div>
+      <div class="char-torso"></div>
+      <div class="status-dot status-online"></div>
+    </div>
+  </div>
+
+  <!-- === СТОЛ AI DIGEST BOT === -->
+  <div class="desk desk-digest" onclick="showAgent('digest')">
+    <div class="desk-top"></div>
+    <div class="desk-front"></div>
+    <div class="monitor mon1"><div class="screen"><div class="screen-text">RSS<br>FEED</div></div></div>
+    <div class="monitor-stand ms1"></div>
+    <div class="monitor mon2"><div class="screen"><div class="screen-text">AI NEWS<br>DIGEST<br>v2.1</div></div></div>
+    <div class="monitor-stand ms2"></div>
+    <div class="monitor mon3"><div class="screen"><div class="screen-text">TG<br>POST</div></div></div>
+    <div class="monitor-stand ms3"></div>
+    <div class="nametag">📡 AI DIGEST</div>
+  </div>
+  <div class="character char-digest" onclick="showAgent('digest')">
+    <div class="char-body">
+      <div class="antenna"></div>
+      <div class="char-head"></div>
+      <div class="char-torso"></div>
+      <div class="status-dot status-scheduled"></div>
+    </div>
+  </div>
+
+  <!-- === СТОЛ MORNING BRIEFER === -->
+  <div class="desk desk-morning" onclick="showAgent('morning')">
+    <div class="desk-top"></div>
+    <div class="desk-front"></div>
+    <div class="monitor"><div class="screen"><div class="screen-text">GOOD<br>MORNING<br>☀️</div></div></div>
+    <div class="monitor-stand"></div>
+    <div class="desk-clock" id="desk-clock-face">--:--</div>
+    <div class="nametag">☀️ BRIEFER</div>
+  </div>
+  <div class="character char-morning" onclick="showAgent('morning')">
+    <div class="char-body">
+      <div class="hat"></div>
+      <div class="char-head"></div>
+      <div class="char-torso"></div>
+      <div class="status-dot status-scheduled"></div>
+    </div>
+  </div>
+
+  <!-- === СТОЛ RESEARCHER === -->
+  <div class="desk desk-researcher" onclick="showAgent('researcher')">
+    <div class="desk-top"></div>
+    <div class="desk-front"></div>
+    <div class="monitor"><div class="screen"><div class="screen-text">SEARCH<br>ENGINE<br>&gt;_</div></div></div>
+    <div class="monitor-stand"></div>
+    <div class="nametag">🔍 RESEARCHER</div>
+  </div>
+  <div class="character char-researcher" onclick="showAgent('researcher')">
+    <div class="char-body">
+      <div class="glasses"></div>
+      <div class="char-head"></div>
+      <div class="char-torso"></div>
+      <div class="status-dot status-demand"></div>
+    </div>
+  </div>
+
+  <!-- === СТОЛ DEVELOPER === -->
+  <div class="desk desk-developer" onclick="showAgent('developer')">
+    <div class="desk-top"></div>
+    <div class="desk-front"></div>
+    <div class="monitor mon1"><div class="screen"><div class="screen-text">git<br>push</div></div></div>
+    <div class="monitor-stand ms1"></div>
+    <div class="monitor mon2"><div class="screen"><div class="screen-text">CODE<br>REVIEW<br>v3.0</div></div></div>
+    <div class="monitor-stand ms2"></div>
+    <div class="monitor mon3"><div class="screen"><div class="screen-text">npm<br>run</div></div></div>
+    <div class="monitor-stand ms3"></div>
+    <div class="nametag">💻 DEVELOPER</div>
+  </div>
+  <div class="character char-developer" onclick="showAgent('developer')">
+    <div class="char-body">
+      <div class="headphones"></div>
+      <div class="char-head"></div>
+      <div class="char-torso"></div>
+      <div class="status-dot status-demand"></div>
+    </div>
+  </div>
+
+  <!-- ТЕНДЕРНЫЙ СПЕЦИАЛИСТ -->
+  <div class="desk desk-tender" onclick="showAgent('tender')">
+    <div class="desk-top"></div>
+    <div class="desk-front"></div>
+    <div class="monitor mon1"><div class="screen"><div class="screen-text">🎯<br>TENDER</div></div></div>
+    <div class="monitor-stand ms1"></div>
+    <div class="nametag" style="color:#DD8800">🎯 ТЕНДЕРЫ</div>
+  </div>
+  <div class="character char-tender" onclick="showAgent('tender')">
+    <div class="char-body">
+      <div class="char-head" style="background:#AA5533"></div>
+      <div class="char-torso" style="background:#334488"></div>
+      <div class="status-dot" style="background:#DD8800;animation:pulse 2s infinite"></div>
+    </div>
+  </div>
+
+  <!-- СММщик -->
+  <div class="desk desk-smm" onclick="showAgent('smm')">
+    <div class="desk-top"></div>
+    <div class="desk-front"></div>
+    <div class="monitor mon1"><div class="screen"><div class="screen-text">📱<br>TG/VC</div></div></div>
+    <div class="monitor-stand ms1"></div>
+    <div class="monitor mon2"><div class="screen"><div class="screen-text">📝<br>SOSTAV</div></div></div>
+    <div class="monitor-stand ms2"></div>
+    <div class="nametag" style="color:#FF66AA">📱 СММщик</div>
+  </div>
+  <div class="character char-smm" onclick="showAgent('smm')">
+    <div class="char-body">
+      <div class="char-head" style="background:#FFD5AA"></div>
+      <div class="char-torso" style="background:#CC44AA"></div>
+      <div class="status-dot status-online"></div>
+    </div>
+  </div>
+
+  <!-- АРХИВАРИУС -->
+  <div class="desk desk-archivist" onclick="showAgent('archivist')">
+    <div class="desk-top"></div>
+    <div class="desk-front"></div>
+    <div class="monitor mon1"><div class="screen"><div class="screen-text">📚<br>АРХИВ</div></div></div>
+    <div class="monitor-stand ms1"></div>
+    <div class="nametag" style="color:#DD8800">📚 АРХИВАРИУС</div>
+  </div>
+  <div class="character char-archivist" onclick="showAgent('archivist')">
+    <div class="char-body">
+      <div class="char-head" style="background:#AA7744"></div>
+      <div class="char-torso" style="background:#886633"></div>
+      <div class="status-dot" style="background:#DD8800;animation:pulse 2s infinite"></div>
+    </div>
+  </div>
+
+  <!-- КАРТИНЫ -->
+  <div class="painting painting-landscape" style="top:30px;left:270px">
+    <div class="painting-frame"><div class="painting-canvas">
+      <div class="mountain1"></div><div class="mountain2"></div><div class="mountain-snow1"></div><div class="sun-paint"></div>
+    </div></div>
+  </div>
+  <div class="painting painting-abstract" style="top:30px;left:680px">
+    <div class="painting-frame"><div class="painting-canvas">
+      <div class="pix-block" style="background:#DD3333"></div>
+      <div class="pix-block" style="background:#3366CC"></div>
+      <div class="pix-block" style="background:#FFCC22"></div>
+      <div class="pix-block" style="background:#33AA55"></div>
+      <div class="pix-block" style="background:#AA44CC"></div>
+      <div class="pix-block" style="background:#FF8833"></div>
+      <div class="pix-block" style="background:#2299AA"></div>
+      <div class="pix-block" style="background:#DD5599"></div>
+      <div class="pix-block" style="background:#44BB44"></div>
+      <div class="pix-block" style="background:#5566DD"></div>
+      <div class="pix-block" style="background:#DDAA33"></div>
+      <div class="pix-block" style="background:#CC4455"></div>
+    </div></div>
+  </div>
+
+  <!-- РАСТЕНИЯ -->
+  <div class="plant p1"><div class="plant-crown"></div><div class="plant-trunk"></div><div class="plant-pot"></div></div>
+  <div class="plant p2"><div class="plant-crown"></div><div class="plant-trunk"></div><div class="plant-pot"></div></div>
+  <div class="plant p3"><div class="plant-crown"></div><div class="plant-trunk"></div><div class="plant-pot"></div></div>
+  <div class="plant p4"><div class="plant-crown"></div><div class="plant-trunk"></div><div class="plant-pot"></div></div>
+  <div class="plant p5"><div class="plant-crown"></div><div class="plant-trunk"></div><div class="plant-pot"></div></div>
+  <div class="plant p6"><div class="plant-crown"></div><div class="plant-trunk"></div><div class="plant-pot"></div></div>
+
+  <!-- ТОРШЕРЫ -->
+  <div class="lamp lamp1"><div class="lamp-shade"></div><div class="lamp-pole"></div><div class="lamp-base"></div></div>
+  <div class="lamp lamp2"><div class="lamp-shade"></div><div class="lamp-pole"></div><div class="lamp-base"></div></div>
+
+  <!-- ОГНЕТУШИТЕЛЬ -->
+  <div class="extinguisher"><div class="ext-handle"></div><div class="ext-top"></div><div class="ext-body"><div class="ext-label">!</div></div></div>
+
+  <!-- ТУМБА -->
+  <div class="cabinet"></div>
+</div>
+
+<!-- СТАТУС-БАР -->
+<div class="status-bar">
+  <div class="agents">● 8 агентов в офисе</div>
+  <div class="powered">Powered by <span>OpenClaw 🦞</span></div>
+</div>
+
+<!-- МОДАЛКА АГЕНТА -->
+<div class="modal-overlay" id="agent-modal">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal()">&times;</button>
+    <h3 id="modal-name"></h3>
+    <div class="role" id="modal-role"></div>
+    <div class="status-line"><div class="dot" id="modal-dot"></div><span id="modal-status"></span></div>
+    <div class="tasks" id="modal-tasks"></div>
+  </div>
+</div>
+
+<!-- МОДАЛКА ДОСКИ -->
+<div class="modal-overlay" id="board-modal">
+  <div class="modal board-modal">
+    <button class="close-btn" onclick="closeModal()">&times;</button>
+    <h3>📋 Доска задач</h3>
+    <div id="board-content"></div>
+  </div>
+</div>
+
+<script>
+// Данные агентов
+const agents = {
+  elon: {
+    name: '🚀 Илон',
+    role: 'AI-ассистент | Правая рука Тимура',
+    status: 'ONLINE',
+    color: '#44DD44',
+    tasks: [
+      'Управление командой агентов',
+      'Ответы на запросы Тимура',
+      'Координация задач',
+      'Мониторинг всех систем',
+      'Heartbeat & проактивные проверки'
+    ]
+  },
+  digest: {
+    name: '📡 AI Digest Bot',
+    role: 'Сборщик AI-новостей для Telegram-канала',
+    status: 'SCHEDULED',
+    color: '#DDAA22',
+    tasks: [
+      'Сбор AI-новостей (пн 9:00 МСК)',
+      'Генерация дайджеста',
+      'Публикация в Telegram-канал',
+      'Мониторинг RSS-лент'
+    ]
+  },
+  morning: {
+    name: '☀️ Morning Briefer',
+    role: 'Утренний брифинг и обзор дня',
+    status: 'SCHEDULED',
+    color: '#DDAA22',
+    tasks: [
+      'Утренний обзор (8:00 МСК)',
+      'Погода, календарь, задачи',
+      'Важные email-уведомления',
+      'Планирование дня'
+    ]
+  },
+  researcher: {
+    name: '🔍 Researcher',
+    role: 'Исследователь и аналитик',
+    status: 'ON DEMAND',
+    color: '#999',
+    tasks: [
+      'Глубокий ресёрч по запросу',
+      'Анализ конкурентов',
+      'Поиск информации',
+      'Составление отчётов'
+    ]
+  },
+  developer: {
+    name: '💻 Developer',
+    role: 'Разработчик и технический специалист',
+    status: 'ON DEMAND',
+    color: '#999',
+    tasks: [
+      'Разработка проектов',
+      'Code review',
+      'Деплой на GitHub Pages',
+      'Исправление багов'
+    ]
+  },
+  tender: {
+    name: '🎯 Тендерный специалист',
+    role: 'Мониторинг тендеров на видеопроизводство',
+    status: 'DAILY 9:00',
+    color: '#DD8800',
+    tasks: [
+      'Мониторинг zakupki.gov.ru, b2b-center, roseltorg',
+      'AI видеоролики — от 250К ₽',
+      'Съёмочные ролики — от 8М ₽',
+      'Креативные концепции — от 1.5М ₽',
+      'Канал: Видео тендеры AIZNSTEIN'
+    ]
+  },
+  smm: {
+    name: '📱 СММщик',
+    role: 'Контент-менеджер | AIZNSTEIN + CAT School + Sostav + vc.ru',
+    status: 'ONLINE',
+    color: '#44DD44',
+    tasks: [
+      'Контент-план для @aiznstein (2 поста/нед)',
+      'Контент-план для @catschool_ai (2-3 поста/нед)',
+      'Публикации на Sostav.ru (2 поста/нед)',
+      'Публикации на vc.ru (2 поста/нед)',
+      'Все посты через апрув в канале согласования',
+      'Ресёрч: анализ топовых блогов по AI-видео',
+      'Перелив трафика с Sostav/vc.ru в Telegram'
+    ]
+  },
+  archivist: {
+    name: '📚 Архивариус',
+    role: 'Хранитель памяти и контекста',
+    status: 'ALWAYS ON',
+    color: '#DD8800',
+    tasks: [
+      'Хранение всего контекста',
+      'Бэкап проектов и решений',
+      'Восстановление забытой информации',
+      'Дублирование данных при очистке',
+      'Файл: memory/ARCHIVE.md'
+    ]
+  }
+};
+
+const projects = [
+  { name: 'Vibe School (лендинг)', status: 'active', label: 'ГОТОВ' },
+  { name: 'AI Creator School (лендинг)', status: 'active', label: 'ГОТОВ' },
+  { name: 'ПДД Тренажёр', status: 'active', label: 'ЗАДЕПЛОЕН' },
+  { name: 'Застройщик домов (лендинг)', status: 'active', label: 'ГОТОВ' },
+  { name: 'AI Дайджест Telegram', status: 'active', label: 'ЕЖЕНЕДЕЛЬНО' },
+  { name: 'Morning Briefing', status: 'active', label: 'ЕЖЕДНЕВНО' },
+  { name: 'Виртуальный офис', status: 'active', label: 'В РАБОТЕ' },
+  { name: 'Google Calendar', status: 'active', label: 'ПОДКЛЮЧЁН' }
+];
+
+function showAgent(id) {
+  const a = agents[id];
+  document.getElementById('modal-name').textContent = a.name;
+  document.getElementById('modal-role').textContent = a.role;
+  document.getElementById('modal-status').textContent = a.status;
+  document.getElementById('modal-dot').style.background = a.color;
+  const tasksEl = document.getElementById('modal-tasks');
+  tasksEl.innerHTML = a.tasks.map(t => '<div>• ' + t + '</div>').join('');
+  document.getElementById('agent-modal').classList.add('active');
+}
+
+function showBoard() {
+  const content = document.getElementById('board-content');
+  content.innerHTML = projects.map(p =>
+    '<div class="project"><span>' + p.name + '</span><span class="pstatus ' + p.status + '">' + p.label + '</span></div>'
+  ).join('');
+  document.getElementById('board-modal').classList.add('active');
+}
+
+function closeModal() {
+  document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+}
+
+// Клик вне модалки закрывает
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) closeModal();
+  });
+});
+
+// Часы Москвы
+function updateClock() {
+  const now = new Date();
+  const msk = new Date(now.getTime() + (3 * 60 * 60 * 1000) + (now.getTimezoneOffset() * 60 * 1000));
+  const h = String(msk.getHours()).padStart(2, '0');
+  const m = String(msk.getMinutes()).padStart(2, '0');
+  document.getElementById('msk-time').textContent = h + ':' + m;
+  document.getElementById('desk-clock-face').textContent = h + ':' + m;
+}
+updateClock();
+setInterval(updateClock, 10000);
+
+// День/ночь за окнами (Москва UTC+3)
+function updateDayNight() {
+  const now = new Date();
+  const msk = new Date(now.getTime() + (3 * 60 * 60 * 1000) + (now.getTimezoneOffset() * 60 * 1000));
+  const hour = msk.getHours();
+  const isDay = hour >= 6 && hour < 20;
+
+  document.querySelectorAll('.window .glass').forEach(glass => {
+    if (isDay) {
+      glass.style.background = 'linear-gradient(180deg, #87CEEB 0%, #A8D8EA 60%, #C8E8F0 100%)';
+    } else {
+      glass.style.background = 'linear-gradient(180deg, #0a1628 0%, #1a2640 60%, #0d1a30 100%)';
+    }
+  });
+
+  document.querySelectorAll('.scene-sun').forEach(el => el.style.display = isDay ? 'block' : 'none');
+  document.querySelectorAll('.scene-cloud').forEach(el => el.style.display = isDay ? 'block' : 'none');
+  document.querySelectorAll('.scene-moon').forEach(el => el.style.display = isDay ? 'none' : 'block');
+  document.querySelectorAll('.scene-stars').forEach(el => el.style.display = isDay ? 'none' : 'block');
+}
+updateDayNight();
+setInterval(updateDayNight, 60000);
+</script>
+</body>
+</html>
