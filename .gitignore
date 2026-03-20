@@ -1,0 +1,23 @@
+# Secrets - NEVER push to public repos
+google-calendar-key.json
+*.key
+*.pem
+.env
+.env.*
+
+# Memory with sensitive data
+memory/ARCHIVE.md
+MEMORY.md
+TOOLS.md
+
+# Node modules
+node_modules/
+
+# Temp files
+tmp-*
+*.png
+mail-*.png
+yandex-*.png
+
+# Config with API keys
+config.json5
