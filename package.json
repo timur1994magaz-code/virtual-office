@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "googleapis": "^171.4.0",
+    "imap": "^0.8.19",
+    "nodemailer": "^8.0.3",
     "playwright": "^1.58.2"
   }
 }

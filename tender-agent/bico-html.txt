@@ -1,0 +1,941 @@
+<!DOCTYPE html><html lang="ru"><head itemscope="" itemtype="http://schema.org/WPHeader">
+	<title itemprop="headline">Результат поиска тендеров: видеоролик. Найдено тендеров: 634</title>	
+
+<meta charset="UTF-8">
+
+
+<script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-TV42F0XYNL&amp;cx=c&amp;_slc=1"></script><script async="" src="https://mc.yandex.ru/metrika/tag.js"></script><script>
+	window.Bc_isDevMode = 0;
+	window.Bc_isTestMode = 0;
+	window.Bc_moduleName = '';
+	window.Bc_isLoggedIn = 0;
+	window.Bc_employeeRole = 'admin';
+	window.Bc_isSearchTemplate = 0;
+		window.Bc_isNewSearchTender = 0;
+
+			window.Bc_isTc = false;
+	
+		window.Bc_TcSearchPage = '/tc/tender/search/';
+
+	(function() {
+		try {
+			if (localStorage.getItem('theme') === 'dark') {
+				document.documentElement.setAttribute('data-color-scheme', 'dark');
+			}
+
+			let palette = localStorage.getItem('palette') || (window.Bc_moduleName === 'crm' ? 'soft' : null);
+			if (palette && palette !== 'base') {
+				document.documentElement.setAttribute('data-color-palette', palette);
+			}
+		} catch (e) {}
+	})();
+</script>
+
+<script type="text/tpl" id="js-tpl-form.field.treeSelect.item">    <div class="tree_item js-item-@:=o.id:@" @:if(o.hidden){:@style="display:none;"@:}:@>
+    <div class="tree_item__wrapper">
+        @:if(!o.isLeaf){:@<span class="icon expand js-itemId-@:=o.id:@"></span>@:}:@
+        @:if(o.isLeafAmongParents){:@<span class="icon narrow"></span>@:}:@
+        <label class="tree_item_data @:=o.isLeaf?'no_childs':'':@ @:=o.selectable?'':'unselectable':@">
+
+            <input
+                type="@:=o.multiSelect?'checkbox':'radio':@"
+                value="@:=o.id:@"
+				default="@:=o.attribs ? o.attribs.default : '' :@"
+                class="tree_input form-checkbox js-itemId-@:=o.id:@"
+                @:if(o.disabled || !o.selectable){:@disabled@:}:@
+            >
+
+            <b class="expand_link expand @:=o.isLeaf?'no_childs':'':@ js-item-toggle js-itemId-@:=o.id:@">
+				<span
+					@:if(o.background){:@
+						style="background: @:=o.background:@"
+					@:}:@
+				>@:=o.name:@</span>
+			</b>
+        </label>
+    </div>
+	<div class="tree_childs_container js-item-@:=o.id:@-box" style="display: none">
+		<div class="tree_items_container js-item-@:=o.id:@-childsBox"></div>
+	</div>
+	<div style="clear: both;"></div>
+</div>
+</script>
+			<link rel="stylesheet" as="style" href="/generated-css/base/base-desktop.css?6810be" onload="this.onload=null;this.rel='stylesheet'" fetchpriority="low">
+	
+			<link rel="stylesheet" as="style" href="/css/jquery/jquery-ui/jquery-ui-1.8.21.custom.css?v=1" onload="this.onload=null;this.rel='stylesheet'">
+
+<script src="/js/libs/external/jquery/jquery-1.11.1.min.js"></script>
+<script src="/js/libs/external/jquery/jquery-ui-1.11.1.min.js"></script>
+
+	
+
+	<script src="/generated-js/deployData.js?1773929009" fetchpriority="low" defer=""></script>
+
+<script src="/generated-js/Bico.js?e80505" fetchpriority="high"></script><script src="/generated-js/general.js?270d7e" fetchpriority="low" defer=""></script>
+<script src="/generated-js/application/default/login.js?2ef5a2" fetchpriority="low" defer=""></script>
+<script src="/generated-js/application/default/general.js?ee5652" defer=""></script><script src="/generated-js/application/default/tender/search.js?04f244"></script><link href="/generated-css/default/tender/list-desktop.css?d9d554" rel="stylesheet" type="text/css">
+
+	<!--[if lt IE 9]>
+	<link rel="stylesheet" type="text/css" href="/css/default/ie.css" fetchpriority="low" />
+	<![endif]-->
+
+	<script async="" defer="" src="https://smartcaptcha.yandexcloud.net/captcha.js"></script>
+
+<meta name="robots" content="noindex">
+<meta itemprop="description" name="description" content="Результат поиска тендеров: видеоролик">
+<!--Canonical-->
+	
+	<meta property="og:title" content="Результат поиска тендеров: видеоролик. Найдено тендеров: 634">
+
+	<meta property="og:description" content="Результат поиска тендеров: видеоролик">
+
+<meta property="og:image" content="https://www.bicotender.ru/i/og_image.webp">
+<meta property="og:image:alt" content="Результат поиска тендеров: видеоролик. Найдено тендеров: 634">
+<meta property="og:image:width" content="1520">
+<meta property="og:image:height" content="596">
+<meta name="twitter:card" content="summary_large_image">
+
+<meta property="og:url" content="https://www.bicotender.ru/tender/search/">
+<meta property="og:type" content="website">	<meta name="robots" content="noyaca">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="yandex-verification" content="7d5289175f4a206a">
+
+	<!-- Preconnect для сторонних доменов -->
+	<link rel="preconnect" href="//code.jivo.ru" crossorigin="">
+	<link rel="preconnect" href="//mc.yandex.ru">
+	<link rel="preconnect" href="//www.google-analytics.com">
+	<link rel="dns-prefetch" href="//code.jivosite.com">
+	<link rel="dns-prefetch" href="//www.googletagmanager.com">
+			<link href="/generated-css/default/main-desktop.css?3b9284" rel="stylesheet" type="text/css" fetchpriority="high">		<link href="/generated-css/default/print.css?f812a5" rel="stylesheet" type="text/css" media="print">			<script>
+				document.domain = 'bicotender.ru';
+	</script>
+		<meta name="google" content="notranslate">
+	<style>                      .htmx-indicator{opacity:0}                      .htmx-request .htmx-indicator{opacity:1; transition: opacity 200ms ease-in;}                      .htmx-request.htmx-indicator{opacity:1; transition: opacity 200ms ease-in;}                    </style><link rel="stylesheet" type="text/css" href="/generated-css/default/modal.css?5f9ec9"><style>.SmartCaptcha-Overlay{
+  position:fixed;
+  z-index:9999999;
+  top:-10000px;
+  left:-10000px;
+
+  width:100%;
+  width:var(--smart-captcha-doc-width, 100%);
+  height:100%;
+  height:var(--smart-captcha-doc-height, 100%);
+  margin:0;
+  padding:0;
+
+  background:rgba(0, 0, 0, 0.4);
+}
+
+.SmartCaptcha-Overlay.SmartCaptcha-Overlay_visible{
+  position:fixed;
+  top:0;
+  left:0;
+}
+
+.SmartCaptcha-Overlay.SmartCaptcha-Overlay_no_background{
+  background:none;
+}
+
+.SmartCaptcha-Overlay .SmartCaptcha-Spin{
+  position:absolute;
+  top:50%;
+  left:0;
+  right:0;
+
+  margin:auto;
+
+  transform:translateY(-50%);
+}
+</style><style>.SmartCaptcha-Spin{
+  display:none;
+  visibility:hidden;
+
+  box-sizing:border-box;
+
+  border:2px solid transparent;
+  border-radius:50%;
+  background-image:linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
+}
+.SmartCaptcha-Spin::after{
+  visibility:hidden;
+
+  content:'\00A0';
+}
+.SmartCaptcha-Overlay_visible.SmartCaptcha-Overlay_show_spinner .SmartCaptcha-Spin{
+  display:inline-block;
+  visibility:visible;
+
+  width:50px;
+  height:50px;
+
+  border-top-color:#5282FF;
+  border-left-color:#5282FF;
+
+  animation:islands-spin 1s .21s infinite linear;
+
+  backface-visibility:hidden;
+}
+ .SmartCaptcha-Overlay_visible.SmartCaptcha-Overlay_show_spinner .SmartCaptcha-Spin{
+  border-top-color:var(--spin-view-default-border-color, #5282FF);
+  border-left-color:var(--spin-view-default-border-color, #5282FF);
+}
+
+@keyframes islands-spin{
+  from{
+    transform:rotate(0deg);
+  }
+
+  to{
+    transform:rotate(360deg);
+  }
+}
+</style><style>.smart-captcha{
+  min-width:300px;
+  height:102px;
+}
+
+.smart-captcha_invisible{
+  height:0;
+}
+</style><link rel="prefetch" as="script" href="https://smartcaptcha.yandexcloud.net/shield.980294ac6075b098436d.chunk.js"></head>
+<body class="" hx-ext="bico-ext" data-old-css="1" itemscope="" itemtype="https://schema.org/WebPage">
+<div id="global-preloader"></div>
+<div id="veil"></div>
+<div id="notifications"></div><script type="text/javascript">$(function(){Bc.yaVisitParams({"ab_tenderListPaginatorBlocker":"new"});});</script><div id="container">
+			<div id="header">
+							<div id="bannerGetFullAccess" class="offer_yellow"></div>
+									<div class="content">
+				<div class="hd1">
+					<div id="clock">
+											</div>
+					<div class="header-list-main">
+						<div class="header-list">
+															<ul>
+	<li>
+        <a href="/help.html">
+            <i></i>
+            <span class="line"></span>
+            <span>Как работать в системе?</span>
+        </a>
+    </li>
+	<li>
+        <a href="/questions.html">
+          <i></i>
+          <span class="line"></span>
+          <span>Задать вопрос эксперту</span>
+        </a>
+    </li>
+	<li>
+		<a href="/tariffs.html">
+			<i></i>
+			<span class="line"></span>
+			<span>Подобрать тариф</span>
+		</a>
+    </li>
+
+	<li>
+							<a href="/registration" data-widget="site/registration/Popup" data-form-class="Default_Form_Registration_CallBack">
+					<img src="/i/call-answer.svg" alt="Заказать звонок" class="call-back-icon-main">
+					<span>Заказать звонок</span>
+				</a>		    </li>
+</ul> 
+							
+						</div>
+													<div class="demo_dostup">
+								<a class="button_demo" href="/registration/?mode=demo">
+									<span class="button_demo_connect">Подключить тестовый доступ</span>
+									<span class="button_demo_connect_mob">Тестовый доступ</span>
+								</a>
+							</div>
+											</div>
+				</div>
+				<div class="clear"></div>
+				<div class="hd2">
+	<div class="logo">
+		<a href="/" title="BiCoTender - поисковая система тендеров">
+			<img src="/i/bico_logo.svg" width="220" height="60" alt="BiCoTender - лого" loading="lazy">
+		</a>
+		</div>
+		<div class="hd2_2">
+		
+					Первая и самая полная поисковая система тендеров и закупок России и СНГ
+					<div class="tndsearch ">
+				
+				<form name="search" id="searchForm" action="/tender/search/" method="get">
+					<dl class="search_element_wrapper">
+						<dt></dt>
+						<dd id="search_element">
+							<input type="hidden" name="keywordsStrict" value="0" style="">
+							<input type="hidden" name="smartSearch" value="0" style="">
+							<input type="hidden" name="regionPreference" value="0" style="">
+							<input type="text" name="keywords" placeholder="Введите слова для поиска" data-widget="tender/SearchHistoryAutocomplete" data-widget-config="{&quot;onSelectAction&quot;:&quot;SUBMIT&quot;}" id="keywords_lite" value="видеоролик" autocomplete="off" class="ui-autocomplete-input" style="">
+						</dd>
+					</dl>
+					<input type="submit" value="НАЙТИ" id="searchTenders" style="">
+					<input type="hidden" value="1" name="submit" style="">
+				</form>
+				<div class="tndsearch-bottom">
+					<div class="tndsearch-bottom-left">
+						Например, <a class="example" href="/regions/moskva.html">тендеры москвы</a>, <a href="/katalog/otrasly.html">тендеры по отраслям</a>					</div>
+										<div class="tndsearch-bottom-right">
+						<a href="/tender/search/?keywordsStrict=0&amp;keywords=%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE%D1%80%D0%BE%D0%BB%D0%B8%D0%BA">+ Расширенный поиск</a>
+					</div>
+				</div>
+				
+			</div>
+					<nav class="main-nav" itemscope="" itemtype="http://schema.org/SiteNavigationElement">
+			<ul class="main-nav__list" itemprop="about" itemscope="" itemtype="http://schema.org/ItemList">
+				<li class="main-nav__item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ItemList">
+					<a itemprop="url" href="/trm-promo">Возможности системы</a>
+					<meta itemprop="name" content="Возможности системы">
+				</li>
+				<li class="main-nav__item">
+					<span>Каталог тендеров</span>
+					<ul class="main-nav__submenu">
+						<li class="submenu__item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ItemList">
+							<a itemprop="url" href="/catalog/">Все тендеры</a>
+							<meta itemprop="name" content="Все тендеры">
+						</li>
+						<li class="submenu__item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ItemList">
+							<a itemprop="url" href="/catalog/by-region/rossiya/">Тендеры России</a>
+							<meta itemprop="name" content="Тендеры России">
+						</li>
+						<li class="submenu__item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ItemList">
+							<a itemprop="url" href="/mezhdunarodnye-tender/">Международные тендеры</a>
+							<meta itemprop="name" content="Международные тендеры">
+						</li>
+						<li class="submenu__item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ItemList">
+							<a itemprop="url" href="/malaya-zakupka/">Малые закупки</a>
+							<meta itemprop="name" content="Малые закупки">
+						</li>
+						<li class="submenu__item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ItemList">
+							<a itemprop="url" href="/category/">Закупки на товары</a>
+							<meta itemprop="name" content="Закупки на товары">
+						</li>
+					</ul>
+				</li>
+				<li class="main-nav__item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ItemList">
+					<a itemprop="url" href="/subscribe/registration/">Рассылка с тендерами</a>
+					<meta itemprop="name" content="Рассылка с тендерами">
+				</li>
+				<li class="main-nav__item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ItemList">
+					<a itemprop="url" href="/analytics.html">Аналитика</a>
+					<meta itemprop="name" content="Аналитика">
+				</li>
+								<li class="main-nav__item">
+					<span>Справочники</span>
+					<ul class="main-nav__submenu">
+						<li class="submenu__item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ItemList">
+							<a itemprop="url" href="/okpd2/">Справочник тендеров по ОКПД-2</a>
+							<meta itemprop="name" content="Справочник ОКПД-2">
+						</li>
+						<li class="submenu__item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ItemList">
+							<a itemprop="url" href="/gost/">Справочник тендеров по ГОСТу</a>
+							<meta itemprop="name" content="Справочник тендеров по ГОСТу">
+						</li>
+						<li class="submenu__item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ItemList">
+							<a itemprop="url" href="/ktru/">Справочник тендеров по КТРУ</a>
+							<meta itemprop="name" content="Справочник КТРУ">
+						</li>
+						<li class="submenu__item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ItemList">
+							<a itemprop="url" href="/etp/">Справочник тендеров по ЭТП</a>
+							<meta itemprop="name" content="Справочник тендеров по ЭТП">
+						</li>
+						<li class="submenu__item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ItemList">
+							<a itemprop="url" href="/zakon-223_fz-o-zakupkah-tovarov-rabot-uslug-otdelnymi-vidami-yuridicheskih-lic.html">Закон 223-ФЗ</a>
+							<meta itemprop="name" content="Закон 223-ФЗ о закупках товаров, работ, услуг отдельными видами юридических лиц">
+						</li>
+						<li class="submenu__item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ItemList">
+							<a itemprop="url" href="/zakon-44_fz-o-kontraktnoi-sisteme.html">Закон 44-ФЗ</a>
+							<meta itemprop="name" content="Закон 44-ФЗ о контрактной системе">
+						</li>
+					</ul>
+				</li>
+				<li class="main-nav__item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ItemList">
+					<a itemprop="url" href="/about.html">О компании</a>
+					<meta itemprop="name" content="О компании">
+				</li>
+				<li class="main-nav__item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ItemList">
+					<a itemprop="url" href="/about/contacts.html">Контакты</a>
+					<meta itemprop="name" content="Контакты">
+				</li>
+			</ul>
+		</nav>
+		
+	</div>
+	</div>
+
+			</div>
+		</div>
+		<div id="middle" class="js-middle ">
+		<div id="left">
+			<div class="scroll-left-sidebar" data-widget="Floating" data-secret-id="secret" data-container-selector=".js-middle">
+				<div class="content">
+																		
+	<!--noindex-->
+			<div class="enter_lk">Вход в личный кабинет</div>
+	
+	<div class="infoblok login">
+					<div class="zag">Личный кабинет<div></div></div>
+		
+		<form action="/login/" method="post" name="loginForm">
+			<dl>
+				<dt id="login-label">
+					<label for="login">Логин:</label>
+				</dt>
+				<dd id="login-element">
+					<input type="text" id="login" name="login" value="" style="">
+				</dd>
+				<dt id="pswd-label">
+					<label for="password">Пароль:</label>
+				</dt>
+				<dd id="pswd-element">
+					<input type="password" id="password" name="password" style=""><span class="toggle-password icon-eye"></span>
+				</dd>
+
+			</dl>
+			<label for="remember">
+				<input type="checkbox" id="remember" name="remember" checked="checked" style=""> запомнить меня
+			</label> <br><br>
+			<input class="lkb" type="submit" value="Вход" style="">
+			<div class="sub right">
+				<i></i><a href="/registration/restore/">Забыли пароль?</a>
+			</div>
+							<div class="sub flat-button-wrapper-reg">
+					<a href="/registration" data-widget="site/registration/Popup" data-form-class="Default_Form_Registration_LeftColumnPopup" class="flat-button" style="color: #ffffff">Регистрация</a>				</div>
+					</form>
+	</div>
+	<!--/noindex-->
+																						<link href="/generated-css/default/index/left-menu.css?0e61a1" rel="stylesheet" type="text/css" fetchpriority="low"><div class="left-menu">
+	<div class="left-menu__heading">
+		Наши услуги
+	</div>
+	<ul class="left-menu__list" itemscope="" itemtype="http://schema.org/WPSideBar">
+		<li class="left-menu__item">
+			<a class="sopr" href="/service/complex.html" itemprop="url">
+				<span>Сопровождение</span>
+			</a>
+		</li>
+		<li class="left-menu__item">
+			<a class="ecp" href="/service/ecp/ophormlenie_ep.html" itemprop="url">
+				<span>Оформление ЭЦП</span>
+			</a>
+		</li>
+		<li class="left-menu__item">
+			<a class="reg" href="/service/ecp/registraciya_v_eis.html" itemprop="url">
+				<span>Регистрация в ЕИС</span>
+			</a>
+		</li>
+		<li class="left-menu__item">
+			<a class="fin" href="/service/bicofinans.html" itemprop="url">
+				<span>Финансовые услуги</span>
+			</a>
+		</li>
+				<li class="left-menu__item">
+							<a class="all" href="/service.html" itemprop="url">
+					<span>Все услуги</span>
+				</a>
+					</li>
+	</ul>
+</div>
+									</div>
+							</div>
+		</div>
+		<div id="general">
+			<div id="center">
+								<div class="content">
+											<div class="site-banner-block" data-position="under_search">
+	</div>
+										
+																																								<div class="title__wrapp__block">
+								<a href="#" id="tenderHeader"></a>
+								<div class="page-title openHeading-block">
+									<div class="openHeading">
+										<h1 class="title__wrapp__block__h1 head-first" title="Результат поиска тендеров: видеоролик" itemprop="headline">
+											Результат поиска тендеров: видеоролик										</h1>
+									</div>
+									<div class="open-buttons">
+										<span class="open-title"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="5" fill="none"><path fill-rule="evenodd" d="M5.985 5L.97.036 3.286 0l2.699 2.683L8.774.036H11L5.985 5z" fill="#5c6580"></path></svg></span>
+										<span class="close-title"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="5" fill="none"><path fill-rule="evenodd" d="M5.985 5L.97.036 3.286 0l2.699 2.683L8.774.036H11L5.985 5z" fill="#5c6580"></path></svg></span>
+									</div>
+								</div>
+																							</div>
+															<div class="promo-links">
+		
+<a href="/private/analytics.html" class="analytics-promo-link analytics-promo-link--left" onclick="showAuthorization('analyticsPromo', '/tc/analytics/', true); return false;">
+	Проанализировать тендеры по вашему запросу</a>
+	<a class="search-favorable-tenders" data-widget="site/registration/Popup" data-title="Подберем самые выгодные тендеры из Вашей отрасли!" data-form-class="Default_Form_Registration_TenderListHelpToPick">Помощь в подборе тендеров</a>
+</div>
+
+																							
+<div class="js-widget-Floating floating-block js-widget-Informer informer-wrapper" id="js-Informer" onclick="return {&quot;style&quot;:{&quot;zIndex&quot;:999}}">
+	</div>										
+<script src="/generated-js/application/bc/tender/searchInFound.js?f6fa75"></script>
+<div class="have-many-tender" style="display: none">
+	<p><b>Нашли мало тендеров?</b></p>
+
+	<p>
+		<a data-widget="site/registration/Popup" data-form-class="Default_Form_Registration_TenderListFewResults">Отправьте запрос тендерному специалисту</a> - он подберет для Вас тендеры и
+		настроит бесплатную
+		рассылку с новыми предложениями по Вашей отрасли и региону.</p>
+</div>
+<script src="/generated-js/application/bc/tender/general.js?aa91fc"></script>
+	
+	
+	
+
+	<div class="tender_search_result_block">
+					<span class="note">Заданные ключевые слова:</span>
+			<span class="keywords">видеоролик</span>
+						<br>
+										<span class="note">Найдено тендеров: <span class="number">634</span></span>
+																<br><span class="note">И еще в Архиве найдено: более чем <span class="number">16&nbsp;000</span></span>
+												</div>
+
+			<div class="smart_filter_wrap_block" data-widget="tender/QuickSearchForm" data-authorisation-needed="true">
+    <!--noindex--><form id="tender_search" name="tender_search" fieldsconfig.no_exclude_by_lots.includeif="" fieldsconfig.no_exclude_by_positions.includeif="1" fieldsconfig.sourceurl.includeif="" fieldsconfig.tradetype.value="" isquicksearch="1" method="get" action="/tender/search/" class=" js-widget-Form" data-field-name="" data-field-type="form" data-form-id="tenderSearch"><div class="smart_filter_row group block-blue-background">
+
+	<div class="smart_filter_left_col">
+		<div class="smart_filter_search_field form_element_type">
+			<div class="labels">
+				<label>Ключевые слова:</label>
+			</div>
+			<div class="controls">
+				
+<input type="text" name="keywords" id="keywords" value="видеоролик" placeholder="Введите слова, по которым вы хотите найти тендеры!" data-field-name="keywords" data-field-type="text" style="">			</div>
+		</div>
+
+					<div class="smart_filter_second_row group">
+				<div class="smart_filter_show_search_form">
+					<span class="smart_filter_show_search_form_title" data-action="openFullSearch">Показать все поля поиска</span>
+				</div>
+				<div class="smart_filter_type_tender form_element_type">
+					<div class="labels">
+						<label>Тип тендера:</label>
+					</div>
+					<div class="controls">
+						<div class="tree_info_block smart_filter_type_tender_select_type select_type_block">
+							
+
+
+
+<div data-field-name="type_id" data-field-full-name="type_id[]" data-field-type="selectTree" data-place-holder="" class="js-widget-FormElementTreeSelect form-element-tree" onclick="return {&quot;dataWidgets&quot;:null,&quot;value&quot;:[],&quot;inputName&quot;:&quot;type_id[]&quot;,&quot;inputLabel&quot;:&quot;\u0422\u0438\u043f \u0442\u0435\u043d\u0434\u0435\u0440\u0430&quot;,&quot;data&quot;:[{&quot;id&quot;:1,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u041a\u043e\u043d\u043a\u0443\u0440\u0441&quot;},{&quot;id&quot;:2,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u0410\u0443\u043a\u0446\u0438\u043e\u043d&quot;},{&quot;id&quot;:3,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u0417\u0430\u043f\u0440\u043e\u0441 \u043a\u043e\u0442\u0438\u0440\u043e\u0432\u043e\u043a&quot;},{&quot;id&quot;:4,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u042d\u043b\u0435\u043a\u0442\u0440\u043e\u043d\u043d\u044b\u0439 \u0430\u0443\u043a\u0446\u0438\u043e\u043d&quot;},{&quot;id&quot;:5,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u0411\u0438\u0440\u0436\u0430&quot;},{&quot;id&quot;:6,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u041e\u0442\u0431\u043e\u0440&quot;},{&quot;id&quot;:7,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u0418\u0437\u0432\u0435\u0449\u0435\u043d\u0438\u0435 \u043e \u0437\u0430\u0438\u043d\u0442\u0435\u0440\u0435\u0441\u043e\u0432\u0430\u043d\u043d\u043e\u0441\u0442\u0438&quot;},{&quot;id&quot;:8,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u0414\u0440\u0443\u0433\u043e\u0435&quot;},{&quot;id&quot;:9,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u041d\u0435 \u043e\u043f\u0440\u0435\u0434\u0435\u043b\u0435\u043d&quot;},{&quot;id&quot;:10,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u0415\u0434\u0438\u043d\u0441\u0442\u0432\u0435\u043d\u043d\u044b\u0439 \u043f\u043e\u0441\u0442\u0430\u0432\u0449\u0438\u043a&quot;},{&quot;id&quot;:11,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u0417\u0430\u043f\u0440\u043e\u0441 \u043f\u0440\u0435\u0434\u043b\u043e\u0436\u0435\u043d\u0438\u0439&quot;},{&quot;id&quot;:12,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u0410\u043d\u0430\u043b\u0438\u0437 \u0446\u0435\u043d&quot;},{&quot;id&quot;:13,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u041f\u0440\u0435\u0434\u043b\u043e\u0436\u0435\u043d\u0438\u0435 \u0434\u0435\u043b\u0430\u0442\u044c \u043e\u0444\u0435\u0440\u0442\u044b&quot;},{&quot;id&quot;:14,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u041c\u0430\u043b\u0430\u044f \u0437\u0430\u043a\u0443\u043f\u043a\u0430&quot;},{&quot;id&quot;:15,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u0417\u0430\u043a\u0440\u044b\u0442\u0430\u044f \u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u0430&quot;},{&quot;id&quot;:16,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u0427\u0430\u0441\u0442\u043d\u043e\u0435 \u043e\u0431\u044a\u044f\u0432\u043b\u0435\u043d\u0438\u0435&quot;},{&quot;id&quot;:17,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u0417\u0430\u043a\u0443\u043f\u043a\u0430 \u0443 \u0430\u043a\u043a\u0440\u0435\u0434\u0438\u0442\u043e\u0432\u0430\u043d\u043d\u043e\u0433\u043e \u043f\u043e\u0441\u0442\u0430\u0432\u0449\u0438\u043a\u0430&quot;},{&quot;id&quot;:18,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u041f\u0443\u0431\u043b\u0438\u0447\u043d\u043e\u0435 \u043f\u0440\u0435\u0434\u043b\u043e\u0436\u0435\u043d\u0438\u0435&quot;},{&quot;id&quot;:19,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u0417\u0430\u043f\u0440\u043e\u0441 \u0446\u0435\u043d&quot;},{&quot;id&quot;:20,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u041a\u043e\u043d\u043a\u0443\u0440\u0435\u043d\u0442\u043d\u044b\u0439 \u043b\u0438\u0441\u0442&quot;},{&quot;id&quot;:21,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u041a\u043e\u043d\u043a\u0443\u0440\u0435\u043d\u0442\u043d\u044b\u0439 \u043b\u0438\u0441\u0442 \u0441 \u043f\u0435\u0440\u0435\u0442\u043e\u0440\u0436\u043a\u043e\u0439&quot;},{&quot;id&quot;:22,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u0423\u043f\u0440\u043e\u0449\u0435\u043d\u043d\u0430\u044f \u0437\u0430\u043a\u0443\u043f\u043a\u0430&quot;},{&quot;id&quot;:23,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u0417\u0430\u043a\u0443\u043f\u043a\u0430 \u0432\u043e \u0438\u0441\u043f\u043e\u043b\u043d\u0435\u043d\u0438\u0435 \u0434\u043e\u0445\u043e\u0434\u043d\u044b\u0445 \u0434\u043e\u0433\u043e\u0432\u043e\u0440\u043e\u0432&quot;},{&quot;id&quot;:24,&quot;parent&quot;:0,&quot;name&quot;:&quot;\u0420\u043e\u0441\u0430\u0442\u043e\u043c: \u0411\u0420\u0418\u0424&quot;}],&quot;multiSelect&quot;:true,&quot;quickDeselect&quot;:true,&quot;useFilter&quot;:true,&quot;id&quot;:&quot;type_id&quot;,&quot;ajaxQueryUrl&quot;:&quot;&quot;,&quot;ajaxQueryOptions&quot;:[],&quot;ajaxPortionQueryUrl&quot;:&quot;&quot;,&quot;ajaxListFilterUrl&quot;:&quot;&quot;,&quot;disabled&quot;:false,&quot;listToTreeParams&quot;:{&quot;parentIndex&quot;:&quot;parent&quot;,&quot;idIndex&quot;:&quot;id&quot;,&quot;rootId&quot;:0},&quot;isModal&quot;:false,&quot;separator&quot;:&quot;&quot;,&quot;enableDragDrop&quot;:false}" id="type_id">
+
+	<div class="js-resultBox tree_info_block">
+		<div class="select-tree-place-holder "></div>	</div>
+	<div class="js-dataBox">
+			</div>
+
+	<div class="js-tree_items_wrapper tree-popup" style="display: none">
+		<div class="js-tree-container tree_items_wrapper js-item-0-box tree_items_list">
+			<div class="js-overlay overlay overlay-white hidden"></div>
+							<div class="toggler js-toggler-wrapper">
+					<div class="js-toggler">
+						<a href="#" class="select-all" data-state="1">Выделить все</a> <span>\</span>
+						<a href="#" class="select-all" data-state="0">Снять выделение</a>
+					</div>
+									</div>
+										<div class="filter-block">
+					<input class="filter" type="text" placeholder="Поиск по списку..." style="">
+
+					<div class="js-filter-error error-block" style="display: none;"></div>
+				</div>
+						<div class="tree_items_container js-item-0-childsBox"></div>
+		</div>
+	</div>
+</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+
+	<div class="smart_filter_right_col">
+					<div class="form_element_type smart_filter_region_field">
+				<div class="labels">Регион:</div>
+				<div class="controls">
+					
+
+
+
+<div data-field-name="region_id" data-field-full-name="region_id[]" data-field-type="regionTree" data-place-holder="" class="js-widget-FormElementTreeSelect form-element-tree" onclick="return {&quot;dataWidgets&quot;:null,&quot;value&quot;:[],&quot;inputName&quot;:&quot;region_id[]&quot;,&quot;inputLabel&quot;:&quot;\u0420\u0435\u0433\u0438\u043e\u043d&quot;,&quot;data&quot;:[],&quot;multiSelect&quot;:true,&quot;quickDeselect&quot;:true,&quot;useFilter&quot;:true,&quot;id&quot;:&quot;region_id&quot;,&quot;ajaxQueryUrl&quot;:&quot;\/ajax\/regiontree\/?isSite=1&quot;,&quot;ajaxQueryOptions&quot;:[],&quot;ajaxPortionQueryUrl&quot;:&quot;&quot;,&quot;ajaxListFilterUrl&quot;:&quot;&quot;,&quot;disabled&quot;:false,&quot;listToTreeParams&quot;:{&quot;parentIndex&quot;:&quot;parent&quot;,&quot;idIndex&quot;:&quot;id&quot;,&quot;rootId&quot;:0},&quot;isModal&quot;:false,&quot;separator&quot;:&quot;&quot;,&quot;enableDragDrop&quot;:false}" id="region_id">
+
+	<div class="js-resultBox tree_info_block">
+		<div class="select-tree-place-holder "></div>	</div>
+	<div class="js-dataBox">
+			</div>
+
+	<div class="js-tree_items_wrapper tree-popup" style="display: none">
+		<div class="js-tree-container tree_items_wrapper js-item-0-box tree_items_list">
+			<div class="js-overlay overlay overlay-white hidden"></div>
+							<div class="toggler js-toggler-wrapper">
+					<div class="js-toggler">
+						<a href="#" class="select-all" data-state="1">Выделить все</a> <span>\</span>
+						<a href="#" class="select-all" data-state="0">Снять выделение</a>
+					</div>
+									</div>
+										<div class="filter-block">
+					<input class="filter" type="text" placeholder="Поиск по списку..." style="">
+
+					<div class="js-filter-error error-block" style="display: none;"></div>
+				</div>
+						<div class="tree_items_container js-item-0-childsBox"></div>
+		</div>
+	</div>
+</div>
+				</div>
+			</div>
+		
+					<div class="service_button_block">
+				<ul class="service_button_block_items">
+					
+					<li class="service_button_block_item" data-widget="tooltip" aria-label="Экспорт в Excel. В таблицу excel будет экспортировано 0&nbsp;тендеров&nbsp;(с&nbsp;1&nbsp;по&nbsp;0)." data-bs-original-title="Экспорт в Excel. В таблицу excel будет экспортировано 0&nbsp;тендеров&nbsp;(с&nbsp;1&nbsp;по&nbsp;0).">
+													<a class="service_button_block_link item_it_1" data-action="authorisationNeeded"></a>
+											</li>
+					
+						<li class="service_button_block_item" data-widget="tooltip" aria-label="Сохранить параметры поиска" data-bs-original-title="Сохранить параметры поиска">
+							<a class="service_button_block_link item_it_2" data-action="saveSearch"></a>
+						</li>
+						<li class="service_button_block_item" data-widget="tooltip" aria-label="Сохранить в рассылку" data-bs-original-title="Сохранить в рассылку">
+							<a class="service_button_block_link item_it_3" data-action="saveToSubscribe"></a>
+						</li>
+										<li class="service_button_block_item" data-widget="tooltip" aria-label="Печать" data-bs-original-title="Печать">
+						<a class="service_button_block_link item_it_4" data-action="print"></a>
+					</li>
+				</ul>
+			</div>
+
+
+			<div class="smart_filter_second_row group">
+				<div class="smart_filter_active_checkbox_block form_element_type">
+					<div class="controls">
+						
+						<input type="checkbox" name="status_id[]" value="3" id="chckbox_active_field" class="chckbox_active_field" style="">
+						<label for="chckbox_active_field" class="chckbox_active_title">Активный</label>
+					</div>
+				</div>
+				<div class="smart_filter_quantity_with_page form_element_type">
+					<div class="labels">
+						<label>
+							Показать на странице:
+						</label>
+					</div>
+					<div class="controls">
+						
+<select name="on_page" id="on_page" data-field-name="on_page" data-field-type="select">
+    <option value="10" label="10">10</option>
+    <option value="20" label="20" selected="selected">20</option>
+    <option value="50" label="50">50</option>
+    <option value="100" label="100">100</option>
+</select>					</div>
+				</div>
+			</div>
+		
+		<div class="submit-block">
+			<input type="submit" name="submit" value="найти" class="smart_filter_submit_button" style="">
+		</div>
+	</div>
+</div>
+</form><!--/noindex-->
+	<div data-full-search-box="1" style="display: none">
+		<!--noindex--><form id="tender_search" name="tender_search" fieldsconfig.no_exclude_by_lots.includeif="" fieldsconfig.no_exclude_by_positions.includeif="1" fieldsconfig.sourceurl.includeif="" fieldsconfig.tradetype.value="" submit="1" method="get" action="/tender/search/" class=" js-widget-Form" data-field-name="" data-field-type="form" data-form-id="tenderSearch"><div class="row">
+		<div class="left-column">
+			<div class="element-group bottom-separator">
+				<div class="control-group">
+					<div class="labels">
+						Ключевые слова:
+					</div>
+					<div class="controls">
+						
+<input type="text" name="keywords" id="keywords" value="видеоролик" placeholder="Введите слова, по которым вы хотите найти тендеры!" data-field-name="keywords" data-field-type="text" style="">					</div>
+				</div>
+                <div class="control-group">
+                    <div class="labels">
+                    </div>
+                    <div class="controls">
+                        <label for="no_search_by_positions">
+							
+<input type="hidden" name="no_search_by_positions" value="0" style=""><input type="checkbox" name="no_search_by_positions" id="no_search_by_positions" value="1" data-field-name="no_search_by_positions" data-field-type="checkbox" style="">Не искать по позициям                        </label>
+                    </div>
+                </div>
+				<div class="control-group">
+					<div class="labels">
+					</div>
+					<div class="controls">
+						<label for="keywordsStrict">
+							
+<input type="hidden" name="keywordsStrict" value="0" style=""><input type="checkbox" name="keywordsStrict" id="keywordsStrict" value="1" data-field-name="keywordsStrict" data-field-type="checkbox" style="">Искать все слова в одном тендере						</label>
+					</div>
+				</div>
+				
+				<!-- Исключить слова -->
+				<div class="control-group">
+					<div class="labels">
+						Исключить слова:
+					</div>
+					<div class="controls">
+						
+<input type="text" name="nokeywords" id="nokeywords" value="" placeholder="Слова, которые будут исключены из поиска" data-field-name="nokeywords" data-field-type="text" style="">					</div>
+				</div>
+
+                <div class="control-group">
+                    <div class="labels">
+                    </div>
+                    <div class="controls">
+                        <label for="no_exclude_by_positions">
+							
+<input type="hidden" name="no_exclude_by_positions" value="0" style=""><input type="checkbox" name="no_exclude_by_positions" id="no_exclude_by_positions" value="1" checked="checked" data-field-name="no_exclude_by_positions" data-field-type="checkbox" style="">Не исключать по позициям                        </label>
+                    </div>
+                </div>
+			</div>
+
+			<div class="element-group bottom-separator">
+				<div class="control-group">
+					<div class="labels">
+						Поиск слов в документации:
+					</div>
+					<div class="controls">
+						
+<input type="text" name="documentationKeywords" id="documentationKeywords" value="" placeholder="Cлова, которые хотите найти только в документации тендера" data-field-name="documentationKeywords" data-field-type="text" style="">						<div class="howToSearch" style="float:right; width:90px;">
+							<span></span>
+							<a onclick="$(this).next().slideToggle('fast')">Подсказка</a>
+							<div id="howsearch" class="popover" style="display:none; width: 110px;" onclick="$(this).slideToggle('fast')">
+								<div class="action right delete js-subformListItemAction-remove" title="Удалить">
+									<i class="icon-close"></i>
+								</div>
+								<div class="arrow"></div>
+								<p>Поиск по документации работает для активных тендеров</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<div class="labels">
+						Исключить слова из документации:
+					</div>
+					<div class="controls">
+						
+<input type="text" name="nodocumentationKeywords" id="nodocumentationKeywords" value="" placeholder="Слова, которые будут исключены из поиска по документации" data-field-name="nodocumentationKeywords" data-field-type="text" style="">					</div>
+				</div>
+			</div>
+
+			<div class="element-group bottom-separator">
+				<div class="control-group">
+					<div class="labels">
+						Регион:
+					</div>
+					<div class="controls">
+						
+
+
+
+<div data-field-name="region_id" data-field-full-name="region_id[]" data-field-type="regionTree" data-place-holder="" class="js-widget-FormElementTreeSelect form-element-tree" onclick="return {&quot;dataWidgets&quot;:null,&quot;value&quot;:[],&quot;inputName&quot;:&quot;region_id[]&quot;,&quot;inputLabel&quot;:&quot;\u0420\u0435\u0433\u0438\u043e\u043d&quot;,&quot;data&quot;:[],&quot;multiSelect&quot;:true,&quot;quickDeselect&quot;:true,&quot;useFilter&quot;:true,&quot;id&quot;:&quot;region_id&quot;,&quot;ajaxQueryUrl&quot;:&quot;\/ajax\/regiontree\/?isSite=1&quot;,&quot;ajaxQueryOptions&quot;:[],&quot;ajaxPortionQueryUrl&quot;:&quot;&quot;,&quot;ajaxListFilterUrl&quot;:&quot;&quot;,&quot;disabled&quot;:false,&quot;listToTreeParams&quot;:{&quot;parentIndex&quot;:&quot;parent&quot;,&quot;idIndex&quot;:&quot;id&quot;,&quot;rootId&quot;:0},&quot;isModal&quot;:false,&quot;separator&quot;:&quot;&quot;,&quot;enableDragDrop&quot;:false}" id="region_id">
+
+	<div class="js-resultBox tree_info_block">
+		<div class="select-tree-place-holder "></div>	</div>
+	<div class="js-dataBox">
+			</div>
+
+	<div class="js-tree_items_wrapper tree-popup" style="display: none">
+		<div class="js-tree-container tree_items_wrapper js-item-0-box tree_items_list">
+			<div class="js-overlay overlay overlay-white hidden"></div>
+							<div class="toggler js-toggler-wrapper">
+					<div class="js-toggler">
+						<a href="#" class="select-all" data-state="1">Выделить все</a> <span>\</span>
+						<a href="#" class="select-all" data-state="0">Снять выделение</a>
+					</div>
+									</div>
+										<div class="filter-block">
+					<input class="filter" type="text" placeholder="Поиск по списку..." style="">
+
+					<div class="js-filter-error error-block" style="display: none;"></div>
+				</div>
+						<div class="tree_items_container js-item-0-childsBox"></div>
+		</div>
+	</div>
+</div>
+					</div>
+				</div>
+
+				
+                <div class="control-group">
+                    <div class="labels">
+                        Регион поставки:
+                    </div>
+                    <div class="controls">
+                        
+
+
+
+<div data-field-name="applyingRegion_id" data-field-full-name="applyingRegion_id[]" data-field-type="regionTree" data-place-holder="" class="js-widget-FormElementTreeSelect form-element-tree" onclick="return {&quot;dataWidgets&quot;:null,&quot;value&quot;:[],&quot;inputName&quot;:&quot;applyingRegion_id[]&quot;,&quot;inputLabel&quot;:&quot;\u0420\u0435\u0433\u0438\u043e\u043d \u043f\u043e\u0441\u0442\u0430\u0432\u043a\u0438&quot;,&quot;data&quot;:[],&quot;multiSelect&quot;:true,&quot;quickDeselect&quot;:true,&quot;useFilter&quot;:true,&quot;id&quot;:&quot;applyingRegion_id&quot;,&quot;ajaxQueryUrl&quot;:&quot;\/ajax\/regiontree\/?isSite=1&quot;,&quot;ajaxQueryOptions&quot;:[],&quot;ajaxPortionQueryUrl&quot;:&quot;&quot;,&quot;ajaxListFilterUrl&quot;:&quot;&quot;,&quot;disabled&quot;:false,&quot;listToTreeParams&quot;:{&quot;parentIndex&quot;:&quot;parent&quot;,&quot;idIndex&quot;:&quot;id&quot;,&quot;rootId&quot;:0},&quot;isModal&quot;:false,&quot;separator&quot;:&quot;&quot;,&quot;enableDragDrop&quot;:false}" id="applyingRegion_id">
+
+	<div class="js-resultBox tree_info_block">
+		<div class="select-tree-place-holder "></div>	</div>
+	<div class="js-dataBox">
+			</div>
+
+	<div class="js-tree_items_wrapper tree-popup" style="display: none">
+		<div class="js-tree-container tree_items_wrapper js-item-0-box tree_items_list">
+			<div class="js-overlay overlay overlay-white hidden"></div>
+							<div class="toggler js-toggler-wrapper">
+					<div class="js-toggler">
+						<a href="#" class="select-all" data-state="1">Выделить все</a> <span>\</span>
+						<a href="#" class="select-all" data-state="0">Снять выделение</a>
+					</div>
+									</div>
+										<div class="filter-block">
+					<input class="filter" type="text" placeholder="Поиск по списку..." style="">
+
+					<div class="js-filter-error error-block" style="display: none;"></div>
+				</div>
+						<div class="tree_items_container js-item-0-childsBox"></div>
+		</div>
+	</div>
+</div>
+                    </div>
+                </div>
+			</div>
+
+			<div class="element-group bottom-separator">
+				<div class="control-group">
+					<div class="labels">
+						Отрасль:
+					</div>
+					<div class="controls">
+						
+
+
+
+<div data-field-name="field_id" data-field-full-name="field_id[]" data-field-type="fieldTree" data-place-holder="" class="js-widget-FormElementTreeSelect form-element-tree" onclick="return {&quot;dataWidgets&quot;:null,&quot;value&quot;:[],&quot;inputName&quot;:&quot;field_id[]&quot;,&quot;inputLabel&quot;:&quot;\u041e\u0442\u0440\u0430\u0441\u043b\u044c&quot;,&quot;data&quot;:[],&quot;multiSelect&quot;:true,&quot;quickDeselect&quot;:true,&quot;useFilter&quot;:true,&quot;id&quot;:&quot;field_id&quot;,&quot;ajaxQueryUrl&quot;:&quot;\/ajax\/fieldtree\/&quot;,&quot;ajaxQueryOptions&quot;:[],&quot;ajaxPortionQueryUrl&quot;:&quot;&quot;,&quot;ajaxListFilterUrl&quot;:&quot;&quot;,&quot;disabled&quot;:false,&quot;listToTreeParams&quot;:{&quot;parentIndex&quot;:&quot;parent&quot;,&quot;idIndex&quot;:&quot;id&quot;,&quot;rootId&quot;:0},&quot;isModal&quot;:false,&quot;separator&quot;:&quot;&quot;,&quot;enableDragDrop&quot;:false}" id="field_id">
+
+	<div class="js-resultBox tree_info_block">
+		<div class="select-tree-place-holder "></div>	</div>
+	<div class="js-dataBox">
+			</div>
+
+	<div class="js-tree_items_wrapper tree-popup" style="display: none">
+		<div class="js-tree-container tree_items_wrapper js-item-0-box tree_items_list">
+			<div class="js-overlay overlay overlay-white hidden"></div>
+							<div class="toggler js-toggler-wrapper">
+					<div class="js-toggler">
+						<a href="#" class="select-all" data-state="1">Выделить все</a> <span>\</span>
+						<a href="#" class="select-all" data-state="0">Снять выделение</a>
+					</div>
+									</div>
+										<div class="filter-block">
+					<input class="filter" type="text" placeholder="Поиск по списку..." style="">
+
+					<div class="js-filter-error error-block" style="display: none;"></div>
+				</div>
+						<div class="tree_items_container js-item-0-childsBox"></div>
+		</div>
+	</div>
+</div>
+					</div>
+				</div>
+				                    <div class="control-group">
+                        <div class="labels">
+                        </div>
+                        <div class="controls">
+                            <label for="multifields">
+                                
+<input type="hidden" name="multifields" value="0" style=""><input type="checkbox" name="multifields" id="multifields" value="1" data-field-name="multifields" data-field-type="checkbox" style="">Искать по возможным отраслям                            </label>
+                        </div>
+                    </div>
+							</div>
+
+            <div class="element-group">
+                <div class="control-group">
+                    <div class="labels">
+						Законы:
+                    </div>
+                    <div class="controls">
+						
+<label for="laws-1"><input type="checkbox" name="laws[]" id="laws-1" value="1" showcheckbox="1" data-field-name="laws" data-field-type="tenderLaws" style=""><span class="form__caption">44-ФЗ</span></label> &nbsp; <label for="laws-2"><input type="checkbox" name="laws[]" id="laws-2" value="2" showcheckbox="1" data-field-name="laws" data-field-type="tenderLaws" style=""><span class="form__caption">223-ФЗ</span></label> &nbsp; <label for="laws-4"><input type="checkbox" name="laws[]" id="laws-4" value="4" showcheckbox="1" data-field-name="laws" data-field-type="tenderLaws" style=""><span class="form__caption">ПП РФ 615</span></label> &nbsp; <label for="laws-3"><input type="checkbox" name="laws[]" id="laws-3" value="3" showcheckbox="1" data-field-name="laws" data-field-type="tenderLaws" style=""><span class="form__caption">Коммерческие</span></label> &nbsp; <label for="laws-0"><input type="checkbox" name="laws[]" id="laws-0" value="0" showcheckbox="1" data-field-name="laws" data-field-type="tenderLaws" style=""><span class="form__caption">Другие</span></label>                    </div>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="labels">
+					Преимущества:
+                </div>
+                <div class="controls">
+					
+
+
+
+<div data-field-name="withPreference" data-field-full-name="withPreference[]" data-field-type="withPreference" data-place-holder="СМП, СОНО и другие" class="js-widget-FormElementTreeSelect form-element-tree" onclick="return {&quot;dataWidgets&quot;:null,&quot;value&quot;:[],&quot;inputName&quot;:&quot;withPreference[]&quot;,&quot;inputLabel&quot;:&quot;\u041f\u0440\u0435\u0438\u043c\u0443\u0449\u0435\u0441\u0442\u0432\u0430&quot;,&quot;data&quot;:[{&quot;id&quot;:1,&quot;name&quot;:&quot;\u0421 \u043f\u0440\u0435\u0438\u043c\u0443\u0449\u0435\u0441\u0442\u0432\u0430\u043c\u0438&quot;},{&quot;id&quot;:2,&quot;name&quot;:&quot;\u0411\u0435\u0437 \u043f\u0440\u0435\u0438\u043c\u0443\u0449\u0435\u0441\u0442\u0432&quot;},{&quot;id&quot;:0,&quot;name&quot;:&quot;\u041d\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u043d\u043e&quot;}],&quot;multiSelect&quot;:true,&quot;quickDeselect&quot;:true,&quot;useFilter&quot;:false,&quot;id&quot;:&quot;withPreference&quot;,&quot;ajaxQueryUrl&quot;:&quot;&quot;,&quot;ajaxQueryOptions&quot;:[],&quot;ajaxPortionQueryUrl&quot;:&quot;&quot;,&quot;ajaxListFilterUrl&quot;:&quot;&quot;,&quot;disabled&quot;:false,&quot;listToTreeParams&quot;:{&quot;parentIndex&quot;:&quot;parent&quot;,&quot;idIndex&quot;:&quot;id&quot;,&quot;rootId&quot;:-1},&quot;isModal&quot;:false,&quot;separator&quot;:&quot;&quot;,&quot;enableDragDrop&quot;:false}" id="withPreference">
+
+	<div class="js-resultBox tree_info_block">
+		<div class="select-tree-place-holder ">СМП, СОНО и другие</div>	</div>
+	<div class="js-dataBox">
+			</div>
+
+	<div class="js-tree_items_wrapper tree-popup" style="display: none">
+		<div class="js-tree-container tree_items_wrapper js-item-0-box tree_items_list">
+			<div class="js-overlay overlay overlay-white hidden"></div>
+							<div class="toggler js-toggler-wrapper">
+					<div class="js-toggler">
+						<a href="#" class="select-all" data-state="1">Выделить все</a> <span>\</span>
+						<a href="#" class="select-all" data-state="0">Снять выделение</a>
+					</div>
+									</div>
+									<div class="tree_items_container js-item-0-childsBox"></div>
+		</div>
+	</div>
+</div>
+                </div>
+            </div>
+		</div>
+
+		<div class="right-column">
+			<div class="element-group bottom-separator">
+				<div class="control-group">
+					<div class="labels">
+						ОКПД-2:
+					</div>
+					<div class="controls">
+						
+
+
+
+<div data-field-name="okpd2_id" data-field-full-name="okpd2_id[]" data-field-type="okpd2Tree" data-place-holder="" class="js-widget-FormElementTreeSelect form-element-tree" onclick="return {&quot;dataWidgets&quot;:null,&quot;value&quot;:[],&quot;inputName&quot;:&quot;okpd2_id[]&quot;,&quot;inputLabel&quot;:&quot;\u041e\u041a\u041f\u0414-2&quot;,&quot;data&quot;:[],&quot;multiSelect&quot;:true,&quot;quickDeselect&quot;:true,&quot;useFilter&quot;:true,&quot;id&quot;:&quot;okpd2_id&quot;,&quot;ajaxQueryUrl&quot;:&quot;\/ajax\/ajax-okpd2-list\/&quot;,&quot;ajaxQueryOptions&quot;:[],&quot;ajaxPortionQueryUrl&quot;:&quot;\/ajax\/ajax-okpd2-portion-list\/&quot;,&quot;ajaxListFilterUrl&quot;:&quot;\/ajax\/ajax-okpd2-list-filter\/&quot;,&quot;disabled&quot;:false,&quot;listToTreeParams&quot;:{&quot;parentIndex&quot;:&quot;parent&quot;,&quot;idIndex&quot;:&quot;id&quot;,&quot;rootId&quot;:0},&quot;isModal&quot;:true,&quot;separator&quot;:&quot;&quot;,&quot;enableDragDrop&quot;:false}" id="okpd2_id">
+
+	<div class="js-resultBox tree_info_block">
+		<div class="select-tree-place-holder "></div>	</div>
+	<div class="js-dataBox">
+			</div>
+
+	<div class="js-tree_items_wrapper tree-popup" style="display: none">
+		<div class="js-tree-container tree_items_wrapper js-item-0-box tree_items_list">
+			<div class="js-overlay overlay overlay-white hidden"></div>
+							<div class="toggler js-toggler-wrapper">
+					<div class="js-toggler">
+						<a href="#" class="select-all" data-state="1">Выделить все</a> <span>\</span>
+						<a href="#" class="select-all" data-state="0">Снять выделение</a>
+					</div>
+									</div>
+										<div class="filter-block">
+					<input class="filter" type="text" placeholder="Поиск по списку..." style="">
+
+					<div class="js-filter-error error-block" style="display: none;"></div>
+				</div>
+						<div class="tree_items_container js-item-0-childsBox"></div>
+		</div>
+	</div>
+</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<div class="labels">
+					Заказчик или организатор:
+				</div>
+				<div class="controls">
+					
+<input type="text" name="company[name]" id="company-name" value="" placeholder="Наименование заказчика или организатора" showcheckbox="1" data-field-name="name" data-field-type="text" style="">
+					<label for="company-keywordsStrict">
+						
+<input type="hidden" name="company[excludeName]" value="0" style=""

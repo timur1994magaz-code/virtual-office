@@ -1,0 +1,141 @@
+{
+  "keywords": [
+    "видеоролик",
+    "видеопродакшн",
+    "рекламный ролик",
+    "производство видео",
+    "съёмка видео",
+    "анимационный ролик",
+    "промо ролик",
+    "корпоративный фильм",
+    "видеоконтент",
+    "креативная концепция",
+    "мультимедиа контент",
+    "motion design",
+    "3D анимация",
+    "AI видео",
+    "нейросеть видео"
+  ],
+  "minPrice": 250000,
+  "sources": [
+    {
+      "name": "ЕИС (zakupki.gov.ru)",
+      "type": "gov",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html",
+      "laws": ["44-ФЗ", "223-ФЗ"],
+      "note": "Единая информационная система госзакупок"
+    },
+    {
+      "name": "Сбербанк-АСТ",
+      "type": "etp",
+      "url": "https://www.sberbank-ast.ru",
+      "note": "Крупнейшая ЭТП по 44-ФЗ"
+    },
+    {
+      "name": "РТС-тендер",
+      "type": "etp",
+      "url": "https://www.rts-tender.ru",
+      "note": "ЭТП по 44-ФЗ и 223-ФЗ"
+    },
+    {
+      "name": "Росэлторг",
+      "type": "etp",
+      "url": "https://www.roseltorg.ru",
+      "note": "ЭТП по 44-ФЗ и 223-ФЗ"
+    },
+    {
+      "name": "B2B-Center",
+      "type": "commercial",
+      "url": "https://www.b2b-center.ru",
+      "note": "Коммерческие тендеры"
+    },
+    {
+      "name": "Фабрикант",
+      "type": "commercial",
+      "url": "https://www.fabrikant.ru",
+      "note": "Коммерческие тендеры"
+    },
+    {
+      "name": "ТЭК-Торг",
+      "type": "commercial",
+      "url": "https://www.tektorg.ru",
+      "note": "Тендеры топливно-энергетического комплекса"
+    },
+    {
+      "name": "Tender.Pro",
+      "type": "commercial",
+      "url": "https://tender.pro",
+      "note": "Коммерческие тендеры"
+    },
+    {
+      "name": "Bicotender",
+      "type": "aggregator",
+      "url": "https://bicotender.ru",
+      "note": "Агрегатор всех площадок"
+    },
+    {
+      "name": "Синапс (Synapsenet)",
+      "type": "aggregator",
+      "url": "https://synapsenet.ru",
+      "note": "Агрегатор тендеров"
+    },
+    {
+      "name": "TenderGuru",
+      "type": "aggregator",
+      "url": "https://www.tenderguru.ru",
+      "note": "Агрегатор, поиск по документации"
+    },
+    {
+      "name": "Тендерплан",
+      "type": "aggregator",
+      "url": "https://tenderplan.ru",
+      "note": "Агрегатор, аналитика"
+    },
+    {
+      "name": "Контур.Закупки",
+      "type": "aggregator",
+      "url": "https://zakupki.kontur.ru",
+      "note": "Агрегатор от СКБ Контур"
+    },
+    {
+      "name": "TRADE.SU",
+      "type": "aggregator",
+      "url": "https://www.trade.su",
+      "note": "Агрегатор тендеров"
+    },
+    {
+      "name": "ГосЗатраты",
+      "type": "aggregator",
+      "url": "https://clearspending.ru",
+      "note": "Аналитика госрасходов"
+    }
+  ],
+  "filters": {
+    "categories": [
+      "AI видеоролики — от 250К ₽",
+      "Съёмочные ролики — от 8М ₽",
+      "Креативные концепции — от 1.5М ₽"
+    ],
+    "excludeKeywords": [
+      "видеонаблюдение",
+      "видеорегистратор",
+      "видеодомофон",
+      "видеокамера наблюдения",
+      "CCTV",
+      "продуктов питания",
+      "хлебобулочн",
+      "конвейерн",
+      "металлорежущ",
+      "металлокерам",
+      "печных ролик",
+      "идентификацион",
+      "бесконтактн",
+      "ленты, ролики, цепи",
+      "резьбонакат",
+      "шлифоваль",
+      "подшипник",
+      "запчаст",
+      "эксплуатационн"
+    ]
+  }
+}
